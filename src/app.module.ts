@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common'
+import { ServantsModule } from './app/servants/servants.module'
 
 @Module({
-  imports: [],
+  imports: [ServantsModule],
   controllers: [],
   providers: [],
 })
