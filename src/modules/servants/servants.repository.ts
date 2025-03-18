@@ -1,5 +1,5 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { Servant } from './enterprise/servant.entity'
+import { Servant } from './servant.entity'
 
 export abstract class ServantRepository {
   abstract findById(id: UniqueEntityID): Promise<Servant | null>

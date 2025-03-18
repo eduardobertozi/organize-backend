@@ -1,9 +1,9 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { Servant } from '../servant.entity'
-import { ServantRepository } from '../servants.repository'
+import { Product } from '../product.entity'
+import { ProductsRepository } from '../products.repository'
 
-export class InMemoryServantRepository extends ServantRepository {
-  public items: Servant[] = []
+export class InMemoryProductsRepository extends ProductsRepository {
+  public items: Product[] = []
 
   async findById(id: UniqueEntityID) {
     return this.items.find((item) => item.id.equals(id)) ?? null
@@ -18,20 +18,20 @@ export class InMemoryServantRepository extends ServantRepository {
     return this.items.slice((page - 1) * 10, page * 10)
   }
 
-  async create(servant: Servant) {
-    this.items.push(servant)
+  async create(product: Product) {
+    this.items.push(product)
   }
 
-  async save(servant: Servant): Promise<void> {
-    const index = this.items.findIndex((item) => item.id.equals(servant.id))
+  async save(product: Product): Promise<void> {
+    const index = this.items.findIndex((item) => item.id.equals(product.id))
 
     if (index !== -1) {
-      this.items[index] = servant
+      this.items[index] = product
     }
   }
 
-  async delete(servant: Servant): Promise<void> {
-    const index = this.items.findIndex((item) => item.id.equals(servant.id))
+  async delete(product: Product): Promise<void> {
+    const index = this.items.findIndex((item) => item.id.equals(product.id))
 
     if (index !== -1) {
       this.items.splice(index, 1)

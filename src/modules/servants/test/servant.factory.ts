@@ -1,5 +1,5 @@
 import { faker } from '@faker-js/faker'
-import { Servant, ServantProps } from '../enterprise/servant.entity'
+import { Servant, ServantProps } from '../servant.entity'
 import { UniqueEntityID } from '@/core/unique-entity-id'
 
 export function makeServant(

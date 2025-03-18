@@ -1,5 +1,5 @@
 import { Either, right } from '@/core/either'
-import { Servant } from '../enterprise/servant.entity'
+import { Servant } from '../servant.entity'
 import { ServantRepository } from '../servants.repository'
 
 interface FindServantByNameUseCaseRequest {
