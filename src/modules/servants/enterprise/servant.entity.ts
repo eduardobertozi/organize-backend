@@ -4,6 +4,7 @@ import { UniqueEntityID } from '@/core/unique-entity-id'
 
 export interface ServantProps {
   name: string
+  price: number
   productIds: string[]
   productsPrice: number
   workForcePrice: number
@@ -19,6 +20,15 @@ export class Servant extends Entity<ServantProps> {
 
   set name(name: string) {
     this.props.name = name
+    this.touch()
+  }
+
+  get price(): number {
+    return this.props.price
+  }
+
+  set price(price: number) {
+    this.props.price = price
     this.touch()
   }
 

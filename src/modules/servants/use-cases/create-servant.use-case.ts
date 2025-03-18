@@ -5,6 +5,7 @@ import { Servant } from '../enterprise/servant.entity'
 
 interface CreateServantUseCaseRequest {
   name: string
+  price: number
   productIds: string[]
   productsPrice: number
   workForcePrice: number

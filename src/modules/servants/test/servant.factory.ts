@@ -9,6 +9,7 @@ export function makeServant(
   return Servant.create(
     {
       name: faker.lorem.sentence(),
+      price: faker.number.float(),
       productIds: [],
       productsPrice: faker.number.float(),
       profitPercent: faker.number.int(),
