@@ -1,5 +1,5 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { Servant } from '../servant.entity'
+import { Servant } from '../enterprise/servant.entity'
 import { ServantRepository } from '../servants.repository'
 
 export class InMemoryServantRepository extends ServantRepository {

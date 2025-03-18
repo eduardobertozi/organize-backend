@@ -1,7 +1,7 @@
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { Servant } from '../servant.entity'
+import { Servant } from '../enterprise/servant.entity'
 import { ServantRepository } from '../servants.repository'
 
 interface FindServantByIdUseCaseRequest {

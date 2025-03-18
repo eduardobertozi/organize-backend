@@ -1,7 +1,7 @@
 import { Either, left, right } from '@/core/either'
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { ServantRepository } from '../servants.repository'
-import { Servant } from '../servant.entity'
+import { Servant } from '../enterprise/servant.entity'
 
 interface CreateServantUseCaseRequest {
   name: string
