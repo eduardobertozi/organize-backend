@@ -1,17 +1,10 @@
 import { Either, left, right } from '@/core/either'
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
-
 import { ProductsRepository } from '../repositories/products.repository'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
-import { Optional } from '@/core/optional'
-import { ProductProps } from '../entities/product'
-import { UniqueEntityID } from '@/core/unique-entity-id'
 
-type DeleteProductUseCaseRequest = Optional<
-  ProductProps,
-  'createdAt' | 'updatedAt'
-> & {
-  id: UniqueEntityID
+interface DeleteProductUseCaseRequest {
+  productId: string
 }
 
 type DeleteProductUseCaseResponse = Either<
@@ -22,16 +15,16 @@ type DeleteProductUseCaseResponse = Either<
 export class DeleteProductUseCase {
   constructor(private readonly productsRepository: ProductsRepository) {}
 
-  async execute(
-    params: DeleteProductUseCaseRequest,
-  ): Promise<DeleteProductUseCaseResponse> {
-    const productExists = await this.productsRepository.findById(params.id)
+  async execute({
+    productId,
+  }: DeleteProductUseCaseRequest): Promise<DeleteProductUseCaseResponse> {
+    const product = await this.productsRepository.findById(productId)
 
-    if (!productExists) {
+    if (!product) {
       return left(new ResourceNotFoundError())
     }
 
-    await this.productsRepository.delete(productExists)
+    await this.productsRepository.delete(product)
 
     return right(null)
   }

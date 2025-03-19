@@ -1,10 +1,8 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
 import { InMemoryProductsRepository } from '../test/in-memory-products.repository'
-
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { DeleteProductUseCase } from './delete-product.use-case'
 import { makeProduct } from '../test/products.factory'
-import { ProductAttachmentsList } from '../entities/product-attachments-list'
 
 describe('Delete Product', () => {
   let inMemoryProductsRepository: InMemoryProductsRepository
@@ -21,12 +19,7 @@ describe('Delete Product', () => {
     await inMemoryProductsRepository.create(product)
 
     const result = await sut.execute({
-      id: new UniqueEntityID('1'),
-      name: 'Sample product',
-      price: 0,
-      reference: '1234',
-      supplierId: new UniqueEntityID('1'),
-      attachments: new ProductAttachmentsList(),
+      productId: product.id.toString(),
     })
 
     expect(result.isRight()).toBe(true)
@@ -35,12 +28,7 @@ describe('Delete Product', () => {
 
   it('should not be able delete him when this does not exist', async () => {
     const result = await sut.execute({
-      id: new UniqueEntityID('1'),
-      name: 'Sample product',
-      price: 0,
-      reference: '1234',
-      supplierId: new UniqueEntityID('1'),
-      attachments: new ProductAttachmentsList(),
+      productId: '1',
     })
 
     expect(result.isLeft()).toBe(true)
