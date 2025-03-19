@@ -80,12 +80,6 @@ export class Product extends AggregateRoot<ProductProps> {
       id,
     )
 
-    // const isNewProduct = !id
-
-    // if (isNewProduct) {
-    //   product.addDomainEvent(new ProductCreatedEvent(product))
-    // }
-
     return product
   }
 }

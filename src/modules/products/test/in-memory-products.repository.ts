@@ -1,7 +1,6 @@
 import { Product } from '../entities/product'
 import { ProductAttachmentsRepository } from '../repositories/product-attachments.repository'
 import { ProductsRepository } from '../repositories/products.repository'
-import { DomainEvents } from '@/core/events/domain-events'
 
 export class InMemoryProductsRepository extends ProductsRepository {
   public items: Product[] = []
@@ -33,8 +32,6 @@ export class InMemoryProductsRepository extends ProductsRepository {
     await this.productAttachmentsRepository?.createMany(
       product.attachments.getItems(),
     )
-
-    DomainEvents.dispatchEventsForAggregate(product.id)
   }
 
   async save(product: Product): Promise<void> {
@@ -51,8 +48,6 @@ export class InMemoryProductsRepository extends ProductsRepository {
     await this.productAttachmentsRepository?.deleteMany(
       product.attachments.getRemovedItems(),
     )
-
-    DomainEvents.dispatchEventsForAggregate(product.id)
   }
 
   async delete(product: Product): Promise<void> {
