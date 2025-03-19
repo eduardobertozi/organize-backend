@@ -1,6 +1,6 @@
-import { InMemorySuppliersRepository } from '../test/in-memory-suppliers.repository'
-import { makeSupplier } from '../test/suppliers.factory'
+import { InMemorySuppliersRepository } from 'test/in-memories/in-memory-suppliers.repository'
 import { FindSupplierByNameUseCase } from './find-supplier-by-name.use-case'
+import { makeSupplier } from 'test/factories/suppliers.factory'
 
 describe('Find Supplier By Name', () => {
   let inMemorySuppliersRepository: InMemorySuppliersRepository

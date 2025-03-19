@@ -2,9 +2,9 @@ import { Either, left, right } from '@/core/either'
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { SuppliersRepository } from '../suppliers.repository'
 import { Optional } from '@/core/optional'
-import { SupplierProps } from '../supplier.entity'
+import { SupplierProps } from '../../enterprise/entities/supplier'
+import { SuppliersRepository } from '../repositories/suppliers.repository'
 
 type EditSupplierUseCaseRequest = Optional<
   SupplierProps,

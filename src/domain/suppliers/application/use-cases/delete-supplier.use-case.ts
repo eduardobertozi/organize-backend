@@ -3,8 +3,8 @@ import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { Optional } from '@/core/optional'
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { SupplierProps } from '../supplier.entity'
-import { SuppliersRepository } from '../suppliers.repository'
+import { SupplierProps } from '../../enterprise/entities/supplier'
+import { SuppliersRepository } from '../repositories/suppliers.repository'
 
 type DeleteSupplierUseCaseRequest = Optional<
   SupplierProps,

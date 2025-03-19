@@ -1,8 +1,9 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { InMemorySuppliersRepository } from '../test/in-memory-suppliers.repository'
-import { makeSupplier } from '../test/suppliers.factory'
+
 import { DeleteSupplierUseCase } from './delete-supplier.use-case'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
+import { InMemorySuppliersRepository } from 'test/in-memories/in-memory-suppliers.repository'
+import { makeSupplier } from 'test/factories/suppliers.factory'
 
 describe('Delete Supplier', () => {
   let inMemorySuppliersRepository: InMemorySuppliersRepository

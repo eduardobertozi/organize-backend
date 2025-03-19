@@ -1,8 +1,8 @@
 import { Either, left, right } from '@/core/either'
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
-import { SuppliersRepository } from '../suppliers.repository'
-import { Supplier, SupplierProps } from '../supplier.entity'
 import { Optional } from '@/core/optional'
+import { Supplier, SupplierProps } from '../../enterprise/entities/supplier'
+import { SuppliersRepository } from '../repositories/suppliers.repository'
 
 type CreateSupplierUseCaseRequest = Optional<
   SupplierProps,

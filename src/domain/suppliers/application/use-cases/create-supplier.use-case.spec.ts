@@ -1,7 +1,7 @@
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { CreateSupplierUseCase } from './create-supplier.use-case'
-import { InMemorySuppliersRepository } from '../test/in-memory-suppliers.repository'
-import { makeSupplier } from '../test/suppliers.factory'
+import { InMemorySuppliersRepository } from 'test/in-memories/in-memory-suppliers.repository'
+import { makeSupplier } from 'test/factories/suppliers.factory'
 
 describe('Create Supplier', () => {
   let inMemorySuppliersRepository: InMemorySuppliersRepository

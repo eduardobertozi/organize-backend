@@ -1,6 +1,6 @@
 import { Either, right } from '@/core/either'
-import { Supplier } from '../supplier.entity'
-import { SuppliersRepository } from '../suppliers.repository'
+import { Supplier } from '../../enterprise/entities/supplier'
+import { SuppliersRepository } from '../repositories/suppliers.repository'
 
 interface FindSupplierByNameUseCaseRequest {
   name: string

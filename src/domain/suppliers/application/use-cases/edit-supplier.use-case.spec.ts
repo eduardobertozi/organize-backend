@@ -1,9 +1,9 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { InMemorySuppliersRepository } from '../test/in-memory-suppliers.repository'
-import { makeSupplier } from '../test/suppliers.factory'
-import { EditSupplierUseCase } from './edit-supplier.use-case'
-import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
+import { makeSupplier } from 'test/factories/suppliers.factory'
+import { InMemorySuppliersRepository } from 'test/in-memories/in-memory-suppliers.repository'
+import { EditSupplierUseCase } from './edit-supplier.use-case'
 
 describe('Edit Supplier', () => {
   let inMemorySuppliersRepository: InMemorySuppliersRepository

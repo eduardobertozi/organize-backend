@@ -1,8 +1,8 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { InMemorySuppliersRepository } from '../test/in-memory-suppliers.repository'
-import { makeSupplier } from '../test/suppliers.factory'
 import { FindSupplierByIdUseCase } from './find-supplier-by-id.use-case'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
+import { InMemorySuppliersRepository } from 'test/in-memories/in-memory-suppliers.repository'
+import { makeSupplier } from 'test/factories/suppliers.factory'
 
 describe('Find Supplier By Id', () => {
   let inMemorySuppliersRepository: InMemorySuppliersRepository

@@ -1,8 +1,8 @@
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { Supplier } from '../supplier.entity'
-import { SuppliersRepository } from '../suppliers.repository'
+import { Supplier } from '../../enterprise/entities/supplier'
+import { SuppliersRepository } from '../repositories/suppliers.repository'
 
 interface FindSupplierByIdUseCaseRequest {
   id: UniqueEntityID

@@ -1,6 +1,6 @@
-import { InMemorySuppliersRepository } from '../test/in-memory-suppliers.repository'
-import { makeSupplier } from '../test/suppliers.factory'
+import { InMemorySuppliersRepository } from 'test/in-memories/in-memory-suppliers.repository'
 import { FetchAllSuppliersUseCase } from './fetch-all-suppliers.use-case'
+import { makeSupplier } from 'test/factories/suppliers.factory'
 
 describe('Fetch All Suppliers', () => {
   let inMemorySuppliersRepository: InMemorySuppliersRepository
