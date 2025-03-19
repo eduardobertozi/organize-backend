@@ -1,7 +1,7 @@
 import {
   HashComparerGateway,
   HashGeneratorGateway,
-} from '@/infrastructure/cryptography/hasher'
+} from '@/infra/gateways/cryptography/hasher'
 
 export class FakeHasher implements HashGeneratorGateway, HashComparerGateway {
   async hash(plain: string): Promise<string> {
