@@ -23,7 +23,7 @@ export class FindServantByNameUseCase {
     name,
     page = 1,
   }: FindServantByNameUseCaseRequest): Promise<FindServantByNameUseCaseResponse> {
-    const servants = await this.servantRepository.findByName(name, page)
+    const servants = await this.servantRepository.findByName(name, { page })
 
     return right({
       servants,

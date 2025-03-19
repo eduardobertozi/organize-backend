@@ -1,12 +1,11 @@
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
-import { UniqueEntityID } from '@/core/unique-entity-id'
 import { Servant } from '../../enterprise/entities/servant'
 import { ServantRepository } from '../repositories/servants.repository'
 import { Injectable } from '@nestjs/common'
 
 interface FindServantByIdUseCaseRequest {
-  id: UniqueEntityID
+  servantId: string
 }
 
 type FindServantByIdUseCaseResponse = Either<
@@ -21,9 +20,9 @@ export class FindServantByIdUseCase {
   constructor(private readonly servantRepository: ServantRepository) {}
 
   async execute({
-    id,
+    servantId,
   }: FindServantByIdUseCaseRequest): Promise<FindServantByIdUseCaseResponse> {
-    const servant = await this.servantRepository.findById(id)
+    const servant = await this.servantRepository.findById(servantId)
 
     if (!servant) {
       return left(new ResourceNotFoundError())

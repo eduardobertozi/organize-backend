@@ -1,9 +1,8 @@
-import { UniqueEntityID } from '@/core/unique-entity-id'
-import { InMemoryServantRepository } from 'test/in-memories/in-memory-servants.repository'
-import { makeServant } from 'test/factories/servant.factory'
-import { EditServantUseCase } from './edit-servant.use-case'
-import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
+import { makeServant } from 'test/factories/servant.factory'
+import { InMemoryServantRepository } from 'test/in-memories/in-memory-servants.repository'
+import { EditServantUseCase } from './edit-servant.use-case'
 
 describe('Edit Servant', () => {
   let inMemoryServantRepository: InMemoryServantRepository
@@ -22,7 +21,7 @@ describe('Edit Servant', () => {
     await inMemoryServantRepository.create(servant)
 
     const result = await sut.execute({
-      id: servant.id,
+      servantId: servant.id.toString(),
       name: 'Sample servant 2',
       productIds: [],
       productsPrice: 0,
@@ -36,7 +35,7 @@ describe('Edit Servant', () => {
 
   it('should not be able edit him when this does not exist', async () => {
     const result = await sut.execute({
-      id: new UniqueEntityID('123456'),
+      servantId: 'supplier-1',
       name: 'Sample servant',
       productIds: [],
       productsPrice: 0,
@@ -56,7 +55,7 @@ describe('Edit Servant', () => {
     await inMemoryServantRepository.create(servant)
 
     const result = await sut.execute({
-      id: servant.id,
+      servantId: servant.id.toString(),
       name: 'Sample servant',
       productIds: [],
       productsPrice: 0,

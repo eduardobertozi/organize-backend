@@ -20,13 +20,7 @@ describe('Delete Supplier', () => {
     await inMemorySuppliersRepository.create(supplier)
 
     const result = await sut.execute({
-      id: new UniqueEntityID('supplier-1'),
-      name: 'John Doe',
-      phone: '11999999999',
-      email: 'johndoe@example.com',
-      address: 'Sample address, 1',
-      city: 'Sample city',
-      state: 'SP',
+      supplierId: 'supplier-1',
     })
 
     expect(result.isRight()).toBe(true)
@@ -35,13 +29,7 @@ describe('Delete Supplier', () => {
 
   it('should not be able delete him when this does not exist', async () => {
     const result = await sut.execute({
-      id: new UniqueEntityID('supplier-1'),
-      name: 'John Doe',
-      phone: '11999999999',
-      email: 'johndoe@example.com',
-      address: 'Sample address, 1',
-      city: 'Sample city',
-      state: 'SP',
+      supplierId: 'supplier-1',
     })
 
     expect(result.isLeft()).toBe(true)

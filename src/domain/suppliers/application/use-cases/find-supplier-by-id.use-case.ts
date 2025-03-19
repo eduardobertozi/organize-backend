@@ -1,12 +1,11 @@
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
-import { UniqueEntityID } from '@/core/unique-entity-id'
+import { Injectable } from '@nestjs/common'
 import { Supplier } from '../../enterprise/entities/supplier'
 import { SuppliersRepository } from '../repositories/suppliers.repository'
-import { Injectable } from '@nestjs/common'
 
 interface FindSupplierByIdUseCaseRequest {
-  id: UniqueEntityID
+  supplierId: string
 }
 
 type FindSupplierByIdUseCaseResponse = Either<
@@ -21,9 +20,9 @@ export class FindSupplierByIdUseCase {
   constructor(private readonly suppliersRepository: SuppliersRepository) {}
 
   async execute({
-    id,
+    supplierId,
   }: FindSupplierByIdUseCaseRequest): Promise<FindSupplierByIdUseCaseResponse> {
-    const supplier = await this.suppliersRepository.findById(id)
+    const supplier = await this.suppliersRepository.findById(supplierId)
 
     if (!supplier) {
       return left(new ResourceNotFoundError())

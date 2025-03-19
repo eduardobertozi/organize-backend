@@ -21,7 +21,7 @@ export class FetchAllSuppliersUseCase {
   async execute({
     page = 1,
   }: FetchAllSuppliersUseCaseRequest): Promise<FetchAllSuppliersUseCaseResponse> {
-    const suppliers = await this.suppliersRepository.findAll(page)
+    const suppliers = await this.suppliersRepository.findAll({ page })
 
     return right({
       suppliers,

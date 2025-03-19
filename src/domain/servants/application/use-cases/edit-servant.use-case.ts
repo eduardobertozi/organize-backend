@@ -1,12 +1,11 @@
 import { Either, left, right } from '@/core/either'
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
-import { UniqueEntityID } from '@/core/unique-entity-id'
-import { ServantRepository } from '../repositories/servants.repository'
 import { Injectable } from '@nestjs/common'
+import { ServantRepository } from '../repositories/servants.repository'
 
 interface EditServantUseCaseRequest {
-  id: UniqueEntityID
+  servantId: string
   name: string
   productIds: string[]
   productsPrice: number
@@ -26,7 +25,9 @@ export class EditServantUseCase {
   async execute(
     params: EditServantUseCaseRequest,
   ): Promise<EditServantUseCaseResponse> {
-    const servantExists = await this.servantRepository.findById(params.id)
+    const servantExists = await this.servantRepository.findById(
+      params.servantId,
+    )
 
     if (!servantExists) {
       return left(new ResourceNotFoundError())

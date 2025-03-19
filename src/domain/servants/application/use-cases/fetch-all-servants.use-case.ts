@@ -21,7 +21,7 @@ export class FetchAllServantsUseCase {
   async execute({
     page = 1,
   }: FetchAllServantsUseCaseRequest): Promise<FetchAllServantsUseCaseResponse> {
-    const servants = await this.servantRepository.findAll(page)
+    const servants = await this.servantRepository.findAll({ page })
 
     return right({
       servants,

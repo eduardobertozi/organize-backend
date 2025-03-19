@@ -22,7 +22,7 @@ describe('Edit Supplier', () => {
     await inMemorySuppliersRepository.create(supplier)
 
     const result = await sut.execute({
-      id: supplier.id,
+      supplierId: supplier.id.toString(),
       name: 'John Doe 2',
       phone: '11999999999',
       email: 'johndoe@example.com',
@@ -37,7 +37,7 @@ describe('Edit Supplier', () => {
 
   it('should not be able edit him when this does not exist', async () => {
     const result = await sut.execute({
-      id: new UniqueEntityID('supplier-1'),
+      supplierId: 'supplier-1',
       name: 'John Doe',
       phone: '11999999999',
       email: 'johndoe@example.com',
@@ -62,7 +62,7 @@ describe('Edit Supplier', () => {
     )
 
     const result = await sut.execute({
-      id: new UniqueEntityID('supplier-1'),
+      supplierId: 'supplier-1',
       name: 'John Doe',
       phone: '11999999999',
       email: 'johndoe@example.com',

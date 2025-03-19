@@ -18,13 +18,13 @@ describe('Find Supplier By Id', () => {
       {
         name: 'Sample supplier',
       },
-      new UniqueEntityID('123456'),
+      new UniqueEntityID('supplier-1'),
     )
 
     await inMemorySuppliersRepository.create(supplier)
 
     const result = await sut.execute({
-      id: new UniqueEntityID('123456'),
+      supplierId: 'supplier-1',
     })
 
     expect(result.isRight()).toBe(true)
@@ -33,7 +33,7 @@ describe('Find Supplier By Id', () => {
 
   it('should return error when supplier not exists', async () => {
     const result = await sut.execute({
-      id: new UniqueEntityID('123456'),
+      supplierId: 'supplier-id',
     })
 
     expect(result.isLeft()).toBe(true)

@@ -14,17 +14,17 @@ describe('Find Servant By Id', () => {
   })
 
   it('should be able to find servant by id', async () => {
-    const servant = makeServant(
-      {
-        name: 'Sample servant',
-      },
-      new UniqueEntityID('123456'),
+    await inMemoryServantRepository.create(
+      makeServant(
+        {
+          name: 'Sample servant',
+        },
+        new UniqueEntityID('servant-id'),
+      ),
     )
 
-    await inMemoryServantRepository.create(servant)
-
     const result = await sut.execute({
-      id: new UniqueEntityID('123456'),
+      servantId: 'servant-id',
     })
 
     expect(result.isRight()).toBe(true)
@@ -33,7 +33,7 @@ describe('Find Servant By Id', () => {
 
   it('should return error when servant not exists', async () => {
     const result = await sut.execute({
-      id: new UniqueEntityID('123456'),
+      servantId: 'servant-1',
     })
 
     expect(result.isLeft()).toBe(true)

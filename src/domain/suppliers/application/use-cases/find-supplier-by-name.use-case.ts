@@ -23,7 +23,7 @@ export class FindSupplierByNameUseCase {
     name,
     page = 1,
   }: FindSupplierByNameUseCaseRequest): Promise<FindSupplierByNameUseCaseResponse> {
-    const suppliers = await this.suppliersRepository.findByName(name, page)
+    const suppliers = await this.suppliersRepository.findByName(name, { page })
 
     return right({
       suppliers,

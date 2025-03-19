@@ -1,17 +1,17 @@
 import { Either, left, right } from '@/core/either'
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
-import { UniqueEntityID } from '@/core/unique-entity-id'
-import { Optional } from '@/core/optional'
-import { SupplierProps } from '../../enterprise/entities/supplier'
 import { SuppliersRepository } from '../repositories/suppliers.repository'
 import { Injectable } from '@nestjs/common'
 
-type EditSupplierUseCaseRequest = Optional<
-  SupplierProps,
-  'createdAt' | 'updatedAt'
-> & {
-  id: UniqueEntityID
+interface EditSupplierUseCaseRequest {
+  supplierId: string
+  name: string
+  phone: string
+  email: string
+  address: string
+  city: string
+  state: string
 }
 
 type EditSupplierUseCaseResponse = Either<
@@ -26,7 +26,7 @@ export class EditSupplierUseCase {
   async execute(
     params: EditSupplierUseCaseRequest,
   ): Promise<EditSupplierUseCaseResponse> {
-    const supplier = await this.suppliersRepository.findById(params.id)
+    const supplier = await this.suppliersRepository.findById(params.supplierId)
 
     if (!supplier) {
       return left(new ResourceNotFoundError())
