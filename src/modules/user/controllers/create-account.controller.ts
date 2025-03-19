@@ -1,4 +1,5 @@
 import { Public } from '@/infrastructure/auth/public'
+import { ZodValidationPipe } from '@/infrastructure/pipes/zod-validation.pipe'
 import {
   BadRequestException,
   Body,
@@ -8,18 +9,12 @@ import {
   Post,
   UsePipes,
 } from '@nestjs/common'
-import { z } from 'zod'
-import { RegisterUserUseCase } from '../use-cases/register-user'
-import { ZodValidationPipe } from '@/infrastructure/pipes/zod-validation.pipe'
+import {
+  CreateAccountDTO,
+  CreateAccountSchema,
+} from '../dto/create-account.dto'
 import { UserAlreadyExistsError } from '../use-cases/errors/user-already-exists-error'
-
-const createAccountBodySchema = z.object({
-  name: z.string(),
-  email: z.string().email(),
-  password: z.string().min(6),
-})
-
-type CreateAccountBodySchema = z.infer<typeof createAccountBodySchema>
+import { RegisterUserUseCase } from '../use-cases/register-user'
 
 @Controller('/accounts')
 @Public()
@@ -28,15 +23,9 @@ export class CreateAccountController {
 
   @Post()
   @HttpCode(201)
-  @UsePipes(new ZodValidationPipe(createAccountBodySchema))
-  async handle(@Body() body: CreateAccountBodySchema) {
-    const { name, email, password } = body
-
-    const result = await this.registerUser.execute({
-      name,
-      email,
-      password,
-    })
+  @UsePipes(new ZodValidationPipe(CreateAccountSchema))
+  async handle(@Body() body: CreateAccountDTO) {
+    const result = await this.registerUser.execute(body)
 
     const error = result.value
 
