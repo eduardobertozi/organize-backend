@@ -8,6 +8,8 @@ import { AuthenticateController } from './controllers/users/authenticate.control
 import { AuthenticateUserUseCase } from '@/domain/user/application/use-cases/authenticate-user'
 import { CreateProductController } from './controllers/products/create-product.controller'
 import { CreateProductUseCase } from '@/domain/products/application/use-cases/create-product.use-case'
+import { CreateSupplierController } from './controllers/suppliers/create-supplier.controller'
+import { CreateSupplierUseCase } from '@/domain/suppliers/application/use-cases/create-supplier.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -15,11 +17,13 @@ import { CreateProductUseCase } from '@/domain/products/application/use-cases/cr
     CreateAccountController,
     AuthenticateController,
     CreateProductController,
+    CreateSupplierController,
   ],
   providers: [
     RegisterUserUseCase,
     AuthenticateUserUseCase,
     CreateProductUseCase,
+    CreateSupplierUseCase,
   ],
 })
 export class HttpModule {}

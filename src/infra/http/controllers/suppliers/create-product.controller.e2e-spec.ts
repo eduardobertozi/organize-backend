@@ -1,71 +1,57 @@
 import { AppModule } from '@/app.module'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
-import { AttachmentsFactory } from 'test/factories/attachments-factory'
 import { UsersFactory } from 'test/factories/users.factory'
 import { INestApplication } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
 import { DatabaseModule } from '@/infra/database/database.module'
-import { ProductsFactory } from 'test/factories/products.factory'
 
-describe('Create Product (E2E)', () => {
+describe('Create Supplier (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let usersFactory: UsersFactory
-  let attachmentsFactory: AttachmentsFactory
   let jwt: JwtService
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [UsersFactory, ProductsFactory, AttachmentsFactory],
+      providers: [UsersFactory],
     }).compile()
 
     app = moduleRef.createNestApplication()
     prisma = moduleRef.get(PrismaService)
     usersFactory = moduleRef.get(UsersFactory)
-    attachmentsFactory = moduleRef.get(AttachmentsFactory)
     jwt = moduleRef.get(JwtService)
 
     await app.init()
   })
 
-  test('[POST] /products', async () => {
+  test('[POST] /suppliers', async () => {
     const user = await usersFactory.makePrismaUser()
 
     const access_token = jwt.sign({ sub: user.id.toString() })
 
-    const attachment1 = await attachmentsFactory.makePrismaAttachment()
-    const attachment2 = await attachmentsFactory.makePrismaAttachment()
-
     const response = await request(app.getHttpServer())
-      .post('/products')
+      .post('/suppliers')
       .set('Authorization', `Bearer ${access_token}`)
       .send({
-        name: 'New Product',
-        price: 100,
-        reference: '123456',
-        supplierId: 'supplier-1',
-        attachments: [attachment1.id.toString(), attachment2.id.toString()],
+        name: 'New Supplier',
+        phone: '11999999999',
+        email: 'supplier@example.com',
+        address: 'Rua dos Bobos, 0',
+        city: 'São Paulo',
+        state: 'SP',
       })
 
     expect(response.statusCode).toBe(201)
 
-    const productsOnDatabase = await prisma.product.findFirst({
+    const suppliersOnDatabase = await prisma.supplier.findFirst({
       where: {
-        name: 'New Product',
+        name: 'New Supplier',
       },
     })
 
-    expect(productsOnDatabase).toBeTruthy()
-
-    const attachmentsOnDatabase = await prisma.attachment.findMany({
-      where: {
-        productId: productsOnDatabase?.id,
-      },
-    })
-
-    expect(attachmentsOnDatabase).toHaveLength(2)
+    expect(suppliersOnDatabase).toBeTruthy()
   })
 })

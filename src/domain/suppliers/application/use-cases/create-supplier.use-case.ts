@@ -1,14 +1,17 @@
 import { Either, left, right } from '@/core/either'
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
-import { Optional } from '@/core/optional'
-import { Supplier, SupplierProps } from '../../enterprise/entities/supplier'
+import { Supplier } from '../../enterprise/entities/supplier'
 import { SuppliersRepository } from '../repositories/suppliers.repository'
 import { Injectable } from '@nestjs/common'
 
-type CreateSupplierUseCaseRequest = Optional<
-  SupplierProps,
-  'createdAt' | 'updatedAt'
->
+interface CreateSupplierUseCaseRequest {
+  name: string
+  email: string
+  phone: string
+  city: string
+  state: string
+  address: string
+}
 
 type CreateSupplierUseCaseResponse = Either<AlreadyExistsError, null>
 
