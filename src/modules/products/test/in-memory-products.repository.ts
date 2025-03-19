@@ -1,3 +1,4 @@
+import { PaginationParams } from '@/core/pagination-params'
 import { Product } from '../entities/product'
 import { ProductAttachmentsRepository } from '../repositories/product-attachments.repository'
 import { ProductsRepository } from '../repositories/products.repository'
@@ -17,12 +18,13 @@ export class InMemoryProductsRepository extends ProductsRepository {
     )
   }
 
-  async findByName(name: string, page = 1) {
+  async findByName(name: string, params?: PaginationParams) {
+    const page = params?.page ?? 1
     const filteredItems = this.items.filter((item) => item.name?.includes(name))
     return Promise.resolve(filteredItems.slice((page - 1) * 10, page * 10))
   }
 
-  async findAll(page = 1) {
+  async findAll({ page = 1 }: PaginationParams) {
     return Promise.resolve(this.items.slice((page - 1) * 10, page * 10))
   }
 

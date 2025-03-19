@@ -1,6 +1,6 @@
 import { Either, right } from '@/core/either'
 import { Product } from '../entities/product'
-import { ProductsRepository } from '../products.repository'
+import { ProductsRepository } from '../repositories/products.repository'
 
 interface FindProductByNameUseCaseRequest {
   name: string
@@ -21,7 +21,7 @@ export class FindProductByNameUseCase {
     name,
     page = 1,
   }: FindProductByNameUseCaseRequest): Promise<FindProductByNameUseCaseResponse> {
-    const products = await this.productsRepository.findByName(name, page)
+    const products = await this.productsRepository.findByName(name, { page })
 
     return right({
       products,

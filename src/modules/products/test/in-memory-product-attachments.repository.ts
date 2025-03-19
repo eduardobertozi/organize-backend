@@ -1,8 +1,8 @@
 import { ProductAttachment } from '../entities/product-attachment'
-import { ProductAttachmentRepository } from '../repositories/product-attachments.repository'
+import { ProductAttachmentsRepository } from '../repositories/product-attachments.repository'
 
 export class InMemoryProductAttachmentsRepository
-  implements ProductAttachmentRepository
+  implements ProductAttachmentsRepository
 {
   public items: ProductAttachment[] = []
 

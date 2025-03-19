@@ -22,3 +22,64 @@ model User {
 
   @@map("users")
 }
+
+model Servant {
+  id       String               @id @default(uuid())
+  name     String
+  price    Float
+  products ProductsOnServants[]
+
+  @@map("servants")
+}
+
+model ProductsOnServants {
+  servantId String
+  servant   Servant @relation(fields: [servantId], references: [id])
+  productId String
+  product   Product @relation(fields: [productId], references: [id])
+
+  @@id([servantId, productId])
+  @@map("products_on_servants")
+}
+
+model Product {
+  id        String @id @default(uuid())
+  name      String
+  price     Float
+  reference String
+
+  supplier    Supplier     @relation(fields: [supplierId], references: [id])
+  supplierId  String       @map("supplier_id")
+  attachments Attachment[]
+
+  createdAt DateTime             @default(now())
+  updatedAt DateTime             @updatedAt
+  servants  ProductsOnServants[]
+
+  @@map("products")
+}
+
+model Supplier {
+  id       String    @id @default(uuid())
+  name     String
+  email    String
+  phone    String
+  city     String
+  state    String
+  address  String
+  products Product[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Attachment {
+  id        String  @id @default(uuid())
+  title     String
+  url       String
+  productId String? @map("product_id")
+
+  product Product? @relation(fields: [productId], references: [id])
+
+  @@map("attachments")
+}

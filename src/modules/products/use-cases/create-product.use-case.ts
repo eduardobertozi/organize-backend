@@ -10,14 +10,14 @@ interface CreateProductUseCaseRequest {
   name: string
   price: number
   reference: string
-  supplierId: UniqueEntityID
+  supplierId: string
   attachmentsIds: string[]
 }
 
 type CreateProductUseCaseResponse = Either<AlreadyExistsError, null>
 
 export class CreateProductUseCase {
-  constructor(private readonly servantRepository: ProductsRepository) {}
+  constructor(private readonly productsRepository: ProductsRepository) {}
 
   async execute(
     params: CreateProductUseCaseRequest,
@@ -26,7 +26,7 @@ export class CreateProductUseCase {
       name: params.name,
       price: params.price,
       reference: params.reference,
-      supplierId: params.supplierId,
+      supplierId: new UniqueEntityID(params.supplierId),
       attachments: new ProductAttachmentsList(),
     })
 
@@ -39,13 +39,13 @@ export class CreateProductUseCase {
 
     product.attachments = new ProductAttachmentsList(productAttachments)
 
-    const servantExists = await this.servantRepository.findByName(product.name)
+    const productExists = await this.productsRepository.findByName(product.name)
 
-    if (!servantExists || servantExists.length > 0) {
+    if (!productExists || productExists.length > 0) {
       return left(new AlreadyExistsError())
     }
 
-    await this.servantRepository.create(product)
+    await this.productsRepository.create(product)
 
     return right(null)
   }

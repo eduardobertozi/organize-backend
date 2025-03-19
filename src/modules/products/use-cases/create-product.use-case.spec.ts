@@ -23,7 +23,7 @@ describe('Create Product', () => {
       name: 'Sample product',
       price: 0,
       reference: '123',
-      supplierId: new UniqueEntityID('123'),
+      supplierId: 'supplier-1',
       attachmentsIds: ['1', '2'],
     })
 
@@ -37,7 +37,7 @@ describe('Create Product', () => {
       name: 'Sample product',
       price: 0,
       reference: '123',
-      supplierId: new UniqueEntityID('123'),
+      supplierId: 'supplier-1',
       attachmentsIds: ['1', '2'],
     })
 
@@ -45,7 +45,7 @@ describe('Create Product', () => {
       name: 'Sample product',
       price: 0,
       reference: '123',
-      supplierId: new UniqueEntityID('123'),
+      supplierId: 'supplier-1',
       attachmentsIds: ['1', '2'],
     })
 
@@ -58,7 +58,7 @@ describe('Create Product', () => {
       name: 'Sample product',
       price: 0,
       reference: '123',
-      supplierId: new UniqueEntityID('123'),
+      supplierId: 'supplier-1',
       attachmentsIds: ['1', '2'],
     })
 

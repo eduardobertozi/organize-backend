@@ -1,6 +1,6 @@
 import { Either, right } from '@/core/either'
 import { Product } from '../entities/product'
-import { ProductsRepository } from '../products.repository'
+import { ProductsRepository } from '../repositories/products.repository'
 
 interface FetchAllProductsUseCaseRequest {
   page?: number
@@ -19,7 +19,7 @@ export class FetchAllProductsUseCase {
   async execute({
     page = 1,
   }: FetchAllProductsUseCaseRequest): Promise<FetchAllProductsUseCaseResponse> {
-    const products = await this.productsRepository.findAll(page)
+    const products = await this.productsRepository.findAll({ page })
 
     return right({
       products,
