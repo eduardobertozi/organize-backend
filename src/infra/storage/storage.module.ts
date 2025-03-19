@@ -1,4 +1,4 @@
-import { Uploader } from '../gateways/storage/uploader'
+import { UploaderGateway } from '../gateways/storage/uploader'
 import { Module } from '@nestjs/common'
 import { R2Storage } from './r2-storage'
 import { EnvModule } from '../env/env.module'
@@ -7,10 +7,10 @@ import { EnvModule } from '../env/env.module'
   imports: [EnvModule],
   providers: [
     {
-      provide: Uploader,
+      provide: UploaderGateway,
       useClass: R2Storage,
     },
   ],
-  exports: [Uploader],
+  exports: [UploaderGateway],
 })
 export class StorageModule {}
