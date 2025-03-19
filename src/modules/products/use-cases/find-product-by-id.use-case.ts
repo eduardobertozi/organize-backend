@@ -1,11 +1,10 @@
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
-import { UniqueEntityID } from '@/core/unique-entity-id'
 import { Product } from '../entities/product'
-import { ProductsRepository } from '../products.repository'
+import { ProductsRepository } from '../repositories/products.repository'
 
 interface FindProductByIdUseCaseRequest {
-  id: UniqueEntityID
+  productId: string
 }
 
 type FindProductByIdUseCaseResponse = Either<
@@ -19,9 +18,9 @@ export class FindProductByIdUseCase {
   constructor(private readonly productsRepository: ProductsRepository) {}
 
   async execute({
-    id,
+    productId,
   }: FindProductByIdUseCaseRequest): Promise<FindProductByIdUseCaseResponse> {
-    const product = await this.productsRepository.findById(id)
+    const product = await this.productsRepository.findById(productId)
 
     if (!product) {
       return left(new ResourceNotFoundError())

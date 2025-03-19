@@ -14,17 +14,14 @@ describe('Find Product By Id', () => {
   })
 
   it('should be able to find product by id', async () => {
-    const product = makeProduct(
-      {
-        name: 'Sample product',
-      },
-      new UniqueEntityID('123456'),
-    )
+    const product = makeProduct({
+      name: 'Sample product',
+    })
 
     await inMemoryProductsRepository.create(product)
 
     const result = await sut.execute({
-      id: new UniqueEntityID('123456'),
+      productId: product.id.toString(),
     })
 
     expect(result.isRight()).toBe(true)
@@ -33,7 +30,7 @@ describe('Find Product By Id', () => {
 
   it('should return error when product not exists', async () => {
     const result = await sut.execute({
-      id: new UniqueEntityID('123456'),
+      productId: 'product-1',
     })
 
     expect(result.isLeft()).toBe(true)
