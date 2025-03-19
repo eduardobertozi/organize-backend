@@ -15,16 +15,18 @@ describe('Create Servant', () => {
   it('should be able to create a new servant', async () => {
     const result = await sut.execute({
       name: 'Sample servant',
-      price: 0,
       productIds: [],
-      productsPrice: 0,
-      profitPercent: 0,
-      workForcePrice: 0,
+      productsPrice: 8.75,
+      profitPercent: 120,
+      workForcePrice: 19.0,
     })
+
+    const calculatedPrice = 8.75 + 19.0 + (8.75 * 120) / 100
 
     expect(result.isRight()).toBe(true)
     expect(inMemoryServantRepository.items).toHaveLength(1)
     expect(inMemoryServantRepository.items[0].name).toBe('Sample servant')
+    expect(inMemoryServantRepository.items[0].price).toBe(calculatedPrice)
   })
 
   it('should not be able create a servant with this already exists', async () => {
@@ -36,7 +38,6 @@ describe('Create Servant', () => {
 
     const result = await sut.execute({
       name: 'Sample servant',
-      price: 0,
       productIds: [],
       productsPrice: 0,
       profitPercent: 0,

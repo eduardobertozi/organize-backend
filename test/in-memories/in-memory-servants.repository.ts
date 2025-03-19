@@ -1,22 +1,24 @@
-import { UniqueEntityID } from '@/core/unique-entity-id'
+import { PaginationParams } from '@/core/pagination-params'
 import { ServantRepository } from '@/domain/servants/application/repositories/servants.repository'
 import { Servant } from '@/domain/servants/enterprise/entities/servant'
 
 export class InMemoryServantRepository extends ServantRepository {
   public items: Servant[] = []
 
-  async findById(id: UniqueEntityID) {
+  async findById(id: string) {
     return Promise.resolve(
-      this.items.find((item) => item.id.equals(id)) ?? null,
+      this.items.find((item) => item.id.toString() === id) ?? null,
     )
   }
 
-  async findByName(name: string, page = 1) {
+  async findByName(name: string, params?: PaginationParams) {
+    const page = params?.page ?? 1
+
     const filteredItems = this.items.filter((item) => item.name?.includes(name))
     return Promise.resolve(filteredItems.slice((page - 1) * 10, page * 10))
   }
 
-  async findAll(page = 1) {
+  async findAll({ page }: PaginationParams) {
     return Promise.resolve(this.items.slice((page - 1) * 10, page * 10))
   }
 

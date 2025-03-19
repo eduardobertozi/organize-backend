@@ -4,11 +4,11 @@ import { UniqueEntityID } from '@/core/unique-entity-id'
 
 export interface ServantProps {
   name: string
-  price: number
   productIds: string[]
   productsPrice: number
   workForcePrice: number
   profitPercent: number
+  price?: number
   createdAt?: Date | null
   updatedAt?: Date | null
 }
@@ -24,12 +24,7 @@ export class Servant extends Entity<ServantProps> {
   }
 
   get price(): number {
-    return this.props.price
-  }
-
-  set price(price: number) {
-    this.props.price = price
-    this.touch()
+    return this.props.price ?? 0
   }
 
   get productIds(): string[] {
@@ -91,6 +86,10 @@ export class Servant extends Entity<ServantProps> {
     return new Servant(
       {
         ...props,
+        price:
+          props.productsPrice +
+          props.workForcePrice +
+          (props.productsPrice * props.profitPercent) / 100,
         createdAt: props.createdAt ?? new Date(),
       },
       id,

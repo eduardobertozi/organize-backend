@@ -6,7 +6,6 @@ import { Injectable } from '@nestjs/common'
 
 interface CreateServantUseCaseRequest {
   name: string
-  price: number
   productIds: string[]
   productsPrice: number
   workForcePrice: number
