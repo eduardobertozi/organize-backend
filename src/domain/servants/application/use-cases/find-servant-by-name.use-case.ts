@@ -1,6 +1,7 @@
 import { Either, right } from '@/core/either'
 import { Servant } from '../../enterprise/entities/servant'
 import { ServantRepository } from '../repositories/servants.repository'
+import { Injectable } from '@nestjs/common'
 
 interface FindServantByNameUseCaseRequest {
   name: string
@@ -14,6 +15,7 @@ type FindServantByNameUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class FindServantByNameUseCase {
   constructor(private readonly servantRepository: ServantRepository) {}
 

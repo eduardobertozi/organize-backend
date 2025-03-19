@@ -2,6 +2,7 @@ import { Either, left, right } from '@/core/either'
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { Servant } from '../../enterprise/entities/servant'
 import { ServantRepository } from '../repositories/servants.repository'
+import { Injectable } from '@nestjs/common'
 
 interface CreateServantUseCaseRequest {
   name: string
@@ -14,6 +15,7 @@ interface CreateServantUseCaseRequest {
 
 type CreateServantUseCaseResponse = Either<AlreadyExistsError, null>
 
+@Injectable()
 export class CreateServantUseCase {
   constructor(private readonly servantRepository: ServantRepository) {}
 

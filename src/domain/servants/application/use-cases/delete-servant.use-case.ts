@@ -3,6 +3,7 @@ import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { UniqueEntityID } from '@/core/unique-entity-id'
 import { ServantRepository } from '../repositories/servants.repository'
+import { Injectable } from '@nestjs/common'
 
 interface DeleteServantUseCaseRequest {
   id: UniqueEntityID
@@ -18,6 +19,7 @@ type DeleteServantUseCaseResponse = Either<
   null
 >
 
+@Injectable()
 export class DeleteServantUseCase {
   constructor(private readonly servantRepository: ServantRepository) {}
 

@@ -6,8 +6,8 @@ import { INestApplication } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
-import { DatabaseProductsModule } from '../database/database-products.module'
-import { ProductsFactory } from '../../../../../test/factories/products.factory'
+import { DatabaseModule } from '@/infra/database/database.module'
+import { ProductsFactory } from 'test/factories/products.factory'
 
 describe('Answer Question (E2E)', () => {
   let app: INestApplication
@@ -18,7 +18,7 @@ describe('Answer Question (E2E)', () => {
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [AppModule, DatabaseProductsModule],
+      imports: [AppModule, DatabaseModule],
       providers: [UsersFactory, ProductsFactory, AttachmentsFactory],
     }).compile()
 

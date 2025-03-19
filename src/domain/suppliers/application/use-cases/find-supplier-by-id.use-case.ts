@@ -3,6 +3,7 @@ import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { UniqueEntityID } from '@/core/unique-entity-id'
 import { Supplier } from '../../enterprise/entities/supplier'
 import { SuppliersRepository } from '../repositories/suppliers.repository'
+import { Injectable } from '@nestjs/common'
 
 interface FindSupplierByIdUseCaseRequest {
   id: UniqueEntityID
@@ -15,6 +16,7 @@ type FindSupplierByIdUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class FindSupplierByIdUseCase {
   constructor(private readonly suppliersRepository: SuppliersRepository) {}
 

@@ -3,6 +3,7 @@ import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { Optional } from '@/core/optional'
 import { Supplier, SupplierProps } from '../../enterprise/entities/supplier'
 import { SuppliersRepository } from '../repositories/suppliers.repository'
+import { Injectable } from '@nestjs/common'
 
 type CreateSupplierUseCaseRequest = Optional<
   SupplierProps,
@@ -11,6 +12,7 @@ type CreateSupplierUseCaseRequest = Optional<
 
 type CreateSupplierUseCaseResponse = Either<AlreadyExistsError, null>
 
+@Injectable()
 export class CreateSupplierUseCase {
   constructor(private readonly suppliersRepository: SuppliersRepository) {}
 

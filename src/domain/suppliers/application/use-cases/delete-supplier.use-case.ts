@@ -5,6 +5,7 @@ import { Optional } from '@/core/optional'
 import { UniqueEntityID } from '@/core/unique-entity-id'
 import { SupplierProps } from '../../enterprise/entities/supplier'
 import { SuppliersRepository } from '../repositories/suppliers.repository'
+import { Injectable } from '@nestjs/common'
 
 type DeleteSupplierUseCaseRequest = Optional<
   SupplierProps,
@@ -18,6 +19,7 @@ type DeleteSupplierUseCaseResponse = Either<
   null
 >
 
+@Injectable()
 export class DeleteSupplierUseCase {
   constructor(private readonly suppliersRepository: SuppliersRepository) {}
 

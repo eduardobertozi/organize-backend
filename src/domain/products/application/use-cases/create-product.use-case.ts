@@ -5,6 +5,7 @@ import { Product } from '../../enterprise/entities/product'
 import { UniqueEntityID } from '@/core/unique-entity-id'
 import { ProductAttachment } from '../../enterprise/entities/product-attachment'
 import { ProductAttachmentsList } from '../../enterprise/entities/product-attachments-list'
+import { Injectable } from '@nestjs/common'
 
 interface CreateProductUseCaseRequest {
   name: string
@@ -16,6 +17,7 @@ interface CreateProductUseCaseRequest {
 
 type CreateProductUseCaseResponse = Either<AlreadyExistsError, null>
 
+@Injectable()
 export class CreateProductUseCase {
   constructor(private readonly productsRepository: ProductsRepository) {}
 

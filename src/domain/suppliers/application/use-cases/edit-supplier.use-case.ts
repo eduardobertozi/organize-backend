@@ -5,6 +5,7 @@ import { UniqueEntityID } from '@/core/unique-entity-id'
 import { Optional } from '@/core/optional'
 import { SupplierProps } from '../../enterprise/entities/supplier'
 import { SuppliersRepository } from '../repositories/suppliers.repository'
+import { Injectable } from '@nestjs/common'
 
 type EditSupplierUseCaseRequest = Optional<
   SupplierProps,
@@ -18,6 +19,7 @@ type EditSupplierUseCaseResponse = Either<
   null
 >
 
+@Injectable()
 export class EditSupplierUseCase {
   constructor(private readonly suppliersRepository: SuppliersRepository) {}
 

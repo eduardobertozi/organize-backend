@@ -6,6 +6,7 @@ import { ProductsRepository } from '../repositories/products.repository'
 import { ProductAttachmentsRepository } from '../repositories/product-attachments.repository'
 import { ProductAttachmentsList } from '../../enterprise/entities/product-attachments-list'
 import { ProductAttachment } from '../../enterprise/entities/product-attachment'
+import { Injectable } from '@nestjs/common'
 
 interface EditProductUseCaseRequest {
   productId: string
@@ -21,6 +22,7 @@ type EditProductUseCaseResponse = Either<
   null
 >
 
+@Injectable()
 export class EditProductUseCase {
   constructor(
     private readonly productsRepository: ProductsRepository,

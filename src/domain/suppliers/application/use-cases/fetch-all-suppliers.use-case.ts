@@ -1,6 +1,7 @@
 import { Either, right } from '@/core/either'
 import { SuppliersRepository } from '../repositories/suppliers.repository'
 import { Supplier } from '../../enterprise/entities/supplier'
+import { Injectable } from '@nestjs/common'
 
 interface FetchAllSuppliersUseCaseRequest {
   page?: number
@@ -13,6 +14,7 @@ type FetchAllSuppliersUseCaseResponse = Either<
   }
 >
 
+@Injectable()
 export class FetchAllSuppliersUseCase {
   constructor(private readonly suppliersRepository: SuppliersRepository) {}
 
