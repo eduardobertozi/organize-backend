@@ -11,6 +11,6 @@ import { ProductsRepository } from '../repositories/products.repository'
       useClass: PrismaProductService,
     },
   ],
-  exports: [PrismaService, ProductsRepository],
+  exports: [ProductsRepository],
 })
 export class DatabaseProductsModule {}

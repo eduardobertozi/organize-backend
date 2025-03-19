@@ -16,12 +16,12 @@ import {
 import { UserAlreadyExistsError } from '../use-cases/errors/user-already-exists-error'
 import { RegisterUserUseCase } from '../use-cases/register-user'
 
-@Controller('/accounts')
+@Controller()
 @Public()
 export class CreateAccountController {
   constructor(private readonly registerUser: RegisterUserUseCase) {}
 
-  @Post()
+  @Post('/accounts')
   @HttpCode(201)
   @UsePipes(new ZodValidationPipe(CreateAccountSchema))
   async handle(@Body() body: CreateAccountDTO) {

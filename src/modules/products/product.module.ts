@@ -15,6 +15,5 @@ import { CreateProductUseCase } from './use-cases/create-product.use-case'
   ],
   controllers: [CreateProductController],
   providers: [CreateProductUseCase],
-  exports: [],
 })
 export class ProductsModule {}

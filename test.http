@@ -1,0 +1,37 @@
+@base_url = http://localhost:8000
+@token = {{create_session.response.body.access_token}}
+
+### 
+# @name create_account
+POST {{base_url}}/accounts
+Content-Type: application/json
+
+{
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "password": "123456789"
+}
+
+### 
+# @name create_session
+POST {{base_url}}/sessions
+Content-Type: application/json
+
+{
+  "email": "johndoe@example.com",
+  "password": "123456789"
+}
+
+### 
+# @name create_product
+POST {{base_url}}/products
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "New Product",
+  "price": 100,
+  "reference": "123456",
+  "supplierId": "supplier-1",
+  "attachments": ["f2e9a1e3-9bc6-4be8-a8bc-b26194d4c994"]
+}
