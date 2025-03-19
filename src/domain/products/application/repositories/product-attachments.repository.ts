@@ -1,6 +1,6 @@
 import { ProductAttachment } from '../../enterprise/entities/product-attachment'
 
-export abstract class ProductAttachmentsRepository {
+export abstract class ProductsAttachmentsRepository {
   abstract createMany(attachments: ProductAttachment[]): Promise<void>
   abstract deleteMany(attachments: ProductAttachment[]): Promise<void>
   abstract findManyByProductId(productId: string): Promise<ProductAttachment[]>

@@ -1,13 +1,15 @@
+import { AttachmentsRepository } from '@/domain/attachments/application/repositories/attachments.repository'
+import { ProductsAttachmentsRepository } from '@/domain/products/application/repositories/product-attachments.repository'
+import { ProductsRepository } from '@/domain/products/application/repositories/products.repository'
+import { SuppliersRepository } from '@/domain/suppliers/application/repositories/suppliers.repository'
+import { UsersRepository } from '@/domain/user/application/repositories/users.repository'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { Module } from '@nestjs/common'
-import { PrismaUsersService } from './prisma/services/prisma-users.service'
-import { UsersRepository } from '@/domain/user/application/repositories/users.repository'
-import { PrismaProductsService } from './prisma/services/prisma-products.service'
-import { ProductsRepository } from '@/domain/products/application/repositories/products.repository'
 import { PrismaAttachmentsService } from './prisma/services/prisma-attachments.service'
-import { AttachmentsRepository } from '@/domain/attachments/application/repositories/attachments.repository'
-import { SuppliersRepository } from '@/domain/suppliers/application/repositories/suppliers.repository'
+import { PrismaProductAttachmentsRepository } from './prisma/services/prisma-products-attachments.service'
+import { PrismaProductsService } from './prisma/services/prisma-products.service'
 import { PrismaSuppliersService } from './prisma/services/prisma-suppliers.service'
+import { PrismaUsersService } from './prisma/services/prisma-users.service'
 
 @Module({
   providers: [
@@ -28,6 +30,10 @@ import { PrismaSuppliersService } from './prisma/services/prisma-suppliers.servi
       provide: SuppliersRepository,
       useClass: PrismaSuppliersService,
     },
+    {
+      provide: ProductsAttachmentsRepository,
+      useClass: PrismaProductAttachmentsRepository,
+    },
   ],
   exports: [
     PrismaService,
@@ -35,6 +41,7 @@ import { PrismaSuppliersService } from './prisma/services/prisma-suppliers.servi
     ProductsRepository,
     AttachmentsRepository,
     SuppliersRepository,
+    ProductsAttachmentsRepository,
   ],
 })
 export class DatabaseModule {}

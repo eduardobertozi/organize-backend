@@ -1,6 +1,12 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { Supplier } from '@/domain/suppliers/enterprise/entities/supplier'
+import {
+  Supplier,
+  SupplierProps,
+} from '@/domain/suppliers/enterprise/entities/supplier'
+import { PrismaSuppliersMapper } from '@/infra/database/prisma/mappers/prisma-suppliers.mapper'
+import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { faker } from '@faker-js/faker'
+import { Injectable } from '@nestjs/common'
 
 export function makeSupplier(
   override: Partial<Supplier> = {},
@@ -18,4 +24,21 @@ export function makeSupplier(
     },
     id,
   )
+}
+
+@Injectable()
+export class SuppliersFactory {
+  constructor(private readonly prismaService: PrismaService) {}
+
+  async makePrismaSuppliers(
+    data: Partial<SupplierProps> = {},
+  ): Promise<Supplier> {
+    const supplier = makeSupplier(data)
+
+    await this.prismaService.supplier.create({
+      data: PrismaSuppliersMapper.toPrisma(supplier),
+    })
+
+    return supplier
+  }
 }

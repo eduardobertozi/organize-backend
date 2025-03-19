@@ -4,10 +4,14 @@ import { ProductsRepository } from '@/domain/products/application/repositories/p
 import { Product } from '@/domain/products/enterprise/entities/product'
 import { PrismaProductMapper } from '../mappers/prisma-products.mapper'
 import { PaginationParams } from '@/core/pagination-params'
+import { ProductsAttachmentsRepository } from '@/domain/products/application/repositories/product-attachments.repository'
 
 @Injectable()
 export class PrismaProductsService implements ProductsRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly productsAttachmentsRepository: ProductsAttachmentsRepository,
+  ) {}
 
   async findById(id: string): Promise<Product | null> {
     const product = await this.prisma.product.findUnique({
@@ -55,15 +59,29 @@ export class PrismaProductsService implements ProductsRepository {
     await this.prisma.product.create({
       data: PrismaProductMapper.toPrisma(product),
     })
+
+    await this.productsAttachmentsRepository.createMany(
+      product.attachments.getItems(),
+    )
   }
 
   async save(product: Product): Promise<void> {
-    await this.prisma.product.update({
-      where: {
-        id: product.id.toString(),
-      },
-      data: PrismaProductMapper.toPrisma(product),
-    })
+    const data = PrismaProductMapper.toPrisma(product)
+
+    await Promise.all([
+      this.prisma.product.update({
+        where: {
+          id: product.id.toString(),
+        },
+        data,
+      }),
+      this.productsAttachmentsRepository.createMany(
+        product.attachments.getNewItems(),
+      ),
+      this.productsAttachmentsRepository.deleteMany(
+        product.attachments.getRemovedItems(),
+      ),
+    ])
   }
 
   async delete(product: Product): Promise<void> {
