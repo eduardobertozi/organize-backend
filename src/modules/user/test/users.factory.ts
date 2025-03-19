@@ -1,6 +1,9 @@
 import { faker } from '@faker-js/faker'
 import { User, UserProps } from '../user.entity'
 import { UniqueEntityID } from '@/core/unique-entity-id'
+import { Injectable } from '@nestjs/common'
+import { PrismaService } from '@/infrastructure/database/prisma.service'
+import { PrismaUserMapper } from '../database/users.mapper'
 
 export function makeUser(
   override: Partial<UserProps> = {},
@@ -17,17 +20,17 @@ export function makeUser(
   )
 }
 
-// @Injectable()
-// export class UserFactory {
-//   constructor(private readonly prismaService: PrismaService) {}
+@Injectable()
+export class UsersFactory {
+  constructor(private readonly prismaService: PrismaService) {}
 
-//   async makePrismaUser(data: Partial<UserProps> = {}): Promise<User> {
-//     const user = makeUser(data)
+  async makePrismaUser(data: Partial<UserProps> = {}): Promise<User> {
+    const user = makeUser(data)
 
-//     await this.prismaService.user.create({
-//       data: PrismaUserMapper.toPrisma(user),
-//     })
+    await this.prismaService.user.create({
+      data: PrismaUserMapper.toPrisma(user),
+    })
 
-//     return user
-//   }
-// }
+    return user
+  }
+}

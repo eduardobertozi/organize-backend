@@ -9,10 +9,10 @@ config({
   override: true,
 })
 
-config({
-  path: '.env.test',
-  override: true,
-})
+// config({
+//   path: '.env.test',
+//   override: true,
+// })
 
 const prisma = new PrismaClient()
 
