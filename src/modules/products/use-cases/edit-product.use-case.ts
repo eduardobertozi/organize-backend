@@ -2,15 +2,18 @@ import { Either, left, right } from '@/core/either'
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { ProductsRepository } from '../products.repository'
-import { Optional } from '@/core/optional'
-import { ProductProps } from '../entities/product'
+import { ProductsRepository } from '../repositories/products.repository'
+import { ProductAttachmentsRepository } from '../repositories/product-attachments.repository'
+import { ProductAttachmentsList } from '../entities/product-attachments-list'
+import { ProductAttachment } from '../entities/product-attachment'
 
-type EditProductUseCaseRequest = Optional<
-  ProductProps,
-  'createdAt' | 'updatedAt'
-> & {
-  id: UniqueEntityID
+interface EditProductUseCaseRequest {
+  productId: string
+  name: string
+  price: number
+  reference: string
+  supplierId: string
+  attachmentsIds: string[]
 }
 
 type EditProductUseCaseResponse = Either<
@@ -19,14 +22,17 @@ type EditProductUseCaseResponse = Either<
 >
 
 export class EditProductUseCase {
-  constructor(private readonly productsRepository: ProductsRepository) {}
+  constructor(
+    private readonly productsRepository: ProductsRepository,
+    private readonly productAttachmentsRepository: ProductAttachmentsRepository,
+  ) {}
 
   async execute(
     params: EditProductUseCaseRequest,
   ): Promise<EditProductUseCaseResponse> {
-    const productExists = await this.productsRepository.findById(params.id)
+    const product = await this.productsRepository.findById(params.productId)
 
-    if (!productExists) {
+    if (!product) {
       return left(new ResourceNotFoundError())
     }
 
@@ -37,12 +43,30 @@ export class EditProductUseCase {
       return left(new AlreadyExistsError())
     }
 
-    productExists.name = params.name
-    productExists.price = params.price
-    productExists.reference = params.reference
-    productExists.supplierId = params.supplierId
+    const currentProductAttachments =
+      await this.productAttachmentsRepository.findManyByProductId(
+        params.productId,
+      )
 
-    await this.productsRepository.save(productExists)
+    const productAttachmentsList = new ProductAttachmentsList(
+      currentProductAttachments,
+    )
+
+    const productAttachments = params.attachmentsIds.map((attachmentId) => {
+      return ProductAttachment.create({
+        attachmentId: new UniqueEntityID(attachmentId),
+        productId: product.id,
+      })
+    })
+
+    productAttachmentsList.update(productAttachments)
+
+    product.name = params.name
+    product.price = params.price
+    product.reference = params.reference
+    product.supplierId = new UniqueEntityID(params.supplierId)
+
+    await this.productsRepository.save(product)
 
     return right(null)
   }

@@ -4,14 +4,23 @@ import { makeProduct } from '../test/products.factory'
 import { EditProductUseCase } from './edit-product.use-case'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
+import { InMemoryProductAttachmentsRepository } from '../test/in-memory-product-attachments.repository'
 
 describe('Edit Product', () => {
   let inMemoryProductsRepository: InMemoryProductsRepository
+  let inMemoryProductAttachmentsRepository: InMemoryProductAttachmentsRepository
   let sut: EditProductUseCase
 
   beforeEach(() => {
-    inMemoryProductsRepository = new InMemoryProductsRepository()
-    sut = new EditProductUseCase(inMemoryProductsRepository)
+    inMemoryProductAttachmentsRepository =
+      new InMemoryProductAttachmentsRepository()
+    inMemoryProductsRepository = new InMemoryProductsRepository(
+      inMemoryProductAttachmentsRepository,
+    )
+    sut = new EditProductUseCase(
+      inMemoryProductsRepository,
+      inMemoryProductAttachmentsRepository,
+    )
   })
 
   it('should be able to edit a existant product', async () => {
@@ -19,11 +28,12 @@ describe('Edit Product', () => {
     await inMemoryProductsRepository.create(product)
 
     const result = await sut.execute({
-      id: new UniqueEntityID('1'),
+      productId: product.id.toString(),
       name: 'Sample product 2',
       price: 0,
       reference: '1234',
-      supplierId: new UniqueEntityID('supplier-1'),
+      supplierId: 'supplier-1',
+      attachmentsIds: ['1', '2'],
     })
 
     expect(result.isRight()).toBe(true)
@@ -32,11 +42,12 @@ describe('Edit Product', () => {
 
   it('should not be able edit him when this does not exist', async () => {
     const result = await sut.execute({
-      id: new UniqueEntityID('1'),
-      name: 'Sample product',
+      productId: 'product-1',
+      name: 'Sample product 2',
       price: 0,
       reference: '1234',
-      supplierId: new UniqueEntityID('1'),
+      supplierId: 'supplier-1',
+      attachmentsIds: ['1', '2'],
     })
 
     expect(result.isLeft()).toBe(true)
@@ -44,18 +55,25 @@ describe('Edit Product', () => {
   })
 
   it('should not be able edit product with a another existant product name', async () => {
+    await inMemoryProductsRepository.create(
+      makeProduct({
+        name: 'Sample product',
+      }),
+    )
+
     const product = makeProduct({
-      name: 'Sample product',
+      name: 'Sample product 2',
     })
 
     await inMemoryProductsRepository.create(product)
 
     const result = await sut.execute({
-      id: product.id,
+      productId: product.id.toString(),
       name: 'Sample product',
       price: 0,
       reference: '1234',
-      supplierId: new UniqueEntityID('1'),
+      supplierId: 'supplier-1',
+      attachmentsIds: ['1', '2'],
     })
 
     expect(result.isLeft()).toBe(true)

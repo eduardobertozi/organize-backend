@@ -1,6 +1,5 @@
-import { UniqueEntityID } from '@/core/unique-entity-id'
 import { Product } from '../entities/product'
-import { ProductAttachmentRepository } from '../repositories/product-attachments.repository'
+import { ProductAttachmentsRepository } from '../repositories/product-attachments.repository'
 import { ProductsRepository } from '../repositories/products.repository'
 import { DomainEvents } from '@/core/events/domain-events'
 
@@ -8,14 +7,14 @@ export class InMemoryProductsRepository extends ProductsRepository {
   public items: Product[] = []
 
   constructor(
-    private readonly productAttachmentsRepository?: ProductAttachmentRepository,
+    private readonly productAttachmentsRepository?: ProductAttachmentsRepository,
   ) {
     super()
   }
 
-  async findById(id: UniqueEntityID) {
+  async findById(id: string) {
     return Promise.resolve(
-      this.items.find((item) => item.id.equals(id)) ?? null,
+      this.items.find((item) => item.id.toString() === id) ?? null,
     )
   }
 

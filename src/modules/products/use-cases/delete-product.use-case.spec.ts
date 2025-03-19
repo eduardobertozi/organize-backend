@@ -4,6 +4,7 @@ import { InMemoryProductsRepository } from '../test/in-memory-products.repositor
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { DeleteProductUseCase } from './delete-product.use-case'
 import { makeProduct } from '../test/products.factory'
+import { ProductAttachmentsList } from '../entities/product-attachments-list'
 
 describe('Delete Product', () => {
   let inMemoryProductsRepository: InMemoryProductsRepository
@@ -25,6 +26,7 @@ describe('Delete Product', () => {
       price: 0,
       reference: '1234',
       supplierId: new UniqueEntityID('1'),
+      attachments: new ProductAttachmentsList(),
     })
 
     expect(result.isRight()).toBe(true)
@@ -38,6 +40,7 @@ describe('Delete Product', () => {
       price: 0,
       reference: '1234',
       supplierId: new UniqueEntityID('1'),
+      attachments: new ProductAttachmentsList(),
     })
 
     expect(result.isLeft()).toBe(true)
