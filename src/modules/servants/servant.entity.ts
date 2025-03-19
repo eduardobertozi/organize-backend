@@ -1,4 +1,4 @@
-import { Entity } from '@/core/entity'
+import { Entity } from '@/core/entities/entity'
 import { Optional } from '@/core/optional'
 import { UniqueEntityID } from '@/core/unique-entity-id'
 

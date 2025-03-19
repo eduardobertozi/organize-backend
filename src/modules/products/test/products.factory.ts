@@ -1,5 +1,5 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { Product } from '../product.entity'
+import { Product } from '../entities/product'
 import { faker } from '@faker-js/faker'
 
 export function makeProduct(

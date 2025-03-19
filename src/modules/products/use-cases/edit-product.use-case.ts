@@ -4,7 +4,7 @@ import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { UniqueEntityID } from '@/core/unique-entity-id'
 import { ProductsRepository } from '../products.repository'
 import { Optional } from '@/core/optional'
-import { ProductProps } from '../product.entity'
+import { ProductProps } from '../entities/product'
 
 type EditProductUseCaseRequest = Optional<
   ProductProps,

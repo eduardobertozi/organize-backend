@@ -1,22 +1,25 @@
-import { Entity } from '@/core/entity'
+import { AggregateRoot } from '@/core/entities/aggregate-root'
 import { UniqueEntityID } from '@/core/unique-entity-id'
+import { ProductAttachmentsList } from './product-attachments-list'
 
 export interface ProductProps {
   name: string
   price: number
   reference: string
   supplierId: UniqueEntityID
-  createdAt?: Date | null
+  attachments: ProductAttachmentsList
+  createdAt?: Date
   updatedAt?: Date | null
 }
 
-export class Product extends Entity<ProductProps> {
+export class Product extends AggregateRoot<ProductProps> {
   get name() {
     return this.props.name
   }
 
   set name(value: string) {
     this.props.name = value
+    this.touch()
   }
 
   get price() {
@@ -25,6 +28,7 @@ export class Product extends Entity<ProductProps> {
 
   set price(value: number) {
     this.props.price = value
+    this.touch()
   }
 
   get reference() {
@@ -33,6 +37,7 @@ export class Product extends Entity<ProductProps> {
 
   set reference(reference: string) {
     this.props.reference = reference
+    this.touch()
   }
 
   get supplierId() {
@@ -41,6 +46,16 @@ export class Product extends Entity<ProductProps> {
 
   set supplierId(supplierId: UniqueEntityID) {
     this.props.supplierId = supplierId
+    this.touch()
+  }
+
+  get attachments() {
+    return this.props.attachments
+  }
+
+  set attachments(attachments: ProductAttachmentsList) {
+    this.props.attachments = attachments
+    this.touch()
   }
 
   get createdAt() {
@@ -56,12 +71,21 @@ export class Product extends Entity<ProductProps> {
   }
 
   static create(props: ProductProps, id?: UniqueEntityID): Product {
-    return new Product(
+    const product = new Product(
       {
         ...props,
+        attachments: props.attachments ?? new ProductAttachmentsList(),
         createdAt: props.createdAt ?? new Date(),
       },
       id,
     )
+
+    // const isNewProduct = !id
+
+    // if (isNewProduct) {
+    //   product.addDomainEvent(new ProductCreatedEvent(product))
+    // }
+
+    return product
   }
 }

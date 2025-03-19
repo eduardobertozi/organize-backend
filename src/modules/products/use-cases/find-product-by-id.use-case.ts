@@ -1,7 +1,7 @@
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { Product } from '../product.entity'
+import { Product } from '../entities/product'
 import { ProductsRepository } from '../products.repository'
 
 interface FindProductByIdUseCaseRequest {

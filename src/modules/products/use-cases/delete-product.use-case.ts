@@ -4,7 +4,7 @@ import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { ProductsRepository } from '../products.repository'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { Optional } from '@/core/optional'
-import { ProductProps } from '../product.entity'
+import { ProductProps } from '../entities/product'
 import { UniqueEntityID } from '@/core/unique-entity-id'
 
 type DeleteProductUseCaseRequest = Optional<

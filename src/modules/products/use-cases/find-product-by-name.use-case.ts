@@ -1,5 +1,5 @@
 import { Either, right } from '@/core/either'
-import { Product } from '../product.entity'
+import { Product } from '../entities/product'
 import { ProductsRepository } from '../products.repository'
 
 interface FindProductByNameUseCaseRequest {
