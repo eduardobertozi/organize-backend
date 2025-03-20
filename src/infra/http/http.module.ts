@@ -10,6 +10,8 @@ import { CreateProductController } from './controllers/products/create-product.c
 import { CreateProductUseCase } from '@/domain/products/application/use-cases/create-product.use-case'
 import { CreateSupplierController } from './controllers/suppliers/create-supplier.controller'
 import { CreateSupplierUseCase } from '@/domain/suppliers/application/use-cases/create-supplier.use-case'
+import { EditProductController } from './controllers/products/edit-product.controller'
+import { EditProductUseCase } from '@/domain/products/application/use-cases/edit-product.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -18,12 +20,14 @@ import { CreateSupplierUseCase } from '@/domain/suppliers/application/use-cases/
     AuthenticateController,
     CreateProductController,
     CreateSupplierController,
+    EditProductController,
   ],
   providers: [
     RegisterUserUseCase,
     AuthenticateUserUseCase,
     CreateProductUseCase,
     CreateSupplierUseCase,
+    EditProductUseCase,
   ],
 })
 export class HttpModule {}

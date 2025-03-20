@@ -2,8 +2,8 @@ import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/unique-entity-id'
 
 export interface ProductAttachmentProps {
-  attachmentId: UniqueEntityID
   productId: UniqueEntityID
+  attachmentId: UniqueEntityID
 }
 
 export class ProductAttachment extends Entity<ProductAttachmentProps> {

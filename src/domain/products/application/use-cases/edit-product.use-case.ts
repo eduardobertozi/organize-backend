@@ -3,10 +3,10 @@ import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { UniqueEntityID } from '@/core/unique-entity-id'
 import { ProductsRepository } from '../repositories/products.repository'
-import { ProductAttachmentsRepository } from '../repositories/product-attachments.repository'
 import { ProductAttachmentsList } from '../../enterprise/entities/product-attachments-list'
 import { ProductAttachment } from '../../enterprise/entities/product-attachment'
 import { Injectable } from '@nestjs/common'
+import { ProductsAttachmentsRepository } from '../repositories/product-attachments.repository'
 
 interface EditProductUseCaseRequest {
   productId: string
@@ -26,7 +26,7 @@ type EditProductUseCaseResponse = Either<
 export class EditProductUseCase {
   constructor(
     private readonly productsRepository: ProductsRepository,
-    private readonly productAttachmentsRepository: ProductAttachmentsRepository,
+    private readonly productAttachmentsRepository: ProductsAttachmentsRepository,
   ) {}
 
   async execute(
@@ -67,6 +67,7 @@ export class EditProductUseCase {
     product.price = params.price
     product.reference = params.reference
     product.supplierId = new UniqueEntityID(params.supplierId)
+    product.attachments = productAttachmentsList
 
     await this.productsRepository.save(product)
 
