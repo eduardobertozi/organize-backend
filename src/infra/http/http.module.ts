@@ -12,6 +12,8 @@ import { CreateSupplierController } from './controllers/suppliers/create-supplie
 import { CreateSupplierUseCase } from '@/domain/suppliers/application/use-cases/create-supplier.use-case'
 import { EditProductController } from './controllers/products/edit-product.controller'
 import { EditProductUseCase } from '@/domain/products/application/use-cases/edit-product.use-case'
+import { DeleteProductController } from './controllers/products/delete-product.controller'
+import { DeleteProductUseCase } from '@/domain/products/application/use-cases/delete-product.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -21,6 +23,7 @@ import { EditProductUseCase } from '@/domain/products/application/use-cases/edit
     CreateProductController,
     CreateSupplierController,
     EditProductController,
+    DeleteProductController,
   ],
   providers: [
     RegisterUserUseCase,
@@ -28,6 +31,7 @@ import { EditProductUseCase } from '@/domain/products/application/use-cases/edit
     CreateProductUseCase,
     CreateSupplierUseCase,
     EditProductUseCase,
+    DeleteProductUseCase,
   ],
 })
 export class HttpModule {}
