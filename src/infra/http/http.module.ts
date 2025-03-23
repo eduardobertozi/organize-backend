@@ -14,6 +14,12 @@ import { EditProductController } from './controllers/products/edit-product.contr
 import { EditProductUseCase } from '@/domain/products/application/use-cases/edit-product.use-case'
 import { DeleteProductController } from './controllers/products/delete-product.controller'
 import { DeleteProductUseCase } from '@/domain/products/application/use-cases/delete-product.use-case'
+import { FindProductByIdController } from './controllers/products/find-product-by-id.controller'
+import { FindProductByIdUseCase } from '@/domain/products/application/use-cases/find-product-by-id.use-case'
+import { FindProductByNameUseCase } from '@/domain/products/application/use-cases/find-product-by-name.use-case'
+import { FindProductsByNameController } from './controllers/products/find-products-by-name.controller'
+import { FetchAllProductsController } from './controllers/products/fetch-all-products.controller'
+import { FetchAllProductsUseCase } from '@/domain/products/application/use-cases/fetch-all-products.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -24,6 +30,9 @@ import { DeleteProductUseCase } from '@/domain/products/application/use-cases/de
     CreateSupplierController,
     EditProductController,
     DeleteProductController,
+    FindProductByIdController,
+    FindProductsByNameController,
+    FetchAllProductsController,
   ],
   providers: [
     RegisterUserUseCase,
@@ -32,6 +41,9 @@ import { DeleteProductUseCase } from '@/domain/products/application/use-cases/de
     CreateSupplierUseCase,
     EditProductUseCase,
     DeleteProductUseCase,
+    FindProductByIdUseCase,
+    FindProductByNameUseCase,
+    FetchAllProductsUseCase,
   ],
 })
 export class HttpModule {}
