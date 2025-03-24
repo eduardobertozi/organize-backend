@@ -7,11 +7,11 @@ export interface ServantProductProps {
 }
 
 export class ServantProduct extends Entity<ServantProductProps> {
-  get getProductId() {
+  get productId() {
     return this.props.productId
   }
 
-  get getServantId() {
+  get servantId() {
     return this.props.servantId
   }
 

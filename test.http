@@ -23,6 +23,21 @@ Content-Type: application/json
 }
 
 ### 
+# @name create_supplier
+POST {{base_url}}/suppliers
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Denis",
+  "email": "denis@example.com",
+  "phone": "47999999999",
+  "city": "Jaraguá do Sul",
+  "state": "SC",
+  "address": "Rua do Comércio, 123"
+}
+
+### 
 # @name create_product
 POST {{base_url}}/products
 Content-Type: application/json
@@ -32,6 +47,31 @@ Authorization: Bearer {{token}}
   "name": "New Product",
   "price": 100,
   "reference": "123456",
-  "supplierId": "supplier-1",
-  "attachments": ["f2e9a1e3-9bc6-4be8-a8bc-b26194d4c994"]
+  "supplierId": "225225b3-e6ee-40f4-88de-dc41c0433337",
+  "attachments": []
+}
+
+### 
+# @name create_servant
+POST {{base_url}}/servants
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Corte",
+  "productIds": [],
+  "productsPrice": 10,
+  "workForcePrice": 20,
+  "profitPercent": 112
+}
+
+### 
+# @name create_servant_products
+POST {{base_url}}/servant-products
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "servantId": "02e3d480-2e19-4f89-8a66-e0ab891b973a",
+  "productId": "1cb59a07-4119-41c0-8631-603e6a532b98"
 }

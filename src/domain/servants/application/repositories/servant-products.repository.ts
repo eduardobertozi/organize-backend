@@ -4,8 +4,8 @@ import { ServantProduct } from '../../enterprise/entities/servant-product'
 export abstract class ServantProductsRepository {
   abstract findById(id: string): Promise<ServantProduct | null>
 
-  abstract findManyByProductId(
-    productId: string,
+  abstract findManyByServantId(
+    ServantId: string,
     params: PaginationParams,
   ): Promise<ServantProduct[]>
 

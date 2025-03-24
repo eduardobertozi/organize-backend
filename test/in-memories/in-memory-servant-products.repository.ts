@@ -13,14 +13,14 @@ export class InMemoryServantProductsRepository
     )
   }
 
-  async findManyByProductId(
-    productId: string,
+  async findManyByServantId(
+    servantId: string,
     params: PaginationParams,
   ): Promise<ServantProduct[]> {
     const page = params.page ?? 1
 
     const itemsWithProductId = this.items.filter(
-      (item) => item.id.toString() === productId,
+      (item) => item.id.toString() === servantId,
     )
 
     return Promise.resolve(itemsWithProductId.slice((page - 1) * 10, page * 10))

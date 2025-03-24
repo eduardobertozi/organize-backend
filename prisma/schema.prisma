@@ -24,22 +24,24 @@ model User {
 }
 
 model Servant {
-  id       String               @id @default(uuid())
+  id       String           @id @default(uuid())
   name     String
   price    Float
-  products ProductsOnServants[]
+  products ServantProduct[]
 
   @@map("servants")
 }
 
-model ProductsOnServants {
+model ServantProduct {
+  id String @id @default(uuid())
+
   servantId String
   servant   Servant @relation(fields: [servantId], references: [id])
+
   productId String
   product   Product @relation(fields: [productId], references: [id])
 
-  @@id([servantId, productId])
-  @@map("products_on_servants")
+  @@map("servant_products")
 }
 
 model Product {
@@ -52,9 +54,9 @@ model Product {
   supplierId  String       @map("supplier_id")
   attachments Attachment[]
 
-  createdAt DateTime             @default(now())
-  updatedAt DateTime             @updatedAt
-  servants  ProductsOnServants[]
+  createdAt DateTime         @default(now())
+  updatedAt DateTime         @updatedAt
+  servants  ServantProduct[]
 
   @@map("products")
 }
