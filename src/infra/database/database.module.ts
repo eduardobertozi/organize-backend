@@ -1,6 +1,7 @@
 import { AttachmentsRepository } from '@/domain/attachments/application/repositories/attachments.repository'
 import { ProductsAttachmentsRepository } from '@/domain/products/application/repositories/product-attachments.repository'
 import { ProductsRepository } from '@/domain/products/application/repositories/products.repository'
+import { ServantsRepository } from '@/domain/servants/application/repositories/servants.repository'
 import { SuppliersRepository } from '@/domain/suppliers/application/repositories/suppliers.repository'
 import { UsersRepository } from '@/domain/user/application/repositories/users.repository'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
@@ -8,12 +9,9 @@ import { Module } from '@nestjs/common'
 import { PrismaAttachmentsService } from './prisma/services/prisma-attachments.service'
 import { PrismaProductAttachmentsService } from './prisma/services/prisma-products-attachments.service'
 import { PrismaProductsService } from './prisma/services/prisma-products.service'
+import { PrismaServantsService } from './prisma/services/prisma-servants.service'
 import { PrismaSuppliersService } from './prisma/services/prisma-suppliers.service'
 import { PrismaUsersService } from './prisma/services/prisma-users.service'
-import { ServantsRepository } from '@/domain/servants/application/repositories/servants.repository'
-import { PrismaServantsService } from './prisma/services/prisma-servants.service'
-import { ServantProductsRepository } from '@/domain/servants/application/repositories/servant-products.repository'
-import { PrismaServantProductsService } from './prisma/services/prisma-servant-products.service'
 
 @Module({
   providers: [
@@ -42,10 +40,6 @@ import { PrismaServantProductsService } from './prisma/services/prisma-servant-p
       provide: ServantsRepository,
       useClass: PrismaServantsService,
     },
-    {
-      provide: ServantProductsRepository,
-      useClass: PrismaServantProductsService,
-    },
   ],
   exports: [
     PrismaService,
@@ -55,7 +49,6 @@ import { PrismaServantProductsService } from './prisma/services/prisma-servant-p
     SuppliersRepository,
     ProductsAttachmentsRepository,
     ServantsRepository,
-    ServantProductsRepository,
   ],
 })
 export class DatabaseModule {}

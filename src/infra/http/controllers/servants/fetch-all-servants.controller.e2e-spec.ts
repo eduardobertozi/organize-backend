@@ -1,6 +1,5 @@
 import { AppModule } from '@/app.module'
 import { DatabaseModule } from '@/infra/database/database.module'
-import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
@@ -10,9 +9,8 @@ import { ServantsFactory } from 'test/factories/servants.factory'
 import { SuppliersFactory } from 'test/factories/suppliers.factory'
 import { UsersFactory } from 'test/factories/users.factory'
 
-describe('Create ServantProduct (E2E)', () => {
+describe('Create Servant (E2E)', () => {
   let app: INestApplication
-  let prisma: PrismaService
   let usersFactory: UsersFactory
   let productsFactory: ProductsFactory
   let servantsFactory: ServantsFactory
@@ -31,7 +29,6 @@ describe('Create ServantProduct (E2E)', () => {
     }).compile()
 
     app = moduleRef.createNestApplication()
-    prisma = moduleRef.get(PrismaService)
     usersFactory = moduleRef.get(UsersFactory)
     productsFactory = moduleRef.get(ProductsFactory)
     servantsFactory = moduleRef.get(ServantsFactory)
@@ -41,7 +38,7 @@ describe('Create ServantProduct (E2E)', () => {
     await app.init()
   })
 
-  test('[POST] /servant-products', async () => {
+  test('[GET] /servants/all', async () => {
     const user = await usersFactory.makePrismaUser()
     const access_token = jwt.sign({ sub: user.id.toString() })
 
@@ -50,25 +47,33 @@ describe('Create ServantProduct (E2E)', () => {
       supplierId: supplier.id,
     })
 
-    const servant = await servantsFactory.makePrismaServant()
+    await Promise.all(
+      Array.from({ length: 12 }).map((_v, i) =>
+        servantsFactory.makePrismaServant({
+          products: [product],
+          name: `Servant ${i}`,
+        }),
+      ),
+    )
 
     const response = await request(app.getHttpServer())
-      .post('/servant-products')
+      .get('/servants/all?page=1')
       .set('Authorization', `Bearer ${access_token}`)
-      .send({
-        productId: product.id.toString(),
-        servantId: servant.id.toString(),
-      })
+      .send({})
 
-    expect(response.statusCode).toBe(201)
+    expect(response.statusCode).toBe(200)
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        servants: expect.any(Array),
+      }),
+    )
+    expect(response.body.servants).toHaveLength(10)
 
-    const productServantsOnDatabase = await prisma.servantProduct.findFirst({
-      where: {
-        productId: product.id.toString(),
-        servantId: servant.id.toString(),
-      },
-    })
+    const response2 = await request(app.getHttpServer())
+      .get('/servants/all?page=2')
+      .set('Authorization', `Bearer ${access_token}`)
+      .send({})
 
-    expect(productServantsOnDatabase).toBeTruthy()
+    expect(response2.body.servants).toHaveLength(2)
   })
 })

@@ -14,6 +14,9 @@ export class PrismaServantsService implements ServantsRepository {
       where: {
         id,
       },
+      include: {
+        products: true,
+      },
     })
 
     if (!servant) {
@@ -37,6 +40,9 @@ export class PrismaServantsService implements ServantsRepository {
       },
       take: 10,
       skip: (page - 1) * 10,
+      include: {
+        products: true,
+      },
     })
 
     return servants.map((servant) => PrismaServantMapper.toDomain(servant))
@@ -46,6 +52,9 @@ export class PrismaServantsService implements ServantsRepository {
     const servants = await this.prisma.servant.findMany({
       take: 10,
       skip: (page - 1) * 10,
+      include: {
+        products: true,
+      },
     })
 
     return servants.map((servant) => PrismaServantMapper.toDomain(servant))

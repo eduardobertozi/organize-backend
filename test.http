@@ -65,6 +65,11 @@ Authorization: Bearer {{token}}
   "profitPercent": 112
 }
 
+###
+# @name fetch_all_servants
+GET {{base_url}}/servants/all
+Authorization: Bearer {{token}}
+
 ### 
 # @name create_servant_products
 POST {{base_url}}/servant-products

@@ -15,7 +15,7 @@ describe('Create Servant', () => {
   it('should be able to create a new servant', async () => {
     const result = await sut.execute({
       name: 'Sample servant',
-      productIds: [],
+      products: [],
       productsPrice: 8.75,
       profitPercent: 120,
       workForcePrice: 19.0,
@@ -38,7 +38,7 @@ describe('Create Servant', () => {
 
     const result = await sut.execute({
       name: 'Sample servant',
-      productIds: [],
+      products: [],
       productsPrice: 0,
       profitPercent: 0,
       workForcePrice: 0,

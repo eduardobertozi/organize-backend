@@ -15,7 +15,7 @@ export function makeServant(
     {
       name: faker.lorem.sentence(),
       price: faker.number.float(),
-      productIds: [],
+      products: [],
       productsPrice: faker.number.float(),
       profitPercent: faker.number.int(),
       workForcePrice: faker.number.int(),
@@ -37,9 +37,10 @@ export class ServantsFactory {
 
     return this.prisma.servant.create({
       data: {
-        id: servant.id.toString(),
         name: servant.name,
         price: servant.price,
+        profitPercent: servant.profitPercent,
+        workForcePrice: servant.workForcePrice,
       },
     })
   }

@@ -1,10 +1,11 @@
 import { Entity } from '@/core/entities/entity'
 import { Optional } from '@/core/optional'
 import { UniqueEntityID } from '@/core/unique-entity-id'
+import { Product } from '@/domain/products/enterprise/entities/product'
 
 export interface ServantProps {
   name: string
-  productIds: string[]
+  products: Product[]
   productsPrice: number
   workForcePrice: number
   profitPercent: number
@@ -27,12 +28,12 @@ export class Servant extends Entity<ServantProps> {
     return this.props.price ?? 0
   }
 
-  get productIds(): string[] {
-    return this.props.productIds
+  get products(): Product[] {
+    return this.props.products
   }
 
-  set productIds(productIds: string[]) {
-    this.props.productIds = productIds
+  set products(products: Product[]) {
+    this.props.products = products
     this.touch()
   }
 
@@ -83,13 +84,15 @@ export class Servant extends Entity<ServantProps> {
     props: Optional<ServantProps, 'createdAt'>,
     id?: UniqueEntityID,
   ): Servant {
+    const price =
+      props.productsPrice +
+      props.workForcePrice +
+      (props.productsPrice * props.profitPercent) / 100
+
     return new Servant(
       {
         ...props,
-        price:
-          props.productsPrice +
-          props.workForcePrice +
-          (props.productsPrice * props.profitPercent) / 100,
+        price,
         createdAt: props.createdAt ?? new Date(),
       },
       id,
