@@ -12,7 +12,7 @@ interface CreateProductUseCaseRequest {
   price: number
   reference: string
   supplierId: string
-  servantId: string
+  servantId?: string
   attachmentsIds: string[]
 }
 

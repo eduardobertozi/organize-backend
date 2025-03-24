@@ -24,7 +24,6 @@ describe('Create Product', () => {
       price: 0,
       reference: '123',
       supplierId: 'supplier-1',
-      servantId: 'servant-1',
       attachmentsIds: ['1', '2'],
     })
 
@@ -39,7 +38,6 @@ describe('Create Product', () => {
       price: 0,
       reference: '123',
       supplierId: 'supplier-1',
-      servantId: 'servant-1',
       attachmentsIds: ['1', '2'],
     })
 
@@ -48,7 +46,6 @@ describe('Create Product', () => {
       price: 0,
       reference: '123',
       supplierId: 'supplier-1',
-      servantId: 'servant-1',
       attachmentsIds: ['1', '2'],
     })
 
@@ -62,7 +59,6 @@ describe('Create Product', () => {
       price: 0,
       reference: '123',
       supplierId: 'supplier-1',
-      servantId: 'servant-1',
       attachmentsIds: ['1', '2'],
     })
 
