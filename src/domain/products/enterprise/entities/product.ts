@@ -8,7 +8,7 @@ export interface ProductProps {
   reference: string
   attachments: ProductAttachmentsList
   supplierId?: UniqueEntityID
-  servantId?: UniqueEntityID
+  servantId?: UniqueEntityID | null
   createdAt?: Date | null
   updatedAt?: Date | null
 }

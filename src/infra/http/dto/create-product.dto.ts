@@ -5,7 +5,7 @@ export const CreateProductSchema = z.object({
   price: z.coerce.number(),
   reference: z.string(),
   supplierId: z.string().uuid(),
-  servantId: z.string().uuid(),
+  servantId: z.string().uuid().optional(),
   attachments: z.array(z.string().uuid()),
 })
 
@@ -14,6 +14,6 @@ export class CreateProductDto {
   price: number
   reference: string
   supplierId: string
-  servantId: string
+  servantId?: string
   attachments: string[]
 }

@@ -27,9 +27,9 @@ model Servant {
   id             String    @id @default(uuid())
   name           String
   price          Float
-  products       Product[]
   profitPercent  Float
   workForcePrice Float
+  products       Product[]
 
   @@map("servants")
 }
@@ -42,8 +42,9 @@ model Product {
 
   supplier   Supplier @relation(fields: [supplierId], references: [id])
   supplierId String   @map("supplier_id")
-  servant    Servant? @relation(fields: [servantId], references: [id])
-  servantId  String?
+
+  servant   Servant? @relation(fields: [servantId], references: [id])
+  servantId String?
 
   attachments Attachment[]
 

@@ -11,6 +11,7 @@ export class PrismaProductMapper {
         price: raw.price,
         reference: raw.reference,
         supplierId: new UniqueEntityID(raw.supplierId ?? ''),
+        servantId: raw.servantId ? new UniqueEntityID(raw.servantId) : null,
         attachments: new ProductAttachmentsList(),
       },
       new UniqueEntityID(raw.id),
@@ -24,6 +25,7 @@ export class PrismaProductMapper {
       price: product.price,
       reference: product.reference,
       supplierId: product.supplierId.toString(),
+      servantId: product.servantId ? product.servantId.toString() : null,
     }
   }
 }

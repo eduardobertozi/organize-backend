@@ -53,7 +53,6 @@ describe('Create Servant (E2E)', () => {
         profitPercent: 100,
       })
 
-    console.log(response)
     expect(response.statusCode).toBe(201)
 
     // const servantsOnDatabase = await prisma.servant.findFirst({
