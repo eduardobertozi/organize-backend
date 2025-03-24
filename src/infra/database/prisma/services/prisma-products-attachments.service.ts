@@ -5,7 +5,7 @@ import { ProductAttachment } from '@/domain/products/enterprise/entities/product
 import { PrismaProductAttachmentsMapper } from '../mappers/prisma-product-attachments.mapper'
 
 @Injectable()
-export class PrismaProductAttachmentsRepository
+export class PrismaProductAttachmentsService
   implements ProductsAttachmentsRepository
 {
   constructor(private readonly prisma: PrismaService) {}

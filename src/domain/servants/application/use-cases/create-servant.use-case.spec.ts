@@ -1,15 +1,15 @@
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { CreateServantUseCase } from './create-servant.use-case'
-import { InMemoryServantRepository } from 'test/in-memories/in-memory-servants.repository'
-import { makeServant } from 'test/factories/servant.factory'
+import { InMemoryServantsRepository } from 'test/in-memories/in-memory-servants.repository'
+import { makeServant } from 'test/factories/servants.factory'
 
 describe('Create Servant', () => {
-  let inMemoryServantRepository: InMemoryServantRepository
+  let inMemoryServantsRepository: InMemoryServantsRepository
   let sut: CreateServantUseCase
 
   beforeEach(() => {
-    inMemoryServantRepository = new InMemoryServantRepository()
-    sut = new CreateServantUseCase(inMemoryServantRepository)
+    inMemoryServantsRepository = new InMemoryServantsRepository()
+    sut = new CreateServantUseCase(inMemoryServantsRepository)
   })
 
   it('should be able to create a new servant', async () => {
@@ -24,13 +24,13 @@ describe('Create Servant', () => {
     const calculatedPrice = 8.75 + 19.0 + (8.75 * 120) / 100
 
     expect(result.isRight()).toBe(true)
-    expect(inMemoryServantRepository.items).toHaveLength(1)
-    expect(inMemoryServantRepository.items[0].name).toBe('Sample servant')
-    expect(inMemoryServantRepository.items[0].price).toBe(calculatedPrice)
+    expect(inMemoryServantsRepository.items).toHaveLength(1)
+    expect(inMemoryServantsRepository.items[0].name).toBe('Sample servant')
+    expect(inMemoryServantsRepository.items[0].price).toBe(calculatedPrice)
   })
 
   it('should not be able create a servant with this already exists', async () => {
-    await inMemoryServantRepository.create(
+    await inMemoryServantsRepository.create(
       makeServant({
         name: 'Sample servant',
       }),

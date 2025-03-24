@@ -6,8 +6,8 @@ export interface ProductProps {
   name: string
   price: number
   reference: string
-  supplierId: UniqueEntityID
   attachments: ProductAttachmentsList
+  supplierId?: UniqueEntityID
   createdAt?: Date
   updatedAt?: Date | null
 }
@@ -41,7 +41,7 @@ export class Product extends AggregateRoot<ProductProps> {
   }
 
   get supplierId() {
-    return this.props.supplierId
+    return this.props.supplierId!
   }
 
   set supplierId(supplierId: UniqueEntityID) {
@@ -74,6 +74,7 @@ export class Product extends AggregateRoot<ProductProps> {
     const product = new Product(
       {
         ...props,
+        supplierId: props.supplierId ?? new UniqueEntityID(),
         attachments: props.attachments ?? new ProductAttachmentsList(),
         createdAt: props.createdAt ?? new Date(),
       },

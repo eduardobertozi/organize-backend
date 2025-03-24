@@ -1,6 +1,6 @@
 import { Either, right } from '@/core/either'
 import { Servant } from '../../enterprise/entities/servant'
-import { ServantRepository } from '../repositories/servants.repository'
+import { ServantsRepository } from '../repositories/servants.repository'
 import { Injectable } from '@nestjs/common'
 
 interface FetchAllServantsUseCaseRequest {
@@ -16,7 +16,7 @@ type FetchAllServantsUseCaseResponse = Either<
 
 @Injectable()
 export class FetchAllServantsUseCase {
-  constructor(private readonly servantRepository: ServantRepository) {}
+  constructor(private readonly servantRepository: ServantsRepository) {}
 
   async execute({
     page = 1,

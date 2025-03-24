@@ -1,16 +1,16 @@
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
-import { makeServant } from 'test/factories/servant.factory'
-import { InMemoryServantRepository } from 'test/in-memories/in-memory-servants.repository'
+import { makeServant } from 'test/factories/servants.factory'
+import { InMemoryServantsRepository } from 'test/in-memories/in-memory-servants.repository'
 import { EditServantUseCase } from './edit-servant.use-case'
 
 describe('Edit Servant', () => {
-  let inMemoryServantRepository: InMemoryServantRepository
+  let inMemoryServantsRepository: InMemoryServantsRepository
   let sut: EditServantUseCase
 
   beforeEach(() => {
-    inMemoryServantRepository = new InMemoryServantRepository()
-    sut = new EditServantUseCase(inMemoryServantRepository)
+    inMemoryServantsRepository = new InMemoryServantsRepository()
+    sut = new EditServantUseCase(inMemoryServantsRepository)
   })
 
   it('should be able to edit a existant servant', async () => {
@@ -18,7 +18,7 @@ describe('Edit Servant', () => {
       name: 'Sample servant',
     })
 
-    await inMemoryServantRepository.create(servant)
+    await inMemoryServantsRepository.create(servant)
 
     const result = await sut.execute({
       servantId: servant.id.toString(),
@@ -30,7 +30,7 @@ describe('Edit Servant', () => {
     })
 
     expect(result.isRight()).toBe(true)
-    expect(inMemoryServantRepository.items[0].name).toBe('Sample servant 2')
+    expect(inMemoryServantsRepository.items[0].name).toBe('Sample servant 2')
   })
 
   it('should not be able edit him when this does not exist', async () => {
@@ -52,7 +52,7 @@ describe('Edit Servant', () => {
       name: 'Sample servant',
     })
 
-    await inMemoryServantRepository.create(servant)
+    await inMemoryServantsRepository.create(servant)
 
     const result = await sut.execute({
       servantId: servant.id.toString(),

@@ -2,7 +2,7 @@ import { Either, left, right } from '@/core/either'
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { Injectable } from '@nestjs/common'
-import { ServantRepository } from '../repositories/servants.repository'
+import { ServantsRepository } from '../repositories/servants.repository'
 
 interface EditServantUseCaseRequest {
   servantId: string
@@ -20,7 +20,7 @@ type EditServantUseCaseResponse = Either<
 
 @Injectable()
 export class EditServantUseCase {
-  constructor(private readonly servantRepository: ServantRepository) {}
+  constructor(private readonly servantRepository: ServantsRepository) {}
 
   async execute(
     params: EditServantUseCaseRequest,

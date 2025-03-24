@@ -1,7 +1,7 @@
 import { PaginationParams } from '@/core/pagination-params'
 import { Servant } from '../../enterprise/entities/servant'
 
-export abstract class ServantRepository {
+export abstract class ServantsRepository {
   abstract findById(id: string): Promise<Servant | null>
   abstract findByName(
     name: string,

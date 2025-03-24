@@ -1,7 +1,7 @@
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { Servant } from '../../enterprise/entities/servant'
-import { ServantRepository } from '../repositories/servants.repository'
+import { ServantsRepository } from '../repositories/servants.repository'
 import { Injectable } from '@nestjs/common'
 
 interface FindServantByIdUseCaseRequest {
@@ -17,7 +17,7 @@ type FindServantByIdUseCaseResponse = Either<
 
 @Injectable()
 export class FindServantByIdUseCase {
-  constructor(private readonly servantRepository: ServantRepository) {}
+  constructor(private readonly servantRepository: ServantsRepository) {}
 
   async execute({
     servantId,

@@ -20,6 +20,8 @@ import { FindProductByNameUseCase } from '@/domain/products/application/use-case
 import { FindProductsByNameController } from './controllers/products/find-products-by-name.controller'
 import { FetchAllProductsController } from './controllers/products/fetch-all-products.controller'
 import { FetchAllProductsUseCase } from '@/domain/products/application/use-cases/fetch-all-products.use-case'
+import { CreateServantController } from './controllers/servants/create-servant.controller'
+import { CreateServantUseCase } from '@/domain/servants/application/use-cases/create-servant.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -33,6 +35,7 @@ import { FetchAllProductsUseCase } from '@/domain/products/application/use-cases
     FindProductByIdController,
     FindProductsByNameController,
     FetchAllProductsController,
+    CreateServantController,
   ],
   providers: [
     RegisterUserUseCase,
@@ -44,6 +47,7 @@ import { FetchAllProductsUseCase } from '@/domain/products/application/use-cases
     FindProductByIdUseCase,
     FindProductByNameUseCase,
     FetchAllProductsUseCase,
+    CreateServantUseCase,
   ],
 })
 export class HttpModule {}

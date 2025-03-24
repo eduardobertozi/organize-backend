@@ -1,14 +1,14 @@
-import { InMemoryServantRepository } from 'test/in-memories/in-memory-servants.repository'
-import { makeServant } from 'test/factories/servant.factory'
+import { InMemoryServantsRepository } from 'test/in-memories/in-memory-servants.repository'
+import { makeServant } from 'test/factories/servants.factory'
 import { FindServantByNameUseCase } from './find-servant-by-name.use-case'
 
 describe('Find Servant By Name', () => {
-  let inMemoryServantRepository: InMemoryServantRepository
+  let inMemoryServantsRepository: InMemoryServantsRepository
   let sut: FindServantByNameUseCase
 
   beforeEach(() => {
-    inMemoryServantRepository = new InMemoryServantRepository()
-    sut = new FindServantByNameUseCase(inMemoryServantRepository)
+    inMemoryServantsRepository = new InMemoryServantsRepository()
+    sut = new FindServantByNameUseCase(inMemoryServantsRepository)
   })
 
   it('should be able to find servants by name', async () => {
@@ -16,29 +16,29 @@ describe('Find Servant By Name', () => {
       name: 'Sample servant',
     })
 
-    await inMemoryServantRepository.create(servant)
+    await inMemoryServantsRepository.create(servant)
 
     const result = await sut.execute({
       name: 'Sample servant',
     })
 
     expect(result.isRight()).toBe(true)
-    expect(inMemoryServantRepository.items).toHaveLength(1)
+    expect(inMemoryServantsRepository.items).toHaveLength(1)
   })
 
   it('should be able to find for several servants with similar name', async () => {
     await Promise.all([
-      inMemoryServantRepository.create(
+      inMemoryServantsRepository.create(
         makeServant({
           name: 'Sample servant',
         }),
       ),
-      inMemoryServantRepository.create(
+      inMemoryServantsRepository.create(
         makeServant({
           name: 'Sample servant 2',
         }),
       ),
-      inMemoryServantRepository.create(
+      inMemoryServantsRepository.create(
         makeServant({
           name: 'Sample servant 3',
         }),
@@ -50,7 +50,7 @@ describe('Find Servant By Name', () => {
     })
 
     expect(result.isRight()).toBe(true)
-    expect(inMemoryServantRepository.items).toHaveLength(3)
+    expect(inMemoryServantsRepository.items).toHaveLength(3)
   })
 
   it('should be able to find paginated servants', async () => {
@@ -58,7 +58,7 @@ describe('Find Servant By Name', () => {
 
     for (let i = 0; i < 12; i++) {
       tasks.push(
-        inMemoryServantRepository.create(
+        inMemoryServantsRepository.create(
           makeServant({
             name: `Sample servant ${i}`,
           }),

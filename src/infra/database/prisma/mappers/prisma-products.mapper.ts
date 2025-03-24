@@ -10,7 +10,7 @@ export class PrismaProductMapper {
         name: raw.name,
         price: raw.price,
         reference: raw.reference,
-        supplierId: new UniqueEntityID(raw.supplierId),
+        supplierId: new UniqueEntityID(raw.supplierId ?? ''),
         attachments: new ProductAttachmentsList(),
       },
       new UniqueEntityID(raw.id),

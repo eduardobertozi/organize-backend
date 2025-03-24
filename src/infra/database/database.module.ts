@@ -6,10 +6,12 @@ import { UsersRepository } from '@/domain/user/application/repositories/users.re
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { Module } from '@nestjs/common'
 import { PrismaAttachmentsService } from './prisma/services/prisma-attachments.service'
-import { PrismaProductAttachmentsRepository } from './prisma/services/prisma-products-attachments.service'
+import { PrismaProductAttachmentsService } from './prisma/services/prisma-products-attachments.service'
 import { PrismaProductsService } from './prisma/services/prisma-products.service'
 import { PrismaSuppliersService } from './prisma/services/prisma-suppliers.service'
 import { PrismaUsersService } from './prisma/services/prisma-users.service'
+import { ServantsRepository } from '@/domain/servants/application/repositories/servants.repository'
+import { PrismaServantsService } from './prisma/services/prisma-servants.service'
 
 @Module({
   providers: [
@@ -32,7 +34,11 @@ import { PrismaUsersService } from './prisma/services/prisma-users.service'
     },
     {
       provide: ProductsAttachmentsRepository,
-      useClass: PrismaProductAttachmentsRepository,
+      useClass: PrismaProductAttachmentsService,
+    },
+    {
+      provide: ServantsRepository,
+      useClass: PrismaServantsService,
     },
   ],
   exports: [
@@ -42,6 +48,7 @@ import { PrismaUsersService } from './prisma/services/prisma-users.service'
     AttachmentsRepository,
     SuppliersRepository,
     ProductsAttachmentsRepository,
+    ServantsRepository,
   ],
 })
 export class DatabaseModule {}

@@ -1,19 +1,19 @@
-import { InMemoryServantRepository } from 'test/in-memories/in-memory-servants.repository'
-import { makeServant } from 'test/factories/servant.factory'
+import { InMemoryServantsRepository } from 'test/in-memories/in-memory-servants.repository'
+import { makeServant } from 'test/factories/servants.factory'
 import { FetchAllServantsUseCase } from './fetch-all-servants.use-case'
 
 describe('Fetch All Servants', () => {
-  let inMemoryServantRepository: InMemoryServantRepository
+  let inMemoryServantsRepository: InMemoryServantsRepository
   let sut: FetchAllServantsUseCase
 
   beforeEach(() => {
-    inMemoryServantRepository = new InMemoryServantRepository()
-    sut = new FetchAllServantsUseCase(inMemoryServantRepository)
+    inMemoryServantsRepository = new InMemoryServantsRepository()
+    sut = new FetchAllServantsUseCase(inMemoryServantsRepository)
   })
 
   it('should be able to fetch all servants', async () => {
     for (let i = 0; i < 10; i++) {
-      await inMemoryServantRepository.create(makeServant())
+      await inMemoryServantsRepository.create(makeServant())
     }
 
     const result = await sut.execute({})
@@ -27,7 +27,7 @@ describe('Fetch All Servants', () => {
     const createServants: Promise<void>[] = []
 
     for (let i = 0; i < 12; i++) {
-      createServants.push(inMemoryServantRepository.create(makeServant()))
+      createServants.push(inMemoryServantsRepository.create(makeServant()))
     }
 
     await Promise.all(createServants)

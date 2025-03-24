@@ -1,8 +1,8 @@
 import { PaginationParams } from '@/core/pagination-params'
-import { ServantRepository } from '@/domain/servants/application/repositories/servants.repository'
+import { ServantsRepository } from '@/domain/servants/application/repositories/servants.repository'
 import { Servant } from '@/domain/servants/enterprise/entities/servant'
 
-export class InMemoryServantRepository extends ServantRepository {
+export class InMemoryServantsRepository extends ServantsRepository {
   public items: Servant[] = []
 
   async findById(id: string) {

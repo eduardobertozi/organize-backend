@@ -1,7 +1,7 @@
 import { Either, left, right } from '@/core/either'
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
-import { ServantRepository } from '../repositories/servants.repository'
+import { ServantsRepository } from '../repositories/servants.repository'
 import { Injectable } from '@nestjs/common'
 
 interface DeleteServantUseCaseRequest {
@@ -15,7 +15,7 @@ type DeleteServantUseCaseResponse = Either<
 
 @Injectable()
 export class DeleteServantUseCase {
-  constructor(private readonly servantRepository: ServantRepository) {}
+  constructor(private readonly servantRepository: ServantsRepository) {}
 
   async execute({
     servantId,

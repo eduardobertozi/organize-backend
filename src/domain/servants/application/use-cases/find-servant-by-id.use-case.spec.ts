@@ -1,20 +1,20 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { InMemoryServantRepository } from 'test/in-memories/in-memory-servants.repository'
-import { makeServant } from 'test/factories/servant.factory'
+import { InMemoryServantsRepository } from 'test/in-memories/in-memory-servants.repository'
+import { makeServant } from 'test/factories/servants.factory'
 import { FindServantByIdUseCase } from './find-servant-by-id.use-case'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 
 describe('Find Servant By Id', () => {
-  let inMemoryServantRepository: InMemoryServantRepository
+  let inMemoryServantsRepository: InMemoryServantsRepository
   let sut: FindServantByIdUseCase
 
   beforeEach(() => {
-    inMemoryServantRepository = new InMemoryServantRepository()
-    sut = new FindServantByIdUseCase(inMemoryServantRepository)
+    inMemoryServantsRepository = new InMemoryServantsRepository()
+    sut = new FindServantByIdUseCase(inMemoryServantsRepository)
   })
 
   it('should be able to find servant by id', async () => {
-    await inMemoryServantRepository.create(
+    await inMemoryServantsRepository.create(
       makeServant(
         {
           name: 'Sample servant',
@@ -28,7 +28,7 @@ describe('Find Servant By Id', () => {
     })
 
     expect(result.isRight()).toBe(true)
-    expect(inMemoryServantRepository.items).toHaveLength(1)
+    expect(inMemoryServantsRepository.items).toHaveLength(1)
   })
 
   it('should return error when servant not exists', async () => {
