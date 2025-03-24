@@ -15,7 +15,6 @@ export function makeServant(
     {
       name: faker.lorem.sentence(),
       price: faker.number.float(),
-      products: [],
       productsPrice: faker.number.float(),
       profitPercent: faker.number.int(),
       workForcePrice: faker.number.int(),

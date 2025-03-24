@@ -1,13 +1,13 @@
 import { PaginationParams } from '@/core/pagination-params'
-import { Product } from '@/domain/products/enterprise/entities/product'
-import { ProductAttachmentsRepository } from '@/domain/products/application/repositories/product-attachments.repository'
+import { ProductsAttachmentsRepository } from '@/domain/products/application/repositories/product-attachments.repository'
 import { ProductsRepository } from '@/domain/products/application/repositories/products.repository'
+import { Product } from '@/domain/products/enterprise/entities/product'
 
 export class InMemoryProductsRepository extends ProductsRepository {
   public items: Product[] = []
 
   constructor(
-    private readonly productAttachmentsRepository?: ProductAttachmentsRepository,
+    private readonly productAttachmentsRepository?: ProductsAttachmentsRepository,
   ) {
     super()
   }
@@ -22,6 +22,12 @@ export class InMemoryProductsRepository extends ProductsRepository {
     const page = params?.page ?? 1
     const filteredItems = this.items.filter((item) => item.name?.includes(name))
     return Promise.resolve(filteredItems.slice((page - 1) * 10, page * 10))
+  }
+
+  async findByServantId(servantId: string): Promise<Product[]> {
+    return Promise.resolve(
+      this.items.filter((item) => item.servantId.toString() === servantId),
+    )
   }
 
   async findAll({ page = 1 }: PaginationParams) {

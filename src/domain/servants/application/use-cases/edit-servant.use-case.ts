@@ -3,12 +3,10 @@ import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { Injectable } from '@nestjs/common'
 import { ServantsRepository } from '../repositories/servants.repository'
-import { Product } from '@/domain/products/enterprise/entities/product'
 
 interface EditServantUseCaseRequest {
   servantId: string
   name: string
-  products: Product[]
   productsPrice: number
   workForcePrice: number
   profitPercent: number
@@ -42,7 +40,6 @@ export class EditServantUseCase {
     }
 
     servantExists.name = params.name
-    servantExists.products = params.products
     servantExists.productsPrice = params.productsPrice
     servantExists.profitPercent = params.profitPercent
     servantExists.workForcePrice = params.workForcePrice

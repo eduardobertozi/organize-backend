@@ -7,6 +7,7 @@ export abstract class ProductsRepository {
     name: string,
     params?: PaginationParams,
   ): Promise<Product[]>
+  abstract findByServantId(servantId: string): Promise<Product[]>
   abstract findAll(params: PaginationParams): Promise<Product[]>
   abstract create(product: Product): Promise<void>
   abstract save(product: Product): Promise<void>

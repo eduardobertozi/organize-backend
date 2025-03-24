@@ -14,6 +14,7 @@ interface EditProductUseCaseRequest {
   price: number
   reference: string
   supplierId: string
+  servantId: string
   attachmentsIds: string[]
 }
 
@@ -67,6 +68,7 @@ export class EditProductUseCase {
     product.price = params.price
     product.reference = params.reference
     product.supplierId = new UniqueEntityID(params.supplierId)
+    product.servantId = new UniqueEntityID(params.servantId)
     product.attachments = productAttachmentsList
 
     await this.productsRepository.save(product)

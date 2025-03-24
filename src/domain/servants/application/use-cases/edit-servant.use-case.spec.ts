@@ -23,7 +23,6 @@ describe('Edit Servant', () => {
     const result = await sut.execute({
       servantId: servant.id.toString(),
       name: 'Sample servant 2',
-      products: [],
       productsPrice: 0,
       profitPercent: 0,
       workForcePrice: 0,
@@ -37,7 +36,6 @@ describe('Edit Servant', () => {
     const result = await sut.execute({
       servantId: 'supplier-1',
       name: 'Sample servant',
-      products: [],
       productsPrice: 0,
       profitPercent: 0,
       workForcePrice: 0,
@@ -57,7 +55,6 @@ describe('Edit Servant', () => {
     const result = await sut.execute({
       servantId: servant.id.toString(),
       name: 'Sample servant',
-      products: [],
       productsPrice: 0,
       profitPercent: 0,
       workForcePrice: 0,

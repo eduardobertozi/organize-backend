@@ -47,12 +47,13 @@ describe('Create Servant (E2E)', () => {
       .set('Authorization', `Bearer ${access_token}`)
       .send({
         name: 'New Servant',
-        productIds: [product.id.toString()],
+        products: [product],
         productsPrice: product.price,
         workForcePrice: 20,
         profitPercent: 100,
       })
 
+    console.log(response)
     expect(response.statusCode).toBe(201)
 
     // const servantsOnDatabase = await prisma.servant.findFirst({
