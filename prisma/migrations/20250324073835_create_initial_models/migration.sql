@@ -1,18 +1,26 @@
+-- CreateEnum
+CREATE TYPE "UserRole" AS ENUM ('OWNER', 'EMPLOYEE', 'CLIENT');
+
+-- CreateTable
+CREATE TABLE "users" (
+    "id" TEXT NOT NULL,
+    "name" TEXT NOT NULL,
+    "email" TEXT NOT NULL,
+    "password" TEXT NOT NULL,
+    "role" "UserRole" NOT NULL DEFAULT 'EMPLOYEE',
+
+    CONSTRAINT "users_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateTable
 CREATE TABLE "servants" (
     "id" TEXT NOT NULL,
     "name" TEXT NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
+    "profitPercent" DOUBLE PRECISION NOT NULL,
+    "workForcePrice" DOUBLE PRECISION NOT NULL,
 
     CONSTRAINT "servants_pkey" PRIMARY KEY ("id")
-);
-
--- CreateTable
-CREATE TABLE "products_on_servants" (
-    "servantId" TEXT NOT NULL,
-    "productId" TEXT NOT NULL,
-
-    CONSTRAINT "products_on_servants_pkey" PRIMARY KEY ("servantId","productId")
 );
 
 -- CreateTable
@@ -21,7 +29,8 @@ CREATE TABLE "products" (
     "name" TEXT NOT NULL,
     "price" DOUBLE PRECISION NOT NULL,
     "reference" TEXT NOT NULL,
-    "supplier_id" TEXT,
+    "supplier_id" TEXT NOT NULL,
+    "servantId" TEXT,
     "createdAt" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP(3) NOT NULL,
 
@@ -53,14 +62,14 @@ CREATE TABLE "attachments" (
     CONSTRAINT "attachments_pkey" PRIMARY KEY ("id")
 );
 
--- AddForeignKey
-ALTER TABLE "products_on_servants" ADD CONSTRAINT "products_on_servants_servantId_fkey" FOREIGN KEY ("servantId") REFERENCES "servants"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+-- CreateIndex
+CREATE UNIQUE INDEX "users_email_key" ON "users"("email");
 
 -- AddForeignKey
-ALTER TABLE "products_on_servants" ADD CONSTRAINT "products_on_servants_productId_fkey" FOREIGN KEY ("productId") REFERENCES "products"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
+ALTER TABLE "products" ADD CONSTRAINT "products_supplier_id_fkey" FOREIGN KEY ("supplier_id") REFERENCES "Supplier"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "products" ADD CONSTRAINT "products_supplier_id_fkey" FOREIGN KEY ("supplier_id") REFERENCES "Supplier"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "products" ADD CONSTRAINT "products_servantId_fkey" FOREIGN KEY ("servantId") REFERENCES "servants"("id") ON DELETE SET NULL ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "attachments" ADD CONSTRAINT "attachments_product_id_fkey" FOREIGN KEY ("product_id") REFERENCES "products"("id") ON DELETE SET NULL ON UPDATE CASCADE;
