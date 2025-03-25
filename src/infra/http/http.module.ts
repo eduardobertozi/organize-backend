@@ -24,10 +24,12 @@ import { CreateServantController } from './controllers/servants/create-servant.c
 import { CreateServantUseCase } from '@/domain/servants/application/use-cases/create-servant.use-case'
 import { FetchAllServantsController } from './controllers/servants/fetch-all-servants.controller'
 import { FetchAllServantsUseCase } from '@/domain/servants/application/use-cases/fetch-all-servants.use-case'
-import { CreateServantProductController } from './controllers/servants/create-servant-products.controller'
+import { CreateServantProductController } from './controllers/servant-products/create-servant-products.controller'
 import { CreateServantProductUseCase } from '@/domain/servants/application/use-cases/create-servant-product.use-case'
-import { DeleteServantProductController } from './controllers/servants/delete-servant-product.controller'
+import { DeleteServantProductController } from './controllers/servant-products/delete-servant-product.controller'
 import { DeleteServantProductUseCase } from '@/domain/servants/application/use-cases/delete-servant-product.use-case'
+import { FindServantProductsByServantId } from './controllers/servant-products/find-servant-products-by-servant-id.controller'
+import { FindServantProductsByServantIdUseCase } from '@/domain/servants/application/use-cases/find-servant-products-by-servant-id.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -45,6 +47,7 @@ import { DeleteServantProductUseCase } from '@/domain/servants/application/use-c
     FetchAllServantsController,
     CreateServantProductController,
     DeleteServantProductController,
+    FindServantProductsByServantId,
   ],
   providers: [
     RegisterUserUseCase,
@@ -60,6 +63,7 @@ import { DeleteServantProductUseCase } from '@/domain/servants/application/use-c
     FetchAllServantsUseCase,
     CreateServantProductUseCase,
     DeleteServantProductUseCase,
+    FindServantProductsByServantIdUseCase,
   ],
 })
 export class HttpModule {}

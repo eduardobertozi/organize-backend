@@ -1,16 +1,18 @@
 import { InMemoryServantProductsRepository } from 'test/in-memories/in-memory-servant-products.repository'
 import { makeServant } from 'test/factories/servants.factory'
-import { FetchAllServantProductsUseCase } from './fetch-all-servant-products.use-case'
+import { FindServantProductsByServantIdUseCase } from './find-servant-products-by-servant-id.use-case'
 import { ServantProduct } from '../../enterprise/entities/servant-product'
 import { makeProduct } from 'test/factories/products.factory'
 
 describe('Fetch All Servant Products', () => {
   let inMemoryServantProductsRepository: InMemoryServantProductsRepository
-  let sut: FetchAllServantProductsUseCase
+  let sut: FindServantProductsByServantIdUseCase
 
   beforeEach(() => {
     inMemoryServantProductsRepository = new InMemoryServantProductsRepository()
-    sut = new FetchAllServantProductsUseCase(inMemoryServantProductsRepository)
+    sut = new FindServantProductsByServantIdUseCase(
+      inMemoryServantProductsRepository,
+    )
   })
 
   it('should be able to fetch all servant products', async () => {

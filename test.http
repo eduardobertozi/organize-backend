@@ -52,6 +52,12 @@ Authorization: Bearer {{token}}
 }
 
 ### 
+# @name fetch_all_products
+GET {{base_url}}/products
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+### 
 # @name create_servant
 POST {{base_url}}/servants
 Content-Type: application/json
@@ -70,11 +76,6 @@ Authorization: Bearer {{token}}
 GET {{base_url}}/servants/all
 Authorization: Bearer {{token}}
 
-###
-# @name fetch_all_servant_products
-GET {{base_url}}/servants-products
-Authorization: Bearer {{token}}
-
 ### 
 # @name create_servant_products
 POST {{base_url}}/servant-products
@@ -82,6 +83,11 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "servantId": "02e3d480-2e19-4f89-8a66-e0ab891b973a",
-  "productId": "1cb59a07-4119-41c0-8631-603e6a532b98"
+  "servantId": "9897d94d-d0c4-4d96-a6d5-9abcc44bbeac",
+  "productId": "225cb98e-c6bb-4398-9760-c6a19cb01c04"
 }
+
+###
+# @name fetch_all_servant_products
+GET {{base_url}}/servant-products/9897d94d-d0c4-4d96-a6d5-9abcc44bbeac
+Authorization: Bearer {{token}}
