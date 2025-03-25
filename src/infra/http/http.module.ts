@@ -24,6 +24,10 @@ import { CreateServantController } from './controllers/servants/create-servant.c
 import { CreateServantUseCase } from '@/domain/servants/application/use-cases/create-servant.use-case'
 import { FetchAllServantsController } from './controllers/servants/fetch-all-servants.controller'
 import { FetchAllServantsUseCase } from '@/domain/servants/application/use-cases/fetch-all-servants.use-case'
+import { CreateServantProductController } from './controllers/servants/create-servant-products.controller'
+import { CreateServantProductUseCase } from '@/domain/servants/application/use-cases/create-servant-product.use-case'
+import { DeleteServantProductController } from './controllers/servants/delete-servant-product.controller'
+import { DeleteServantProductUseCase } from '@/domain/servants/application/use-cases/delete-servant-product.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -39,6 +43,8 @@ import { FetchAllServantsUseCase } from '@/domain/servants/application/use-cases
     FetchAllProductsController,
     CreateServantController,
     FetchAllServantsController,
+    CreateServantProductController,
+    DeleteServantProductController,
   ],
   providers: [
     RegisterUserUseCase,
@@ -52,6 +58,8 @@ import { FetchAllServantsUseCase } from '@/domain/servants/application/use-cases
     FetchAllProductsUseCase,
     CreateServantUseCase,
     FetchAllServantsUseCase,
+    CreateServantProductUseCase,
+    DeleteServantProductUseCase,
   ],
 })
 export class HttpModule {}

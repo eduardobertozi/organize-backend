@@ -46,16 +46,6 @@ export class PrismaProductsService implements ProductsRepository {
     return products.map((product) => PrismaProductMapper.toDomain(product))
   }
 
-  async findByServantId(servantId: string): Promise<Product[]> {
-    const products = await this.prisma.product.findMany({
-      where: {
-        servantId,
-      },
-    })
-
-    return products.map((product) => PrismaProductMapper.toDomain(product))
-  }
-
   async findAll({ page = 1 }: PaginationParams): Promise<Product[]> {
     const products = await this.prisma.product.findMany({
       skip: (page - 1) * 10,

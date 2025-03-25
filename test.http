@@ -70,6 +70,11 @@ Authorization: Bearer {{token}}
 GET {{base_url}}/servants/all
 Authorization: Bearer {{token}}
 
+###
+# @name fetch_all_servant_products
+GET {{base_url}}/servants-products
+Authorization: Bearer {{token}}
+
 ### 
 # @name create_servant_products
 POST {{base_url}}/servant-products

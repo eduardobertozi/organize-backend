@@ -5,7 +5,6 @@ export class ServantPresenter {
     return {
       id: servant.id.toString(),
       name: servant.name,
-      products: servant.products,
       productsPrice: servant.productsPrice,
       workForcePrice: servant.workForcePrice,
       profitPercent: servant.profitPercent,

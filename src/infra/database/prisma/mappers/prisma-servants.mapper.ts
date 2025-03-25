@@ -1,7 +1,6 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { Prisma, Servant as PrismaServant, Product } from '@prisma/client'
 import { Servant } from '@/domain/servants/enterprise/entities/servant'
-import { PrismaProductMapper } from './prisma-products.mapper'
+import { Prisma, Servant as PrismaServant, Product } from '@prisma/client'
 
 type ServantWithProducts = PrismaServant & {
   products: Product[]
@@ -13,9 +12,6 @@ export class PrismaServantMapper {
       {
         name: raw.name,
         price: raw.price,
-        products: raw.products.map((product) =>
-          PrismaProductMapper.toDomain(product),
-        ),
         productsPrice: raw.products.reduce(
           (acc, product) => acc + product.price,
           0,

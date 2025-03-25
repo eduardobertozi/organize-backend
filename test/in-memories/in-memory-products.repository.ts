@@ -24,12 +24,6 @@ export class InMemoryProductsRepository extends ProductsRepository {
     return Promise.resolve(filteredItems.slice((page - 1) * 10, page * 10))
   }
 
-  async findByServantId(servantId: string): Promise<Product[]> {
-    return Promise.resolve(
-      this.items.filter((item) => item.servantId.toString() === servantId),
-    )
-  }
-
   async findAll({ page = 1 }: PaginationParams) {
     return Promise.resolve(this.items.slice((page - 1) * 10, page * 10))
   }

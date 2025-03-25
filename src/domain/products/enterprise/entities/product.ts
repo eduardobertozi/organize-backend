@@ -8,7 +8,6 @@ export interface ProductProps {
   reference: string
   attachments: ProductAttachmentsList
   supplierId?: UniqueEntityID
-  servantId?: UniqueEntityID | null
   createdAt?: Date | null
   updatedAt?: Date | null
 }
@@ -47,15 +46,6 @@ export class Product extends AggregateRoot<ProductProps> {
 
   set supplierId(supplierId: UniqueEntityID) {
     this.props.supplierId = supplierId
-    this.touch()
-  }
-
-  get servantId() {
-    return this.props.servantId!
-  }
-
-  set servantId(servantId: UniqueEntityID) {
-    this.props.servantId = servantId
     this.touch()
   }
 

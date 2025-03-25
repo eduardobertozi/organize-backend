@@ -12,7 +12,6 @@ interface CreateProductUseCaseRequest {
   price: number
   reference: string
   supplierId: string
-  servantId?: string
   attachmentsIds: string[]
 }
 
@@ -30,7 +29,6 @@ export class CreateProductUseCase {
       price: params.price,
       reference: params.reference,
       supplierId: new UniqueEntityID(params.supplierId),
-      servantId: new UniqueEntityID(params.servantId),
       attachments: new ProductAttachmentsList(),
     })
 

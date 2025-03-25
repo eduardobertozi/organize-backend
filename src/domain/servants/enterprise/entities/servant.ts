@@ -1,14 +1,12 @@
 import { Entity } from '@/core/entities/entity'
 import { Optional } from '@/core/optional'
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { Product } from '@/domain/products/enterprise/entities/product'
 
 export interface ServantProps {
   name: string
   productsPrice: number
   workForcePrice: number
   profitPercent: number
-  products?: Product[]
   price?: number
   createdAt?: Date | null
   updatedAt?: Date | null
@@ -26,10 +24,6 @@ export class Servant extends Entity<ServantProps> {
 
   get price(): number {
     return this.props.price ?? 0
-  }
-
-  get products(): Product[] {
-    return this.props.products ?? []
   }
 
   get productsPrice(): number {
