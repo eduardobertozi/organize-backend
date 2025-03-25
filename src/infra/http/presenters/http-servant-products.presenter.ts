@@ -1,4 +1,4 @@
-import { ServantProduct } from '@/domain/servants/enterprise/entities/servant-product'
+import { ServantProduct } from '@/domain/servant-products/entreprise/entities/servant-product'
 
 export class ServantProductsPresenter {
   static toHTTP(servantProduct: ServantProduct) {

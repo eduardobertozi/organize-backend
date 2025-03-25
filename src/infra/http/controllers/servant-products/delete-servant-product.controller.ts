@@ -1,4 +1,4 @@
-import { DeleteServantProductUseCase } from '@/domain/servants/application/use-cases/delete-servant-product.use-case'
+import { DeleteServantProductUseCase } from '@/domain/servant-products/application/use-cases/delete-servant-product.use-case'
 import {
   BadRequestException,
   Controller,

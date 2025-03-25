@@ -1,6 +1,6 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
 import { Prisma, ServantProduct as PrismaServantProduct } from '@prisma/client'
-import { ServantProduct } from '@/domain/servants/enterprise/entities/servant-product'
+import { ServantProduct } from '@/domain/servant-products/entreprise/entities/servant-product'
 
 export class PrismaServantProductsMapper {
   static toDomain(raw: PrismaServantProduct): ServantProduct {

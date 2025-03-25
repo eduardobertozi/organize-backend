@@ -1,4 +1,4 @@
-import { CreateServantProductUseCase } from '@/domain/servants/application/use-cases/create-servant-product.use-case'
+import { CreateServantProductUseCase } from '@/domain/servant-products/application/use-cases/create-servant-product.use-case'
 import {
   BadRequestException,
   Body,

@@ -1,4 +1,4 @@
-import { FindServantProductsByServantIdUseCase } from '@/domain/servants/application/use-cases/find-servant-products-by-servant-id.use-case'
+import { FindServantProductsByServantIdUseCase } from '@/domain/servant-products/application/use-cases/find-servant-products-by-servant-id.use-case'
 import {
   Controller,
   Get,

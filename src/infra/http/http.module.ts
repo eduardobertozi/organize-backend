@@ -25,11 +25,11 @@ import { CreateServantUseCase } from '@/domain/servants/application/use-cases/cr
 import { FetchAllServantsController } from './controllers/servants/fetch-all-servants.controller'
 import { FetchAllServantsUseCase } from '@/domain/servants/application/use-cases/fetch-all-servants.use-case'
 import { CreateServantProductController } from './controllers/servant-products/create-servant-products.controller'
-import { CreateServantProductUseCase } from '@/domain/servants/application/use-cases/create-servant-product.use-case'
+import { CreateServantProductUseCase } from '@/domain/servant-products/application/use-cases/create-servant-product.use-case'
 import { DeleteServantProductController } from './controllers/servant-products/delete-servant-product.controller'
-import { DeleteServantProductUseCase } from '@/domain/servants/application/use-cases/delete-servant-product.use-case'
+import { DeleteServantProductUseCase } from '@/domain/servant-products/application/use-cases/delete-servant-product.use-case'
 import { FindServantProductsByServantId } from './controllers/servant-products/find-servant-products-by-servant-id.controller'
-import { FindServantProductsByServantIdUseCase } from '@/domain/servants/application/use-cases/find-servant-products-by-servant-id.use-case'
+import { FindServantProductsByServantIdUseCase } from '@/domain/servant-products/application/use-cases/find-servant-products-by-servant-id.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],

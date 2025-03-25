@@ -1,4 +1,4 @@
-import { ServantProduct } from '../../enterprise/entities/servant-product'
+import { ServantProduct } from '../../entreprise/entities/servant-product'
 
 export abstract class ServantProductsRepository {
   abstract findUniqueByServantId(

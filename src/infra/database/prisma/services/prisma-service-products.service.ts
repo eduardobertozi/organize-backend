@@ -1,5 +1,5 @@
-import { ServantProductsRepository } from '@/domain/servants/application/repositories/servant-products.repository'
-import { ServantProduct } from '@/domain/servants/enterprise/entities/servant-product'
+import { ServantProductsRepository } from '@/domain/servant-products/application/repositories/servant-products.repository'
+import { ServantProduct } from '@/domain/servant-products/entreprise/entities/servant-product'
 import { Injectable } from '@nestjs/common'
 import { PrismaServantProductsMapper } from '../mappers/prisma-servant-products.mapper'
 import { PrismaService } from '../prisma.service'

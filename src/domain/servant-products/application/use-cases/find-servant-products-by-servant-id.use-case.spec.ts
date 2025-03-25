@@ -1,7 +1,7 @@
 import { InMemoryServantProductsRepository } from 'test/in-memories/in-memory-servant-products.repository'
 import { makeServant } from 'test/factories/servants.factory'
 import { FindServantProductsByServantIdUseCase } from './find-servant-products-by-servant-id.use-case'
-import { ServantProduct } from '../../enterprise/entities/servant-product'
+import { ServantProduct } from '../../entreprise/entities/servant-product'
 import { makeProduct } from 'test/factories/products.factory'
 
 describe('Fetch All Servant Products', () => {

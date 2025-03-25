@@ -2,7 +2,7 @@ import { UniqueEntityID } from '@/core/unique-entity-id'
 import {
   ServantProduct,
   ServantProductProps,
-} from '@/domain/servants/enterprise/entities/servant-product'
+} from '@/domain/servant-products/entreprise/entities/servant-product'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { faker } from '@faker-js/faker'
 import { Injectable } from '@nestjs/common'

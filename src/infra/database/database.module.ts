@@ -12,7 +12,7 @@ import { PrismaProductsService } from './prisma/services/prisma-products.service
 import { PrismaServantsService } from './prisma/services/prisma-servants.service'
 import { PrismaSuppliersService } from './prisma/services/prisma-suppliers.service'
 import { PrismaUsersService } from './prisma/services/prisma-users.service'
-import { ServantProductsRepository } from '@/domain/servants/application/repositories/servant-products.repository'
+import { ServantProductsRepository } from '@/domain/servant-products/application/repositories/servant-products.repository'
 import { PrismaServantProductsService } from './prisma/services/prisma-service-products.service'
 
 @Module({

@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common'
 import { ServantProductsRepository } from '../repositories/servant-products.repository'
 import { Either, left, right } from '@/core/either'
-import { ServantProduct } from '../../enterprise/entities/servant-product'
-import { ServantsRepository } from '../repositories/servants.repository'
+import { ServantProduct } from '../../entreprise/entities/servant-product'
+import { ServantsRepository } from '../../../servants/application/repositories/servants.repository'
 import { ProductsRepository } from '@/domain/products/application/repositories/products.repository'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 
