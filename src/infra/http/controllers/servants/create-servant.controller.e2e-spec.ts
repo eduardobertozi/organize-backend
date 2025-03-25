@@ -54,12 +54,22 @@ describe('Create Servant (E2E)', () => {
 
     expect(response.statusCode).toBe(201)
 
-    // const servantsOnDatabase = await prisma.servant.findFirst({
-    //   where: {
-    //     id: productId,
-    //   },
-    // })
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        servant: expect.objectContaining({
+          id: expect.any(String),
+        }),
+      }),
+    )
 
-    // expect(servantsOnDatabase).toBeTruthy()
+    const servant = response.body.servant
+
+    const servantsOnDatabase = await prisma.servant.findFirst({
+      where: {
+        id: servant.id,
+      },
+    })
+
+    expect(servantsOnDatabase).toBeTruthy()
   })
 })

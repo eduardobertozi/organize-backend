@@ -10,6 +10,7 @@ import {
   CreateServantDTO,
   CreateServantValidationPipe,
 } from '../../dto/create-servant.dto'
+import { ServantPresenter } from '../../presenters/http-servants.presenter'
 
 @Controller()
 export class CreateServantController {
@@ -17,11 +18,15 @@ export class CreateServantController {
 
   @Post('servants')
   @UsePipes(CreateServantValidationPipe)
-  async createServant(@Body() servant: CreateServantDTO): Promise<void> {
+  async createServant(@Body() servant: CreateServantDTO) {
     const result = await this.createServantUseCase.execute(servant)
 
     if (result.isLeft()) {
       throw new BadRequestException()
+    }
+
+    return {
+      servant: ServantPresenter.toHTTP(result.value.servant),
     }
   }
 }

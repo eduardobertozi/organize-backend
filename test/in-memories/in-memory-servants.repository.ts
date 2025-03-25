@@ -25,14 +25,18 @@ export class InMemoryServantsRepository extends ServantsRepository {
 
   async create(servant: Servant) {
     await Promise.resolve(this.items.push(servant))
+    return servant
   }
 
-  async save(servant: Servant): Promise<void> {
+  async save(servant: Servant): Promise<Servant> {
     const index = this.items.findIndex((item) => item.id.equals(servant.id))
 
-    if (index !== -1) {
-      await Promise.resolve((this.items[index] = servant))
+    if (index < 0) {
+      throw new Error('Servant not found')
     }
+
+    await Promise.resolve((this.items[index] = servant))
+    return servant
   }
 
   async delete(servant: Servant): Promise<void> {

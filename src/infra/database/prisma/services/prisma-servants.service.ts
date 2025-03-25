@@ -61,19 +61,23 @@ export class PrismaServantsService implements ServantsRepository {
     return servants.map((servant) => PrismaServantMapper.toDomain(servant))
   }
 
-  async create(servant: Servant): Promise<void> {
+  async create(servant: Servant): Promise<Servant> {
     await this.prisma.servant.create({
       data: PrismaServantMapper.toPrisma(servant),
     })
+
+    return servant
   }
 
-  async save(servant: Servant): Promise<void> {
+  async save(servant: Servant): Promise<Servant> {
     await this.prisma.servant.update({
       where: {
         id: servant.id.toString(),
       },
       data: PrismaServantMapper.toPrisma(servant),
     })
+
+    return servant
   }
 
   async delete(servant: Servant): Promise<void> {

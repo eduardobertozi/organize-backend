@@ -11,7 +11,12 @@ interface CreateServantUseCaseRequest {
   profitPercent: number
 }
 
-type CreateServantUseCaseResponse = Either<AlreadyExistsError, null>
+type CreateServantUseCaseResponse = Either<
+  AlreadyExistsError,
+  {
+    servant: Servant
+  }
+>
 
 @Injectable()
 export class CreateServantUseCase {
@@ -27,8 +32,10 @@ export class CreateServantUseCase {
       return left(new AlreadyExistsError())
     }
 
-    await this.servantRepository.create(servant)
+    const createdServant = await this.servantRepository.create(servant)
 
-    return right(null)
+    return right({
+      servant: createdServant,
+    })
   }
 }
