@@ -5,6 +5,7 @@ import { ServantProduct } from '../../entreprise/entities/servant-product'
 import { ServantsRepository } from '../../../servants/application/repositories/servants.repository'
 import { ProductsRepository } from '@/domain/products/application/repositories/products.repository'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 
 interface CreateServantProductUseCaseRequest {
   servantId: string
@@ -27,12 +28,14 @@ export class CreateServantProductUseCase {
   ) {}
 
   async execute(
-    data: CreateServantProductUseCaseRequest,
+    params: CreateServantProductUseCaseRequest,
   ): Promise<CreateServantProductUseCaseResponse> {
-    const servantProduct = ServantProduct.create(data)
+    const servantProduct = ServantProduct.create(params)
 
-    const servant = await this.servantsRepository.findById(data.servantId)
-    const product = await this.productsRepository.findById(data.productId)
+    const servant = await this.servantsRepository.findById(
+      new UniqueEntityID(params.servantId),
+    )
+    const product = await this.productsRepository.findById(params.productId)
 
     if (!servant || !product) {
       return left(new ResourceNotFoundError())

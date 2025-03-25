@@ -3,6 +3,7 @@ import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { Injectable } from '@nestjs/common'
 import { ServantsRepository } from '../repositories/servants.repository'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 
 interface EditServantUseCaseRequest {
   servantId: string
@@ -25,7 +26,7 @@ export class EditServantUseCase {
     params: EditServantUseCaseRequest,
   ): Promise<EditServantUseCaseResponse> {
     const servantExists = await this.servantRepository.findById(
-      params.servantId,
+      new UniqueEntityID(params.servantId),
     )
 
     if (!servantExists) {

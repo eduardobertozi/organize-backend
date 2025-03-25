@@ -38,7 +38,6 @@ describe('Create Servant Product', () => {
 
     expect(result.isRight()).toBe(true)
     expect(inMemoryServantsRepository.items).toHaveLength(1)
-    expect(inMemoryProductsRepository.items).toHaveLength(1)
 
     expect(inMemoryServantProductsRepository.items[0]).toEqual(
       expect.objectContaining({

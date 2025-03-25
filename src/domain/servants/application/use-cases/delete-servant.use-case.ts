@@ -3,6 +3,7 @@ import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { ServantsRepository } from '../repositories/servants.repository'
 import { Injectable } from '@nestjs/common'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 
 interface DeleteServantUseCaseRequest {
   servantId: string
@@ -20,7 +21,9 @@ export class DeleteServantUseCase {
   async execute({
     servantId,
   }: DeleteServantUseCaseRequest): Promise<DeleteServantUseCaseResponse> {
-    const servant = await this.servantRepository.findById(servantId)
+    const servant = await this.servantRepository.findById(
+      new UniqueEntityID(servantId),
+    )
 
     if (!servant) {
       return left(new ResourceNotFoundError())
