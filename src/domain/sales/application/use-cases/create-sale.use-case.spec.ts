@@ -1,0 +1,38 @@
+import { InMemorySalesRepository } from 'test/in-memories/in-memory-sales.repository'
+import { CreateSaleUseCase } from './create-sale.use-case'
+import { makeServant } from 'test/factories/servants.factory'
+
+describe('CreateSaleUseCase', () => {
+  let inMemorySalesRepository: InMemorySalesRepository
+  let sut: CreateSaleUseCase
+
+  beforeEach(() => {
+    inMemorySalesRepository = new InMemorySalesRepository()
+    sut = new CreateSaleUseCase(inMemorySalesRepository)
+  })
+
+  it('should be able to create a sale', async () => {
+    const servant = makeServant({
+      productsPrice: 2,
+      profitPercent: 48,
+      workForcePrice: 25,
+    })
+
+    const servant2 = makeServant({
+      productsPrice: 2,
+      profitPercent: 48,
+      workForcePrice: 25,
+    })
+
+    const result = await sut.execute({
+      description: 'New Sale',
+      amount: servant.price + servant2.price,
+    })
+
+    expect(result.isRight()).toEqual(true)
+
+    if ('sale' in result.value) {
+      expect(result.value.sale.amount).toBe(80)
+    }
+  })
+})

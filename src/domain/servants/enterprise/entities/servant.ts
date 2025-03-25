@@ -73,15 +73,13 @@ export class Servant extends Entity<ServantProps> {
     props: Optional<ServantProps, 'createdAt'>,
     id?: UniqueEntityID,
   ): Servant {
-    const price =
-      props.productsPrice +
-      props.workForcePrice +
-      (props.productsPrice * props.profitPercent) / 100
+    const baseCoast = props.productsPrice + props.workForcePrice
+    const profit = (baseCoast * props.profitPercent) / 100
 
     return new Servant(
       {
         ...props,
-        price,
+        price: Math.round(baseCoast + profit),
         createdAt: props.createdAt ?? new Date(),
       },
       id,

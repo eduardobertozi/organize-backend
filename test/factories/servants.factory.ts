@@ -14,10 +14,21 @@ export function makeServant(
   return Servant.create(
     {
       name: faker.lorem.sentence(),
-      price: faker.number.float(),
-      productsPrice: faker.number.float(),
-      profitPercent: faker.number.int(),
-      workForcePrice: faker.number.int(),
+      productsPrice: faker.number.float({
+        min: 30,
+        max: 40,
+        fractionDigits: 2,
+      }),
+      profitPercent: faker.number.float({
+        min: 1,
+        max: 50,
+        fractionDigits: 2,
+      }),
+      workForcePrice: faker.number.float({
+        min: 20,
+        max: 30,
+        fractionDigits: 2,
+      }),
       ...override,
     },
     id,
