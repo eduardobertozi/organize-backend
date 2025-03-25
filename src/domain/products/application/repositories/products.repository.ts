@@ -1,8 +1,9 @@
 import { PaginationParams } from '@/core/pagination-params'
 import { Product } from '../../enterprise/entities/product'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 
 export abstract class ProductsRepository {
-  abstract findById(id: string): Promise<Product | null>
+  abstract findById(id: UniqueEntityID): Promise<Product | null>
   abstract findByName(
     name: string,
     params?: PaginationParams,

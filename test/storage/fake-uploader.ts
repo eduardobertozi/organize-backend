@@ -1,7 +1,7 @@
 import {
-  Uploader,
+  UploaderGateway,
   UploadParams,
-} from '@/domain/forum/application/storage/uploader'
+} from '@/infra/gateways/storage/uploader'
 import { randomUUID } from 'crypto'
 
 interface Upload {
@@ -9,7 +9,7 @@ interface Upload {
   url: string
 }
 
-export class FakeUploader implements Uploader {
+export class FakeUploader implements UploaderGateway {
   public uploads: Upload[] = []
 
   upload({ fileName }: UploadParams): Promise<{ url: string }> {

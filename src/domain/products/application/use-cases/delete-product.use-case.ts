@@ -3,6 +3,7 @@ import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { ProductsRepository } from '../repositories/products.repository'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { Injectable } from '@nestjs/common'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 
 interface DeleteProductUseCaseRequest {
   productId: string
@@ -20,7 +21,9 @@ export class DeleteProductUseCase {
   async execute({
     productId,
   }: DeleteProductUseCaseRequest): Promise<DeleteProductUseCaseResponse> {
-    const product = await this.productsRepository.findById(productId)
+    const product = await this.productsRepository.findById(
+      new UniqueEntityID(productId),
+    )
 
     if (!product) {
       return left(new ResourceNotFoundError())

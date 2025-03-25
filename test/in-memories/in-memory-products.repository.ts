@@ -1,4 +1,5 @@
 import { PaginationParams } from '@/core/pagination-params'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 import { ProductsAttachmentsRepository } from '@/domain/products/application/repositories/product-attachments.repository'
 import { ProductsRepository } from '@/domain/products/application/repositories/products.repository'
 import { Product } from '@/domain/products/enterprise/entities/product'
@@ -12,9 +13,9 @@ export class InMemoryProductsRepository extends ProductsRepository {
     super()
   }
 
-  async findById(id: string) {
+  async findById(id: UniqueEntityID) {
     return Promise.resolve(
-      this.items.find((item) => item.id.toString() === id) ?? null,
+      this.items.find((item) => item.id.equals(id)) ?? null,
     )
   }
 
@@ -59,8 +60,6 @@ export class InMemoryProductsRepository extends ProductsRepository {
       await Promise.resolve(this.items.splice(index, 1))
     }
 
-    await this.productAttachmentsRepository?.deleteManyByProductId(
-      product.id.toString(),
-    )
+    await this.productAttachmentsRepository?.deleteManyByProductId(product.id)
   }
 }

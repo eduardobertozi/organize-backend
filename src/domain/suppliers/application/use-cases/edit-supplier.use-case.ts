@@ -3,6 +3,7 @@ import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { SuppliersRepository } from '../repositories/suppliers.repository'
 import { Injectable } from '@nestjs/common'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 
 interface EditSupplierUseCaseRequest {
   supplierId: string
@@ -26,7 +27,9 @@ export class EditSupplierUseCase {
   async execute(
     params: EditSupplierUseCaseRequest,
   ): Promise<EditSupplierUseCaseResponse> {
-    const supplier = await this.suppliersRepository.findById(params.supplierId)
+    const supplier = await this.suppliersRepository.findById(
+      new UniqueEntityID(params.supplierId),
+    )
 
     if (!supplier) {
       return left(new ResourceNotFoundError())

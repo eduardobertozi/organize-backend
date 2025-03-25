@@ -4,15 +4,16 @@ import { Servant } from '@/domain/servants/enterprise/entities/servant'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { PrismaServantMapper } from '../mappers/prisma-servants.mapper'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 
 @Injectable()
 export class PrismaServantsService implements ServantsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findById(id: string): Promise<Servant | null> {
+  async findById(id: UniqueEntityID): Promise<Servant | null> {
     const servant = await this.prisma.servant.findUnique({
       where: {
-        id,
+        id: id.toString(),
       },
       include: {
         products: true,

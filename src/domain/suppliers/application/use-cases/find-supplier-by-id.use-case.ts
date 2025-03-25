@@ -3,6 +3,7 @@ import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { Injectable } from '@nestjs/common'
 import { Supplier } from '../../enterprise/entities/supplier'
 import { SuppliersRepository } from '../repositories/suppliers.repository'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 
 interface FindSupplierByIdUseCaseRequest {
   supplierId: string
@@ -22,7 +23,9 @@ export class FindSupplierByIdUseCase {
   async execute({
     supplierId,
   }: FindSupplierByIdUseCaseRequest): Promise<FindSupplierByIdUseCaseResponse> {
-    const supplier = await this.suppliersRepository.findById(supplierId)
+    const supplier = await this.suppliersRepository.findById(
+      new UniqueEntityID(supplierId),
+    )
 
     if (!supplier) {
       return left(new ResourceNotFoundError())

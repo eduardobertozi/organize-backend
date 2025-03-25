@@ -3,6 +3,7 @@ import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { ProductAttachment } from '@/domain/products/enterprise/entities/product-attachment'
 import { PrismaProductAttachmentsMapper } from '../mappers/prisma-product-attachments.mapper'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 
 @Injectable()
 export class PrismaProductAttachmentsService
@@ -33,10 +34,12 @@ export class PrismaProductAttachmentsService
     })
   }
 
-  async findManyByProductId(productId: string): Promise<ProductAttachment[]> {
+  async findManyByProductId(
+    productId: UniqueEntityID,
+  ): Promise<ProductAttachment[]> {
     const productAttachments = await this.prisma.attachment.findMany({
       where: {
-        productId,
+        productId: productId.toString(),
       },
     })
 
@@ -45,10 +48,10 @@ export class PrismaProductAttachmentsService
     )
   }
 
-  async deleteManyByProductId(productId: string): Promise<void> {
+  async deleteManyByProductId(productId: UniqueEntityID): Promise<void> {
     await this.prisma.attachment.deleteMany({
       where: {
-        productId,
+        productId: productId.toString(),
       },
     })
   }

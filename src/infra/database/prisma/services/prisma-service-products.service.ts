@@ -3,17 +3,18 @@ import { ServantProduct } from '@/domain/servant-products/entreprise/entities/se
 import { Injectable } from '@nestjs/common'
 import { PrismaServantProductsMapper } from '../mappers/prisma-servant-products.mapper'
 import { PrismaService } from '../prisma.service'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 
 @Injectable()
 export class PrismaServantProductsService implements ServantProductsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findUniqueByServantId(
-    servantId: string,
+    servantId: UniqueEntityID,
   ): Promise<ServantProduct | null> {
     const servantProduct = await this.prisma.servantProduct.findFirst({
       where: {
-        servantId,
+        servantId: servantId.toString(),
       },
     })
 
@@ -24,10 +25,12 @@ export class PrismaServantProductsService implements ServantProductsRepository {
     return PrismaServantProductsMapper.toDomain(servantProduct)
   }
 
-  async fetchAllByServantId(servantId: string): Promise<ServantProduct[]> {
+  async fetchAllByServantId(
+    servantId: UniqueEntityID,
+  ): Promise<ServantProduct[]> {
     const servantProducts = await this.prisma.servantProduct.findMany({
       where: {
-        servantId,
+        servantId: servantId.toString(),
       },
     })
 

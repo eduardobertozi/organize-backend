@@ -4,15 +4,16 @@ import { PrismaService } from '../prisma.service'
 import { Supplier } from '@/domain/suppliers/enterprise/entities/supplier'
 import { PrismaSuppliersMapper } from '../mappers/prisma-suppliers.mapper'
 import { PaginationParams } from '@/core/pagination-params'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 
 @Injectable()
 export class PrismaSuppliersService implements SuppliersRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findById(id: string): Promise<Supplier | null> {
+  async findById(id: UniqueEntityID): Promise<Supplier | null> {
     const supplier = await this.prisma.supplier.findUnique({
       where: {
-        id,
+        id: id.toString(),
       },
     })
 

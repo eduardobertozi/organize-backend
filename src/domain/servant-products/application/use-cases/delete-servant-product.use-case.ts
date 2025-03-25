@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common'
 import { ServantProductsRepository } from '../repositories/servant-products.repository'
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 
 interface DeleteServantProductUseCaseRequest {
   servantId: string
@@ -19,7 +20,9 @@ export class DeleteServantProductUseCase {
     servantId,
   }: DeleteServantProductUseCaseRequest): Promise<DeleteServantProductUseCaseResponse> {
     const servantProduct =
-      await this.servantProductsRepository.findUniqueByServantId(servantId)
+      await this.servantProductsRepository.findUniqueByServantId(
+        new UniqueEntityID(servantId),
+      )
 
     if (!servantProduct) {
       return left(new ResourceNotFoundError())

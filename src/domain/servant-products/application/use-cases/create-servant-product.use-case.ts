@@ -35,7 +35,9 @@ export class CreateServantProductUseCase {
     const servant = await this.servantsRepository.findById(
       new UniqueEntityID(params.servantId),
     )
-    const product = await this.productsRepository.findById(params.productId)
+    const product = await this.productsRepository.findById(
+      new UniqueEntityID(params.productId),
+    )
 
     if (!servant || !product) {
       return left(new ResourceNotFoundError())

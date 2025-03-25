@@ -3,6 +3,7 @@ import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { Product } from '../../enterprise/entities/product'
 import { ProductsRepository } from '../repositories/products.repository'
 import { Injectable } from '@nestjs/common'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 
 interface FindProductByIdUseCaseRequest {
   productId: string
@@ -22,7 +23,9 @@ export class FindProductByIdUseCase {
   async execute({
     productId,
   }: FindProductByIdUseCaseRequest): Promise<FindProductByIdUseCaseResponse> {
-    const product = await this.productsRepository.findById(productId)
+    const product = await this.productsRepository.findById(
+      new UniqueEntityID(productId),
+    )
 
     if (!product) {
       return left(new ResourceNotFoundError())

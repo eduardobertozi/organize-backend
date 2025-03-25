@@ -1,13 +1,14 @@
 import { PaginationParams } from '@/core/pagination-params'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 import { SuppliersRepository } from '@/domain/suppliers/application/repositories/suppliers.repository'
 import { Supplier } from '@/domain/suppliers/enterprise/entities/supplier'
 
 export class InMemorySuppliersRepository extends SuppliersRepository {
   public items: Supplier[] = []
 
-  async findById(id: string) {
+  async findById(id: UniqueEntityID) {
     return Promise.resolve(
-      this.items.find((item) => item.id.toString() === id) ?? null,
+      this.items.find((item) => item.id.equals(id)) ?? null,
     )
   }
 
@@ -23,27 +24,22 @@ export class InMemorySuppliersRepository extends SuppliersRepository {
   }
 
   async create(supplier: Supplier) {
-    this.items.push(supplier)
-    await Promise.resolve()
+    await Promise.resolve(this.items.push(supplier))
   }
 
   async save(supplier: Supplier): Promise<void> {
     const index = this.items.findIndex((item) => item.id === supplier.id)
 
     if (index !== -1) {
-      this.items[index] = supplier
+      await Promise.resolve((this.items[index] = supplier))
     }
-
-    await Promise.resolve()
   }
 
   async delete(supplier: Supplier): Promise<void> {
     const index = this.items.findIndex((item) => item.id === supplier.id)
 
     if (index !== -1) {
-      this.items.splice(index, 1)
+      await Promise.resolve(this.items.splice(index, 1))
     }
-
-    await Promise.resolve()
   }
 }

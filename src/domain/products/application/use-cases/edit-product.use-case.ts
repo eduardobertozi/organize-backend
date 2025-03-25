@@ -32,7 +32,9 @@ export class EditProductUseCase {
   async execute(
     params: EditProductUseCaseRequest,
   ): Promise<EditProductUseCaseResponse> {
-    const product = await this.productsRepository.findById(params.productId)
+    const product = await this.productsRepository.findById(
+      new UniqueEntityID(params.productId),
+    )
 
     if (!product) {
       return left(new ResourceNotFoundError())
@@ -47,7 +49,7 @@ export class EditProductUseCase {
 
     const currentProductAttachments =
       await this.productAttachmentsRepository.findManyByProductId(
-        params.productId,
+        new UniqueEntityID(params.productId),
       )
 
     const productAttachmentsList = new ProductAttachmentsList(

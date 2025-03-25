@@ -1,3 +1,4 @@
+import { UniqueEntityID } from '@/core/unique-entity-id'
 import { ServantProductsRepository } from '@/domain/servant-products/application/repositories/servant-products.repository'
 import { ServantProduct } from '@/domain/servant-products/entreprise/entities/servant-product'
 
@@ -5,17 +6,19 @@ export class InMemoryServantProductsRepository extends ServantProductsRepository
   public items: ServantProduct[] = []
 
   async findUniqueByServantId(
-    servantId: string,
+    servantId: UniqueEntityID,
   ): Promise<ServantProduct | null> {
     return Promise.resolve(
-      this.items.find((item) => item.servantId.toString() === servantId) ??
+      this.items.find((item) => item.servantId === servantId.toString()) ??
         null,
     )
   }
 
-  async fetchAllByServantId(servantId: string): Promise<ServantProduct[]> {
+  async fetchAllByServantId(
+    servantId: UniqueEntityID,
+  ): Promise<ServantProduct[]> {
     return Promise.resolve(
-      this.items.filter((item) => item.servantId.toString() === servantId),
+      this.items.filter((item) => item.servantId === servantId.toString()),
     )
   }
 

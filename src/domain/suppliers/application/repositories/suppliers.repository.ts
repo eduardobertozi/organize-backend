@@ -1,8 +1,9 @@
 import { PaginationParams } from '@/core/pagination-params'
 import { Supplier } from '../../enterprise/entities/supplier'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 
 export abstract class SuppliersRepository {
-  abstract findById(id: string): Promise<Supplier | null>
+  abstract findById(id: UniqueEntityID): Promise<Supplier | null>
   abstract findByName(
     name: string,
     params?: PaginationParams,

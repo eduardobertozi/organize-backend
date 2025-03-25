@@ -1,8 +1,9 @@
+import { UniqueEntityID } from '@/core/unique-entity-id'
+import { ProductsAttachmentsRepository } from '@/domain/products/application/repositories/product-attachments.repository'
 import { ProductAttachment } from '@/domain/products/enterprise/entities/product-attachment'
-import { ProductAttachmentsRepository } from '@/domain/products/application/repositories/product-attachments.repository'
 
 export class InMemoryProductAttachmentsRepository
-  implements ProductAttachmentsRepository
+  implements ProductsAttachmentsRepository
 {
   public items: ProductAttachment[] = []
 
@@ -20,16 +21,16 @@ export class InMemoryProductAttachmentsRepository
     await Promise.resolve()
   }
 
-  async findManyByProductId(productId: string): Promise<ProductAttachment[]> {
+  async findManyByProductId(
+    productId: UniqueEntityID,
+  ): Promise<ProductAttachment[]> {
     return Promise.resolve(
-      this.items.filter((item) => item.productId.toString() === productId),
+      this.items.filter((item) => item.productId.equals(productId)),
     )
   }
 
-  async deleteManyByProductId(productId: string): Promise<void> {
-    this.items = this.items.filter(
-      (item) => item.productId.toString() !== productId,
-    )
+  async deleteManyByProductId(productId: UniqueEntityID): Promise<void> {
+    this.items = this.items.filter((item) => item.productId !== productId)
     await Promise.resolve()
   }
 }

@@ -5,6 +5,7 @@ import { Product } from '@/domain/products/enterprise/entities/product'
 import { PrismaProductMapper } from '../mappers/prisma-products.mapper'
 import { PaginationParams } from '@/core/pagination-params'
 import { ProductsAttachmentsRepository } from '@/domain/products/application/repositories/product-attachments.repository'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 
 @Injectable()
 export class PrismaProductsService implements ProductsRepository {
@@ -13,10 +14,10 @@ export class PrismaProductsService implements ProductsRepository {
     private readonly productsAttachmentsRepository: ProductsAttachmentsRepository,
   ) {}
 
-  async findById(id: string): Promise<Product | null> {
+  async findById(id: UniqueEntityID): Promise<Product | null> {
     const product = await this.prisma.product.findUnique({
       where: {
-        id,
+        id: id.toString(),
       },
     })
 
