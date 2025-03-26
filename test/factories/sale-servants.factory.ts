@@ -22,7 +22,7 @@ export function makeSaleServant(
 // export class SalesFactory {
 //   constructor(private readonly prismaService: PrismaService) {}
 
-//   async makePrismaSales(data: Partial<SaleProps> = {}): Promise<Sale> {
+//   async makePrismaSale(data: Partial<SaleProps> = {}): Promise<Sale> {
 //     const sale = makeSale(data)
 
 //     // await this.prismaService.sale.create({

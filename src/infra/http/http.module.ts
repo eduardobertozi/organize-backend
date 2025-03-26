@@ -32,6 +32,8 @@ import { FindServantProductsByServantIdController } from './controllers/servant-
 import { FindServantProductsByServantIdUseCase } from '@/domain/servant-products/application/use-cases/find-servant-products-by-servant-id.use-case'
 import { CreateSaleController } from './controllers/sales/create-sale.controller'
 import { CreateSaleUseCase } from '@/domain/sales/application/use-cases/create-sale.use-case'
+import { DeleteSaleController } from './controllers/sales/delete-sale-controller'
+import { DeleteSaleUseCase } from '@/domain/sales/application/use-cases/delete-sale.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -51,6 +53,7 @@ import { CreateSaleUseCase } from '@/domain/sales/application/use-cases/create-s
     DeleteServantProductController,
     FindServantProductsByServantIdController,
     CreateSaleController,
+    DeleteSaleController,
   ],
   providers: [
     RegisterUserUseCase,
@@ -68,6 +71,7 @@ import { CreateSaleUseCase } from '@/domain/sales/application/use-cases/create-s
     DeleteServantProductUseCase,
     FindServantProductsByServantIdUseCase,
     CreateSaleUseCase,
+    DeleteSaleUseCase,
   ],
 })
 export class HttpModule {}
