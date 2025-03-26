@@ -22,8 +22,8 @@ type CreateSaleServantUseCaseResponse = Either<
 @Injectable()
 export class CreateSaleServantUseCase {
   constructor(
-    private salesRepository: SalesRepository,
     private servantsRepository: ServantsRepository,
+    private salesRepository: SalesRepository,
     private saleServantsRepository: SaleServantsRepository,
   ) {}
 
