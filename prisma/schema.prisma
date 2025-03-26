@@ -31,36 +31,31 @@ model Servant {
   workForcePrice Float
   products       Product[]
   servantProduct ServantProduct[]
+  saleServant    SaleServant[]
 
   @@map("servants")
 }
 
 model ServantProduct {
-  id String @id @default(uuid())
-
+  id        String  @id @default(uuid())
   servant   Servant @relation(fields: [servantId], references: [id])
-  servantId String
-
+  servantId String  @map("servant_id")
   product   Product @relation(fields: [productId], references: [id])
-  productId String
+  productId String  @map("product_id")
 
   @@map("servant_products")
 }
 
 model Product {
-  id        String @id @default(uuid())
-  name      String
-  price     Float
-  reference String
-
-  supplier   Supplier @relation(fields: [supplierId], references: [id])
-  supplierId String   @map("supplier_id")
-
-  servant   Servant? @relation(fields: [servantId], references: [id])
-  servantId String?
-
-  attachments Attachment[]
-
+  id             String           @id @default(uuid())
+  name           String
+  price          Float
+  reference      String
+  supplier       Supplier         @relation(fields: [supplierId], references: [id])
+  supplierId     String           @map("supplier_id")
+  servant        Servant?         @relation(fields: [servantId], references: [id])
+  servantId      String?          @map("servant_id")
+  attachments    Attachment[]
   createdAt      DateTime         @default(now())
   updatedAt      DateTime         @updatedAt
   servantProduct ServantProduct[]
@@ -82,13 +77,33 @@ model Supplier {
   updatedAt DateTime @updatedAt
 }
 
-model Attachment {
+model Sale {
+  id          String        @id @default(uuid())
+  description String?
+  amount      Float
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  saleServant SaleServant[]
+
+  @@map("sales")
+}
+
+model SaleServant {
   id        String  @id @default(uuid())
+  sale      Sale    @relation(fields: [saleId], references: [id])
+  saleId    String  @map("sale_id")
+  servant   Servant @relation(fields: [servantId], references: [id])
+  servantId String  @map("servant_id")
+
+  @@map("sale_servants")
+}
+
+model Attachment {
+  id        String   @id @default(uuid())
   title     String
   url       String
-  productId String? @map("product_id")
-
-  product Product? @relation(fields: [productId], references: [id])
+  productId String?  @map("product_id")
+  product   Product? @relation(fields: [productId], references: [id])
 
   @@map("attachments")
 }

@@ -28,8 +28,10 @@ import { CreateServantProductController } from './controllers/servant-products/c
 import { CreateServantProductUseCase } from '@/domain/servant-products/application/use-cases/create-servant-product.use-case'
 import { DeleteServantProductController } from './controllers/servant-products/delete-servant-product.controller'
 import { DeleteServantProductUseCase } from '@/domain/servant-products/application/use-cases/delete-servant-product.use-case'
-import { FindServantProductsByServantId } from './controllers/servant-products/find-servant-products-by-servant-id.controller'
+import { FindServantProductsByServantIdController } from './controllers/servant-products/find-servant-products-by-servant-id.controller'
 import { FindServantProductsByServantIdUseCase } from '@/domain/servant-products/application/use-cases/find-servant-products-by-servant-id.use-case'
+import { CreateSaleController } from './controllers/sales/create-sale.controller'
+import { CreateSaleUseCase } from '@/domain/sales/application/use-cases/create-sale.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -47,7 +49,8 @@ import { FindServantProductsByServantIdUseCase } from '@/domain/servant-products
     FetchAllServantsController,
     CreateServantProductController,
     DeleteServantProductController,
-    FindServantProductsByServantId,
+    FindServantProductsByServantIdController,
+    CreateSaleController,
   ],
   providers: [
     RegisterUserUseCase,
@@ -64,6 +67,7 @@ import { FindServantProductsByServantIdUseCase } from '@/domain/servant-products
     CreateServantProductUseCase,
     DeleteServantProductUseCase,
     FindServantProductsByServantIdUseCase,
+    CreateSaleUseCase,
   ],
 })
 export class HttpModule {}

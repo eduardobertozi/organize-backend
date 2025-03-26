@@ -2,7 +2,7 @@ import { UniqueEntityID } from '@/core/unique-entity-id'
 import { Entity } from '@/core/entities/entity'
 
 export interface SaleProps {
-  description?: string
+  description?: string | null
   amount: number
 
   createdAt?: Date | null

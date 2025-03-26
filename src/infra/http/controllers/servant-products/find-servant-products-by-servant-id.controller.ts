@@ -13,7 +13,7 @@ import {
 } from '../../schemas/servant-id-param.schema'
 
 @Controller()
-export class FindServantProductsByServantId {
+export class FindServantProductsByServantIdController {
   constructor(
     private readonly findServantProductsByServantIdUseCase: FindServantProductsByServantIdUseCase,
   ) {}

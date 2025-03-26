@@ -5,7 +5,7 @@ import { Either, left, right } from '@/core/either'
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 
 interface CreateSaleUseCaseRequest {
-  description: string
+  description?: string | null
   amount: number
 }
 
