@@ -58,6 +58,8 @@ import { FindSupplierByNameController } from '@/infra/http/controllers/suppliers
 import { FindSupplierByNameUseCase } from '@/domain/suppliers/application/use-cases/find-supplier-by-name.use-case'
 import { FindSupplierByIdController } from '@/infra/http/controllers/suppliers/find-suppliers-by-id.controller'
 import { FindSupplierByIdUseCase } from '@/domain/suppliers/application/use-cases/find-supplier-by-id.use-case'
+import { EditServantController } from '@/infra/http/controllers/servants/edit-servant.controller'
+import { EditServantUseCase } from '@/domain/servants/application/use-cases/edit-servant.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -75,6 +77,7 @@ import { FindSupplierByIdUseCase } from '@/domain/suppliers/application/use-case
     FindProductsByNameController,
     FetchAllProductsController,
     CreateServantController,
+    EditServantController,
     FetchAllServantsController,
     CreateServantProductController,
     DeleteServantProductController,
@@ -106,6 +109,7 @@ import { FindSupplierByIdUseCase } from '@/domain/suppliers/application/use-case
     FindProductByNameUseCase,
     FetchAllProductsUseCase,
     CreateServantUseCase,
+    EditServantUseCase,
     FetchAllServantsUseCase,
     CreateServantProductUseCase,
     DeleteServantProductUseCase,

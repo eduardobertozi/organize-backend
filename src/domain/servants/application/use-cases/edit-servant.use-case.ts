@@ -4,6 +4,7 @@ import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { Injectable } from '@nestjs/common'
 import { ServantsRepository } from '../repositories/servants.repository'
 import { UniqueEntityID } from '@/core/unique-entity-id'
+import { Servant } from '@/domain/servants/enterprise/entities/servant'
 
 interface EditServantUseCaseRequest {
   servantId: string
@@ -15,7 +16,9 @@ interface EditServantUseCaseRequest {
 
 type EditServantUseCaseResponse = Either<
   AlreadyExistsError | ResourceNotFoundError,
-  null
+  {
+    servant: Servant
+  }
 >
 
 @Injectable()
@@ -25,11 +28,11 @@ export class EditServantUseCase {
   async execute(
     params: EditServantUseCaseRequest,
   ): Promise<EditServantUseCaseResponse> {
-    const servantExists = await this.servantRepository.findById(
+    const servant = await this.servantRepository.findById(
       new UniqueEntityID(params.servantId),
     )
 
-    if (!servantExists) {
+    if (!servant) {
       return left(new ResourceNotFoundError())
     }
 
@@ -40,13 +43,15 @@ export class EditServantUseCase {
       return left(new AlreadyExistsError())
     }
 
-    servantExists.name = params.name
-    servantExists.productsPrice = params.productsPrice
-    servantExists.profitPercent = params.profitPercent
-    servantExists.workForcePrice = params.workForcePrice
+    servant.name = params.name
+    servant.productsPrice = params.productsPrice
+    servant.profitPercent = params.profitPercent
+    servant.workForcePrice = params.workForcePrice
 
-    await this.servantRepository.save(servantExists)
+    await this.servantRepository.save(servant)
 
-    return right(null)
+    return right({
+      servant,
+    })
   }
 }
