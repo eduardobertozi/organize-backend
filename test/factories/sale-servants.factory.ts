@@ -1,5 +1,9 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { SaleServant } from '@/domain/sale-servants/enterprise/entities/sale-servant'
+import {
+  SaleServant,
+  SaleServantProps,
+} from '@/domain/sale-servants/enterprise/entities/sale-servant'
+import { PrismaSaleServantsMapper } from '@/infra/database/prisma/mappers/prisma-sale-servants.mapper'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { faker } from '@faker-js/faker'
 import { Injectable } from '@nestjs/common'
@@ -18,17 +22,19 @@ export function makeSaleServant(
   )
 }
 
-// @Injectable()
-// export class SalesFactory {
-//   constructor(private readonly prismaService: PrismaService) {}
+@Injectable()
+export class SaleServantsFactory {
+  constructor(private readonly prisma: PrismaService) {}
 
-//   async makePrismaSale(data: Partial<SaleProps> = {}): Promise<Sale> {
-//     const sale = makeSale(data)
+  async makePrismaSaleServant(
+    data: Partial<SaleServantProps> = {},
+  ): Promise<SaleServant> {
+    const sale = makeSaleServant(data)
 
-//     // await this.prismaService.sale.create({
-//     //   data: PrismaSaleMapper.toPrisma(sale),
-//     // })
+    await this.prisma.saleServant.create({
+      data: PrismaSaleServantsMapper.toPrisma(sale),
+    })
 
-//     return sale
-//   }
-// }
+    return sale
+  }
+}

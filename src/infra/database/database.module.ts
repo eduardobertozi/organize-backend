@@ -16,6 +16,8 @@ import { ServantProductsRepository } from '@/domain/servant-products/application
 import { PrismaServantProductsService } from './prisma/services/prisma-service-products.service'
 import { SalesRepository } from '@/domain/sales/application/repositories/sales.repository'
 import { PrismaSalesService } from './prisma/services/prisma-sales.service'
+import { SaleServantsRepository } from '@/domain/sale-servants/application/repositories/sale-servants.repository'
+import { PrismaSaleServantsService } from './prisma/services/prisma-sale-servants.service'
 
 @Module({
   providers: [
@@ -52,6 +54,10 @@ import { PrismaSalesService } from './prisma/services/prisma-sales.service'
       provide: SalesRepository,
       useClass: PrismaSalesService,
     },
+    {
+      provide: SaleServantsRepository,
+      useClass: PrismaSaleServantsService,
+    },
   ],
   exports: [
     PrismaService,
@@ -63,6 +69,7 @@ import { PrismaSalesService } from './prisma/services/prisma-sales.service'
     ServantsRepository,
     ServantProductsRepository,
     SalesRepository,
+    SaleServantsRepository,
   ],
 })
 export class DatabaseModule {}

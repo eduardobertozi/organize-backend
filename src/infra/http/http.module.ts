@@ -40,6 +40,8 @@ import { FetchAllSalesController } from './controllers/sales/fetch-all-sales.con
 import { FetchAllSalesUseCase } from '@/domain/sales/application/use-cases/fetch-all-sales.use-case'
 import { FindSaleByIdController } from './controllers/sales/find-sale-by-id.controller'
 import { FindSaleByIdUseCase } from '@/domain/sales/application/use-cases/find-sale-by-id.use-case'
+import { CreateSaleServantController } from './controllers/sale-servants/create-sale-servant.controller'
+import { CreateSaleServantUseCase } from '@/domain/sale-servants/application/use-cases/create-sale-servant.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -63,6 +65,7 @@ import { FindSaleByIdUseCase } from '@/domain/sales/application/use-cases/find-s
     EditSaleController,
     FetchAllSalesController,
     FindSaleByIdController,
+    CreateSaleServantController,
   ],
   providers: [
     RegisterUserUseCase,
@@ -84,6 +87,7 @@ import { FindSaleByIdUseCase } from '@/domain/sales/application/use-cases/find-s
     EditSaleUseCase,
     FetchAllSalesUseCase,
     FindSaleByIdUseCase,
+    CreateSaleServantUseCase,
   ],
 })
 export class HttpModule {}

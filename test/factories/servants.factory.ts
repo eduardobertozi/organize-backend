@@ -6,6 +6,7 @@ import {
 import { UniqueEntityID } from '@/core/unique-entity-id'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
+import { PrismaServantMapper } from '@/infra/database/prisma/mappers/prisma-servants.mapper'
 
 export function makeServant(
   override: Partial<ServantProps> = {},
@@ -45,13 +46,10 @@ export class ServantsFactory {
   ) {
     const servant = makeServant(override, id)
 
-    return this.prisma.servant.create({
-      data: {
-        name: servant.name,
-        price: servant.price,
-        profitPercent: servant.profitPercent,
-        workForcePrice: servant.workForcePrice,
-      },
+    await this.prisma.servant.create({
+      data: PrismaServantMapper.toPrisma(servant),
     })
+
+    return servant
   }
 }
