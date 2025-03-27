@@ -3,9 +3,9 @@ import {
   BadRequestException,
   Body,
   Controller,
+  HttpCode,
   Param,
   Put,
-  UsePipes,
 } from '@nestjs/common'
 import {
   CreateSupplierDTO,
@@ -22,11 +22,11 @@ export class EditSupplierController {
   constructor(private readonly editSupplierUseCase: EditSupplierUseCase) {}
 
   @Put('/suppliers/:supplierId')
-  @UsePipes(CreateSupplierValidationPipe)
+  @HttpCode(204)
   async handle(
     @Param('supplierId', SupplierIdParamValidationPipe)
     supplierId: SupplierIdParam,
-    @Body() body: CreateSupplierDTO,
+    @Body(CreateSupplierValidationPipe) body: CreateSupplierDTO,
   ) {
     const result = await this.editSupplierUseCase.execute({
       supplierId,

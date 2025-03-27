@@ -52,6 +52,8 @@ import { UploadAttachmentsController } from './controllers/uploads/upload-attach
 import { UploadAndCreateAttachmentUseCase } from '@/domain/uploads/upload-and-create-attachment.use-case'
 import { EditSupplierController } from './controllers/suppliers/edit-supplier.controller'
 import { EditSupplierUseCase } from '@/domain/suppliers/application/use-cases/edit-supplier.use-case'
+import { FetchAllSupplierController } from './controllers/suppliers/fetch-all-suppliers.controller'
+import { FetchAllSuppliersUseCase } from '@/domain/suppliers/application/use-cases/fetch-all-suppliers.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -61,6 +63,7 @@ import { EditSupplierUseCase } from '@/domain/suppliers/application/use-cases/ed
     CreateProductController,
     CreateSupplierController,
     EditSupplierController,
+    FetchAllSupplierController,
     EditProductController,
     DeleteProductController,
     FindProductByIdController,
@@ -88,6 +91,7 @@ import { EditSupplierUseCase } from '@/domain/suppliers/application/use-cases/ed
     CreateProductUseCase,
     CreateSupplierUseCase,
     EditSupplierUseCase,
+    FetchAllSuppliersUseCase,
     EditProductUseCase,
     DeleteProductUseCase,
     FindProductByIdUseCase,
