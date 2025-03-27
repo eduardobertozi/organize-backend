@@ -1,6 +1,7 @@
 import { InMemoryServantsRepository } from 'test/in-memories/in-memory-servants.repository'
 import { makeServant } from 'test/factories/servants.factory'
 import { FindServantByNameUseCase } from './find-servant-by-name.use-case'
+import { Servant } from '../../enterprise/entities/servant'
 
 describe('Find Servant By Name', () => {
   let inMemoryServantsRepository: InMemoryServantsRepository
@@ -54,7 +55,7 @@ describe('Find Servant By Name', () => {
   })
 
   it('should be able to find paginated servants', async () => {
-    const tasks: Promise<void>[] = []
+    const tasks: Promise<Servant>[] = []
 
     for (let i = 0; i < 12; i++) {
       tasks.push(

@@ -1,6 +1,7 @@
 import { InMemoryServantsRepository } from 'test/in-memories/in-memory-servants.repository'
 import { makeServant } from 'test/factories/servants.factory'
 import { FetchAllServantsUseCase } from './fetch-all-servants.use-case'
+import { Servant } from '../../enterprise/entities/servant'
 
 describe('Fetch All Servants', () => {
   let inMemoryServantsRepository: InMemoryServantsRepository
@@ -24,7 +25,7 @@ describe('Fetch All Servants', () => {
   })
 
   it('should be able to fetch all servants with ten items per page', async () => {
-    const createServants: Promise<void>[] = []
+    const createServants: Promise<Servant>[] = []
 
     for (let i = 0; i < 12; i++) {
       createServants.push(inMemoryServantsRepository.create(makeServant()))
