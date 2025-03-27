@@ -1,4 +1,5 @@
 import { z } from 'zod'
+import { ZodValidationPipe } from '../pipes/zod-validation.pipe'
 
 export const CreateSupplierSchema = z.object({
   name: z.string(),
@@ -8,6 +9,10 @@ export const CreateSupplierSchema = z.object({
   state: z.string(),
   address: z.string(),
 })
+
+export const CreateSupplierValidationPipe = new ZodValidationPipe(
+  CreateSupplierSchema,
+)
 
 export class CreateSupplierDTO {
   name: string

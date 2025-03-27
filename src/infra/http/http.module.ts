@@ -50,6 +50,8 @@ import { FindSaleServantByIdController } from './controllers/sale-servants/find-
 import { FindSaleServantByIdUseCase } from '@/domain/sale-servants/application/use-cases/find-sale-servant-by-id.use-case'
 import { UploadAttachmentsController } from './controllers/uploads/upload-attachment.controller'
 import { UploadAndCreateAttachmentUseCase } from '@/domain/uploads/upload-and-create-attachment.use-case'
+import { EditSupplierController } from './controllers/suppliers/edit-supplier.controller'
+import { EditSupplierUseCase } from '@/domain/suppliers/application/use-cases/edit-supplier.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -58,6 +60,7 @@ import { UploadAndCreateAttachmentUseCase } from '@/domain/uploads/upload-and-cr
     AuthenticateController,
     CreateProductController,
     CreateSupplierController,
+    EditSupplierController,
     EditProductController,
     DeleteProductController,
     FindProductByIdController,
@@ -84,6 +87,7 @@ import { UploadAndCreateAttachmentUseCase } from '@/domain/uploads/upload-and-cr
     AuthenticateUserUseCase,
     CreateProductUseCase,
     CreateSupplierUseCase,
+    EditSupplierUseCase,
     EditProductUseCase,
     DeleteProductUseCase,
     FindProductByIdUseCase,

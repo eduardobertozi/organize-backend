@@ -19,6 +19,7 @@ export class Supplier extends Entity<SupplierProps> {
 
   set name(name: string) {
     this.props.name = name
+    this.touch()
   }
 
   get email() {
@@ -27,6 +28,7 @@ export class Supplier extends Entity<SupplierProps> {
 
   set email(email: string) {
     this.props.email = email
+    this.touch()
   }
 
   get phone() {
@@ -35,6 +37,7 @@ export class Supplier extends Entity<SupplierProps> {
 
   set phone(phone: string) {
     this.props.phone = phone
+    this.touch()
   }
 
   get city() {
@@ -43,6 +46,7 @@ export class Supplier extends Entity<SupplierProps> {
 
   set city(city: string) {
     this.props.city = city
+    this.touch()
   }
 
   get state() {
@@ -51,6 +55,7 @@ export class Supplier extends Entity<SupplierProps> {
 
   set state(state: string) {
     this.props.state = state
+    this.touch()
   }
 
   get address() {
@@ -59,6 +64,28 @@ export class Supplier extends Entity<SupplierProps> {
 
   set address(address: string) {
     this.props.address = address
+    this.touch()
+  }
+
+  get createdAt() {
+    return this.props.createdAt!
+  }
+
+  set createdAt(createdAt: Date) {
+    this.props.createdAt = createdAt
+    this.touch()
+  }
+
+  get updatedAt() {
+    return this.props.updatedAt!
+  }
+
+  set updatedAt(updatedAt: Date) {
+    this.props.updatedAt = updatedAt
+  }
+
+  private touch() {
+    this.props.updatedAt = new Date()
   }
 
   public static create(props: SupplierProps, id?: UniqueEntityID) {

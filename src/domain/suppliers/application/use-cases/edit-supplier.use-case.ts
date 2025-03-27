@@ -4,6 +4,7 @@ import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { SuppliersRepository } from '../repositories/suppliers.repository'
 import { Injectable } from '@nestjs/common'
 import { UniqueEntityID } from '@/core/unique-entity-id'
+import { Supplier } from '../../enterprise/entities/supplier'
 
 interface EditSupplierUseCaseRequest {
   supplierId: string
@@ -17,7 +18,9 @@ interface EditSupplierUseCaseRequest {
 
 type EditSupplierUseCaseResponse = Either<
   AlreadyExistsError | ResourceNotFoundError,
-  null
+  {
+    supplier: Supplier
+  }
 >
 
 @Injectable()
@@ -51,6 +54,8 @@ export class EditSupplierUseCase {
 
     await this.suppliersRepository.save(supplier)
 
-    return right(null)
+    return right({
+      supplier,
+    })
   }
 }
