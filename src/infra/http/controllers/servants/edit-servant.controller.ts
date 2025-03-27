@@ -36,8 +36,6 @@ export class EditServantController {
       throw new BadRequestException()
     }
 
-    console.log(ServantPresenter.toHTTP(result.value.servant), 'SERVANT')
-
     return {
       servant: ServantPresenter.toHTTP(result.value.servant),
     }
