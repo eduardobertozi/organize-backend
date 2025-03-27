@@ -48,6 +48,8 @@ import { FindSaleServantBySaleIdController } from './controllers/sale-servants/f
 import { FindSaleServantBySaleIdUseCase } from '@/domain/sale-servants/application/use-cases/find-sale-servants-by-sale-id.use-case'
 import { FindSaleServantByIdController } from './controllers/sale-servants/find-sale-servant-by-id.controller'
 import { FindSaleServantByIdUseCase } from '@/domain/sale-servants/application/use-cases/find-sale-servant-by-id.use-case'
+import { UploadAttachmentsController } from './controllers/uploads/upload-attachment.controller'
+import { UploadAndCreateAttachmentUseCase } from '@/domain/uploads/upload-and-create-attachment.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -75,6 +77,7 @@ import { FindSaleServantByIdUseCase } from '@/domain/sale-servants/application/u
     DeleteSaleServantController,
     FindSaleServantBySaleIdController,
     FindSaleServantByIdController,
+    UploadAttachmentsController,
   ],
   providers: [
     RegisterUserUseCase,
@@ -100,6 +103,7 @@ import { FindSaleServantByIdUseCase } from '@/domain/sale-servants/application/u
     DeleteSaleServantUseCase,
     FindSaleServantBySaleIdUseCase,
     FindSaleServantByIdUseCase,
+    UploadAndCreateAttachmentUseCase,
   ],
 })
 export class HttpModule {}

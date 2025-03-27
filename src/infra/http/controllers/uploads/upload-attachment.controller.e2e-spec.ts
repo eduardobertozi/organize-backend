@@ -4,7 +4,6 @@ import { StorageModule } from '@/infra/storage/storage.module'
 import { INestApplication } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
-
 import request from 'supertest'
 import { UsersFactory } from 'test/factories/users.factory'
 
@@ -32,7 +31,7 @@ describe('Upload Attachment [E2E]', () => {
     const access_token = jwt.sign({ sub: user.id.toString() })
 
     const response = await request(app.getHttpServer())
-      .post(`/attachments`)
+      .post('/attachments')
       .set('Authorization', `Bearer ${access_token}`)
       .attach('file', './test/fixtures/sample.jpg')
 
