@@ -9,7 +9,7 @@ import { faker } from '@faker-js/faker'
 import { Injectable } from '@nestjs/common'
 
 export function makeSupplier(
-  override: Partial<Supplier> = {},
+  override: Partial<SupplierProps> = {},
   id?: UniqueEntityID,
 ) {
   return Supplier.create(
