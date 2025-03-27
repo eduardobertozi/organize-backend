@@ -54,6 +54,10 @@ import { EditSupplierController } from './controllers/suppliers/edit-supplier.co
 import { EditSupplierUseCase } from '@/domain/suppliers/application/use-cases/edit-supplier.use-case'
 import { FetchAllSupplierController } from './controllers/suppliers/fetch-all-suppliers.controller'
 import { FetchAllSuppliersUseCase } from '@/domain/suppliers/application/use-cases/fetch-all-suppliers.use-case'
+import { FindSupplierByNameController } from '@/infra/http/controllers/suppliers/find-suppliers-by-name.controller'
+import { FindSupplierByNameUseCase } from '@/domain/suppliers/application/use-cases/find-supplier-by-name.use-case'
+import { FindSupplierByIdController } from '@/infra/http/controllers/suppliers/find-suppliers-by-id.controller'
+import { FindSupplierByIdUseCase } from '@/domain/suppliers/application/use-cases/find-supplier-by-id.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -64,6 +68,7 @@ import { FetchAllSuppliersUseCase } from '@/domain/suppliers/application/use-cas
     CreateSupplierController,
     EditSupplierController,
     FetchAllSupplierController,
+    FindSupplierByNameController,
     EditProductController,
     DeleteProductController,
     FindProductByIdController,
@@ -74,6 +79,7 @@ import { FetchAllSuppliersUseCase } from '@/domain/suppliers/application/use-cas
     CreateServantProductController,
     DeleteServantProductController,
     FindServantProductsByServantIdController,
+    FindSupplierByIdController,
     CreateSaleController,
     DeleteSaleController,
     EditSaleController,
@@ -92,6 +98,8 @@ import { FetchAllSuppliersUseCase } from '@/domain/suppliers/application/use-cas
     CreateSupplierUseCase,
     EditSupplierUseCase,
     FetchAllSuppliersUseCase,
+    FindSupplierByNameUseCase,
+    FindSupplierByIdUseCase,
     EditProductUseCase,
     DeleteProductUseCase,
     FindProductByIdUseCase,
