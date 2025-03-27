@@ -1,10 +1,10 @@
 import { FetchAllServantsUseCase } from '@/domain/servants/application/use-cases/fetch-all-servants.use-case'
 import { BadRequestException, Controller, Get, Query } from '@nestjs/common'
+import { ServantPresenter } from '../../presenters/http-servants.presenter'
 import {
   PageQueryParam,
   PageQueryValidationPipe,
 } from '../../schemas/page-query-param.schema'
-import { ServantPresenter } from '../../presenters/http-servants.presenter'
 
 @Controller()
 export class FetchAllServantsController {

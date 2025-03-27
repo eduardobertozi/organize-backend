@@ -7,7 +7,7 @@ import { UniqueEntityID } from '@/core/unique-entity-id'
 
 interface EditSaleUseCaseRequest {
   saleId: string
-  description: string
+  description?: string | null
   amount: number
 }
 
@@ -33,11 +33,14 @@ export class EditSaleUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    const updatedSale = Sale.create({
-      ...sale,
-      description: params.description,
-      amount: params.amount,
-    })
+    const updatedSale = Sale.create(
+      {
+        ...sale,
+        description: params.description,
+        amount: params.amount,
+      },
+      sale.id,
+    )
 
     await this.salesRepository.save(updatedSale)
 

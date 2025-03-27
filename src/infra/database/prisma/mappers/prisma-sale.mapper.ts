@@ -13,11 +13,11 @@ export class PrismaSaleMapper {
     )
   }
 
-  static toPrisma(servant: Sale): Prisma.SaleUncheckedCreateInput {
+  static toPrisma(sale: Sale): Prisma.SaleUncheckedCreateInput {
     return {
-      id: servant.id.toString(),
-      amount: servant.amount,
-      description: servant.description,
+      id: sale.id.toString(),
+      amount: sale.amount,
+      description: sale.description,
     }
   }
 }

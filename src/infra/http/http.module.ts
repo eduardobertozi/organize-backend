@@ -32,8 +32,14 @@ import { FindServantProductsByServantIdController } from './controllers/servant-
 import { FindServantProductsByServantIdUseCase } from '@/domain/servant-products/application/use-cases/find-servant-products-by-servant-id.use-case'
 import { CreateSaleController } from './controllers/sales/create-sale.controller'
 import { CreateSaleUseCase } from '@/domain/sales/application/use-cases/create-sale.use-case'
-import { DeleteSaleController } from './controllers/sales/delete-sale-controller'
+import { DeleteSaleController } from './controllers/sales/delete-sale.controller'
 import { DeleteSaleUseCase } from '@/domain/sales/application/use-cases/delete-sale.use-case'
+import { EditSaleController } from './controllers/sales/edit-sale.controller'
+import { EditSaleUseCase } from '@/domain/sales/application/use-cases/edit-sale.use-case'
+import { FetchAllSalesController } from './controllers/sales/fetch-all-sales.controller'
+import { FetchAllSalesUseCase } from '@/domain/sales/application/use-cases/fetch-all-sales.use-case'
+import { FindSaleByIdController } from './controllers/sales/find-sale-by-id.controller'
+import { FindSaleByIdUseCase } from '@/domain/sales/application/use-cases/find-sale-by-id.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -54,6 +60,9 @@ import { DeleteSaleUseCase } from '@/domain/sales/application/use-cases/delete-s
     FindServantProductsByServantIdController,
     CreateSaleController,
     DeleteSaleController,
+    EditSaleController,
+    FetchAllSalesController,
+    FindSaleByIdController,
   ],
   providers: [
     RegisterUserUseCase,
@@ -72,6 +81,9 @@ import { DeleteSaleUseCase } from '@/domain/sales/application/use-cases/delete-s
     FindServantProductsByServantIdUseCase,
     CreateSaleUseCase,
     DeleteSaleUseCase,
+    EditSaleUseCase,
+    FetchAllSalesUseCase,
+    FindSaleByIdUseCase,
   ],
 })
 export class HttpModule {}
