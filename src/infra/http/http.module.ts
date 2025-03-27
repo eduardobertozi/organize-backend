@@ -42,6 +42,8 @@ import { FindSaleByIdController } from './controllers/sales/find-sale-by-id.cont
 import { FindSaleByIdUseCase } from '@/domain/sales/application/use-cases/find-sale-by-id.use-case'
 import { CreateSaleServantController } from './controllers/sale-servants/create-sale-servant.controller'
 import { CreateSaleServantUseCase } from '@/domain/sale-servants/application/use-cases/create-sale-servant.use-case'
+import { DeleteSaleServantController } from './controllers/sale-servants/delete-sale-servant.controller'
+import { DeleteSaleServantUseCase } from '@/domain/sale-servants/application/use-cases/delete-sale-servant.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -66,6 +68,7 @@ import { CreateSaleServantUseCase } from '@/domain/sale-servants/application/use
     FetchAllSalesController,
     FindSaleByIdController,
     CreateSaleServantController,
+    DeleteSaleServantController,
   ],
   providers: [
     RegisterUserUseCase,
@@ -88,6 +91,7 @@ import { CreateSaleServantUseCase } from '@/domain/sale-servants/application/use
     FetchAllSalesUseCase,
     FindSaleByIdUseCase,
     CreateSaleServantUseCase,
+    DeleteSaleServantUseCase,
   ],
 })
 export class HttpModule {}
