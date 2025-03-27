@@ -62,6 +62,8 @@ import { EditServantController } from '@/infra/http/controllers/servants/edit-se
 import { EditServantUseCase } from '@/domain/servants/application/use-cases/edit-servant.use-case'
 import { DeleteServantController } from '@/infra/http/controllers/servants/delete-servant.controller'
 import { DeleteServantUseCase } from '@/domain/servants/application/use-cases/delete-servant.use-case'
+import { FindServantByNameController } from '@/infra/http/controllers/servants/find-servant-by-name.controller'
+import { FindServantByNameUseCase } from '@/domain/servants/application/use-cases/find-servant-by-name.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -82,6 +84,7 @@ import { DeleteServantUseCase } from '@/domain/servants/application/use-cases/de
     EditServantController,
     DeleteServantController,
     FetchAllServantsController,
+    FindServantByNameController,
     CreateServantProductController,
     DeleteServantProductController,
     FindServantProductsByServantIdController,
@@ -115,6 +118,7 @@ import { DeleteServantUseCase } from '@/domain/servants/application/use-cases/de
     EditServantUseCase,
     DeleteServantUseCase,
     FetchAllServantsUseCase,
+    FindServantByNameUseCase,
     CreateServantProductUseCase,
     DeleteServantProductUseCase,
     FindServantProductsByServantIdUseCase,
