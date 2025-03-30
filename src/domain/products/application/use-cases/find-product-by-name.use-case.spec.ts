@@ -74,7 +74,10 @@ describe('Find Product By Name', () => {
     })
 
     expect(result.isRight()).toBe(true)
-
+    expect(result.value?.total).toBe(12)
+    expect(result.value?.nextPage).toBeNull()
+    expect(result.value?.previousPage).toBe(1)
+    expect(result.value?.hasMore).toBe(false)
     expect(result.value?.products).toHaveLength(2)
   })
 })

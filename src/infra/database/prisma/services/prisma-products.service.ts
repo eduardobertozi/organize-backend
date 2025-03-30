@@ -1,6 +1,9 @@
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { Injectable } from '@nestjs/common'
-import { ProductsRepository } from '@/domain/products/application/repositories/products.repository'
+import {
+  FindManyProductsResponse,
+  ProductsRepository,
+} from '@/domain/products/application/repositories/products.repository'
 import { Product } from '@/domain/products/enterprise/entities/product'
 import { PrismaProductMapper } from '../mappers/prisma-products.mapper'
 import { PaginationParams } from '@/core/pagination-params'
@@ -31,29 +34,47 @@ export class PrismaProductsService implements ProductsRepository {
   async findByName(
     name: string,
     params?: PaginationParams,
-  ): Promise<Product[]> {
+  ): Promise<FindManyProductsResponse> {
     const page = params?.page ?? 1
 
-    const products = await this.prisma.product.findMany({
-      where: {
-        name: {
-          contains: name,
+    const [total, products] = await this.prisma.$transaction([
+      this.prisma.product.count(),
+      this.prisma.product.findMany({
+        where: {
+          name: {
+            contains: name,
+          },
         },
-      },
-      skip: (page - 1) * 10,
-      take: 10,
-    })
+        skip: (page - 1) * 10,
+        take: 10,
+      }),
+    ])
 
-    return products.map((product) => PrismaProductMapper.toDomain(product))
+    return {
+      total,
+      products: products.map((product) =>
+        PrismaProductMapper.toDomain(product),
+      ),
+    }
   }
 
-  async findAll({ page = 1 }: PaginationParams): Promise<Product[]> {
-    const products = await this.prisma.product.findMany({
-      skip: (page - 1) * 10,
-      take: 10,
-    })
+  async findAll({
+    page = 1,
+  }: PaginationParams): Promise<FindManyProductsResponse> {
+    const [total, products] = await this.prisma.$transaction([
+      this.prisma.product.count(),
+      this.prisma.product.findMany({
+        skip: (page - 1) * 10,
+        take: 10,
+      }),
+    ])
 
-    return products.map((product) => PrismaProductMapper.toDomain(product))
+    return {
+      total,
+      products: products.map((product) =>
+        PrismaProductMapper.toDomain(product),
+      ),
+    }
   }
 
   async create(product: Product): Promise<void> {

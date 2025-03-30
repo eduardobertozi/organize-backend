@@ -2,6 +2,7 @@ import { Either, right } from '@/core/either'
 import { Product } from '../../enterprise/entities/product'
 import { ProductsRepository } from '../repositories/products.repository'
 import { Injectable } from '@nestjs/common'
+import { PaginationResponse } from '@/core/pagination-response'
 
 interface FetchAllProductsUseCaseRequest {
   page?: number
@@ -9,7 +10,7 @@ interface FetchAllProductsUseCaseRequest {
 
 type FetchAllProductsUseCaseResponse = Either<
   null,
-  {
+  PaginationResponse & {
     products: Product[]
   }
 >
@@ -21,9 +22,15 @@ export class FetchAllProductsUseCase {
   async execute({
     page = 1,
   }: FetchAllProductsUseCaseRequest): Promise<FetchAllProductsUseCaseResponse> {
-    const products = await this.productsRepository.findAll({ page })
+    const { products, total } = await this.productsRepository.findAll({ page })
+
+    const paginationResponse = PaginationResponse.create({
+      total,
+      page,
+    })
 
     return right({
+      ...paginationResponse,
       products,
     })
   }

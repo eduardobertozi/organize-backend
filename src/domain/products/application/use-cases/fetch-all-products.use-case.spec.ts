@@ -19,7 +19,10 @@ describe('Fetch All Products', () => {
     const result = await sut.execute({})
 
     expect(result.isRight()).toBe(true)
-    expect(result.value?.products).toHaveLength(10)
+    expect(result.value?.total).toBe(10)
+    expect(result.value?.hasMore).toBe(false)
+    expect(result.value?.nextPage).toBe(null)
+    expect(result.value?.previousPage).toBe(null)
     expect(result.value?.products[0].id).toBeDefined()
   })
 

@@ -41,7 +41,8 @@ export class CreateProductUseCase {
 
     product.attachments = new ProductAttachmentsList(productAttachments)
 
-    const productExists = await this.productsRepository.findByName(product.name)
+    const { products: productExists } =
+      await this.productsRepository.findByName(product.name)
 
     if (!productExists || productExists.length > 0) {
       return left(new AlreadyExistsError())

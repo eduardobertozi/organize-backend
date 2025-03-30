@@ -24,11 +24,14 @@ export class FetchAllServantsUseCase {
   }: FetchAllServantsUseCaseRequest): Promise<FetchAllServantsUseCaseResponse> {
     const { servants, total } = await this.servantRepository.findAll({ page })
 
-    return right({
+    const paginationResponse = PaginationResponse.create({
       total,
-      hasMore: total > page * 10,
-      nextPage: total > page * 10 ? page + 1 : null,
-      previousPage: page > 1 ? page - 1 : null,
+      page,
+    })
+
+    return right({
+      ...paginationResponse,
+      total,
       servants,
     })
   }
