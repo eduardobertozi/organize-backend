@@ -1,5 +1,8 @@
 import { PaginationParams } from '@/core/pagination-params'
-import { ServantsRepository } from '@/domain/servants/application/repositories/servants.repository'
+import {
+  FindManyResponse,
+  ServantsRepository,
+} from '@/domain/servants/application/repositories/servants.repository'
 import { Servant } from '@/domain/servants/enterprise/entities/servant'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
@@ -30,23 +33,31 @@ export class PrismaServantsService implements ServantsRepository {
   async findByName(
     name: string,
     params?: PaginationParams,
-  ): Promise<Servant[]> {
+  ): Promise<FindManyResponse> {
     const page = params?.page ?? 1
 
-    const servants = await this.prisma.servant.findMany({
-      where: {
-        name: {
-          contains: name,
+    const [total, servants] = await this.prisma.$transaction([
+      this.prisma.servant.count(),
+      this.prisma.servant.findMany({
+        where: {
+          name: {
+            contains: name,
+          },
         },
-      },
-      take: 10,
-      skip: (page - 1) * 10,
-      include: {
-        products: true,
-      },
-    })
+        take: 10,
+        skip: (page - 1) * 10,
+        include: {
+          products: true,
+        },
+      }),
+    ])
 
-    return servants.map((servant) => PrismaServantMapper.toDomain(servant))
+    return {
+      total: total,
+      servants: servants.map((servant) =>
+        PrismaServantMapper.toDomain(servant),
+      ),
+    }
   }
 
   async findAll({

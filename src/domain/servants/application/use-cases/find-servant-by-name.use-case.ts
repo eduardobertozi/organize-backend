@@ -2,6 +2,7 @@ import { Either, right } from '@/core/either'
 import { Servant } from '../../enterprise/entities/servant'
 import { ServantsRepository } from '../repositories/servants.repository'
 import { Injectable } from '@nestjs/common'
+import { PaginationResponse } from '@/core/pagination-response'
 
 interface FindServantByNameUseCaseRequest {
   name: string
@@ -10,7 +11,7 @@ interface FindServantByNameUseCaseRequest {
 
 type FindServantByNameUseCaseResponse = Either<
   null,
-  {
+  PaginationResponse & {
     servants: Servant[]
   }
 >
@@ -23,9 +24,20 @@ export class FindServantByNameUseCase {
     name,
     page = 1,
   }: FindServantByNameUseCaseRequest): Promise<FindServantByNameUseCaseResponse> {
-    const servants = await this.servantRepository.findByName(name, { page })
+    const { total, servants } = await this.servantRepository.findByName(name, {
+      page,
+    })
+
+    const { hasMore, nextPage, previousPage } = PaginationResponse.create({
+      total,
+      page,
+    })
 
     return right({
+      total,
+      hasMore,
+      nextPage,
+      previousPage,
       servants,
     })
   }

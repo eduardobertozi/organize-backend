@@ -36,7 +36,7 @@ export class EditServantUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    const newNameBelongsToAnotherExistandServant =
+    const { servants: newNameBelongsToAnotherExistandServant } =
       await this.servantRepository.findByName(params.name)
 
     if (newNameBelongsToAnotherExistandServant.length > 0) {

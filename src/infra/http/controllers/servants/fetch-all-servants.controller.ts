@@ -21,10 +21,7 @@ export class FetchAllServantsController {
     }
 
     return {
-      total: result.value.total,
-      hasMore: result.value.hasMore,
-      nextPage: result.value.nextPage,
-      previousPage: result.value.previousPage,
+      ...result.value,
       servants: result.value.servants.map((servant) =>
         ServantPresenter.toHTTP(servant),
       ),

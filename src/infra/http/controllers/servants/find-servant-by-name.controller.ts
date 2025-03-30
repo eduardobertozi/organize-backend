@@ -29,6 +29,7 @@ export class FindServantByNameController {
     }
 
     return {
+      ...result.value,
       servants: result.value.servants.map((servant) =>
         ServantPresenter.toHTTP(servant),
       ),

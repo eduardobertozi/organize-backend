@@ -26,7 +26,9 @@ export class CreateServantUseCase {
     params: CreateServantUseCaseRequest,
   ): Promise<CreateServantUseCaseResponse> {
     const servant = Servant.create(params)
-    const servantExists = await this.servantRepository.findByName(servant.name)
+    const { servants: servantExists } = await this.servantRepository.findByName(
+      servant.name,
+    )
 
     if (!servantExists || servantExists.length > 0) {
       return left(new AlreadyExistsError())
