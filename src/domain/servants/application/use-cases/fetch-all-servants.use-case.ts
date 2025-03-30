@@ -2,6 +2,7 @@ import { Either, right } from '@/core/either'
 import { Servant } from '../../enterprise/entities/servant'
 import { ServantsRepository } from '../repositories/servants.repository'
 import { Injectable } from '@nestjs/common'
+import { PaginationResponse } from '@/core/pagination-response'
 
 interface FetchAllServantsUseCaseRequest {
   page?: number
@@ -9,11 +10,7 @@ interface FetchAllServantsUseCaseRequest {
 
 type FetchAllServantsUseCaseResponse = Either<
   null,
-  {
-    total: number
-    hasMore: boolean
-    nextPage: number | null
-    previousPage: number | null
+  PaginationResponse & {
     servants: Servant[]
   }
 >
