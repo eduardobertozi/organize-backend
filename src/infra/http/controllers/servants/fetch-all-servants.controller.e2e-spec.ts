@@ -50,6 +50,9 @@ describe('Create Servant (E2E)', () => {
       expect.objectContaining({
         servants: expect.any(Array),
         total: 12,
+        hasMore: true,
+        nextPage: 2,
+        previousPage: null,
       }),
     )
     expect(response.body.servants).toHaveLength(10)
@@ -58,6 +61,16 @@ describe('Create Servant (E2E)', () => {
       .get('/servants/all?page=2')
       .set('Authorization', `Bearer ${access_token}`)
       .send({})
+
+    expect(response2.body).toEqual(
+      expect.objectContaining({
+        servants: expect.any(Array),
+        total: 12,
+        hasMore: false,
+        nextPage: null,
+        previousPage: 1,
+      }),
+    )
 
     expect(response2.body.servants).toHaveLength(2)
   })
