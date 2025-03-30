@@ -5,7 +5,6 @@ import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { PrismaServantMapper } from '../mappers/prisma-servants.mapper'
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { undefined } from 'zod'
 
 @Injectable()
 export class PrismaServantsService implements ServantsRepository {
