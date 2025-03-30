@@ -1,6 +1,5 @@
 import { AppModule } from '@/app.module'
 import { DatabaseModule } from '@/infra/database/database.module'
-import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { INestApplication } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
@@ -11,7 +10,6 @@ import { UsersFactory } from 'test/factories/users.factory'
 
 describe('Fetch All Products (E2E)', () => {
   let app: INestApplication
-  let prisma: PrismaService
   let usersFactory: UsersFactory
   let productsFactory: ProductsFactory
   let suppliersFactory: SuppliersFactory
@@ -24,7 +22,6 @@ describe('Fetch All Products (E2E)', () => {
     }).compile()
 
     app = moduleRef.createNestApplication()
-    prisma = moduleRef.get(PrismaService)
     usersFactory = moduleRef.get(UsersFactory)
     productsFactory = moduleRef.get(ProductsFactory)
     suppliersFactory = moduleRef.get(SuppliersFactory)
@@ -54,15 +51,14 @@ describe('Fetch All Products (E2E)', () => {
       .send({})
 
     expect(response.statusCode).toBe(200)
-
-    const productsOnDatabase = await prisma.product.findMany({
-      where: {
-        supplierId: supplier.id.toString(),
-      },
-      take: 10,
-      skip: (1 - 1) * 10,
-    })
-
-    expect(productsOnDatabase.length).toBe(10)
+    expect(response.body.products).toBeTruthy()
+    expect(response.body).toEqual(
+      expect.objectContaining({
+        total: 12,
+        hasMore: true,
+        nextPage: 2,
+        previousPage: null,
+      }),
+    )
   })
 })

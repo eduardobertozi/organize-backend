@@ -30,8 +30,11 @@ export class FindProductsByNameController {
       throw new BadRequestException()
     }
 
-    return result.value.products.map((product) =>
-      ProductPresenter.toHTTP(product),
-    )
+    return {
+      ...result.value,
+      products: result.value.products.map((product) =>
+        ProductPresenter.toHTTP(product),
+      ),
+    }
   }
 }
