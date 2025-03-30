@@ -8,7 +8,10 @@ export abstract class ServantsRepository {
     name: string,
     params?: PaginationParams,
   ): Promise<Servant[]>
-  abstract findAll(params: PaginationParams): Promise<Servant[]>
+  abstract findAll(params: PaginationParams): Promise<{
+    total: number
+    servants: Servant[]
+  }>
   abstract create(servant: Servant): Promise<Servant>
   abstract save(servant: Servant): Promise<Servant>
   abstract delete(servant: Servant): Promise<void>

@@ -19,8 +19,13 @@ export class InMemoryServantsRepository extends ServantsRepository {
     return Promise.resolve(filteredItems.slice((page - 1) * 10, page * 10))
   }
 
-  async findAll({ page }: PaginationParams) {
-    return Promise.resolve(this.items.slice((page - 1) * 10, page * 10))
+  async findAll({
+    page,
+  }: PaginationParams): Promise<{ total: number; servants: Servant[] }> {
+    return Promise.resolve({
+      servants: this.items.slice((page - 1) * 10, page * 10),
+      total: this.items.length,
+    })
   }
 
   async create(servant: Servant) {

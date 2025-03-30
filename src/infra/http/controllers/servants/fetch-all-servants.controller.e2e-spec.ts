@@ -49,6 +49,7 @@ describe('Create Servant (E2E)', () => {
     expect(response.body).toEqual(
       expect.objectContaining({
         servants: expect.any(Array),
+        total: 12,
       }),
     )
     expect(response.body.servants).toHaveLength(10)

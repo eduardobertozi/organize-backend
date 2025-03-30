@@ -10,6 +10,10 @@ interface FetchAllServantsUseCaseRequest {
 type FetchAllServantsUseCaseResponse = Either<
   null,
   {
+    total: number
+    hasMore: boolean
+    nextPage: number | null
+    previousPage: number | null
     servants: Servant[]
   }
 >
@@ -21,9 +25,13 @@ export class FetchAllServantsUseCase {
   async execute({
     page = 1,
   }: FetchAllServantsUseCaseRequest): Promise<FetchAllServantsUseCaseResponse> {
-    const servants = await this.servantRepository.findAll({ page })
+    const { servants, total } = await this.servantRepository.findAll({ page })
 
     return right({
+      total,
+      hasMore: total > page * 10,
+      nextPage: total > page * 10 ? page + 1 : null,
+      previousPage: page > 1 ? page - 1 : null,
       servants,
     })
   }

@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { PrismaServantMapper } from '../mappers/prisma-servants.mapper'
 import { UniqueEntityID } from '@/core/unique-entity-id'
+import { undefined } from 'zod'
 
 @Injectable()
 export class PrismaServantsService implements ServantsRepository {
@@ -49,16 +50,26 @@ export class PrismaServantsService implements ServantsRepository {
     return servants.map((servant) => PrismaServantMapper.toDomain(servant))
   }
 
-  async findAll({ page }: PaginationParams): Promise<Servant[]> {
-    const servants = await this.prisma.servant.findMany({
-      take: 10,
-      skip: (page - 1) * 10,
-      include: {
-        products: true,
-      },
-    })
+  async findAll({
+    page,
+  }: PaginationParams): Promise<{ total: number; servants: Servant[] }> {
+    const [total, servants] = await this.prisma.$transaction([
+      this.prisma.servant.count(),
+      this.prisma.servant.findMany({
+        take: 10,
+        skip: (page - 1) * 10,
+        include: {
+          products: true,
+        },
+      }),
+    ])
 
-    return servants.map((servant) => PrismaServantMapper.toDomain(servant))
+    return {
+      total: total,
+      servants: servants.map((servant) =>
+        PrismaServantMapper.toDomain(servant),
+      ),
+    }
   }
 
   async create(servant: Servant): Promise<Servant> {
