@@ -1,8 +1,10 @@
 import { PaginationParams } from '@/core/pagination-params'
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { ServantsRepository } from '@/domain/servants/application/repositories/servants.repository'
+import {
+  FindManyServantsResponse,
+  ServantsRepository,
+} from '@/domain/servants/application/repositories/servants.repository'
 import { Servant } from '@/domain/servants/enterprise/entities/servant'
-import { FindManyResponse } from '@/core/find-many-response'
 
 export class InMemoryServantsRepository extends ServantsRepository {
   public items: Servant[] = []
@@ -16,7 +18,7 @@ export class InMemoryServantsRepository extends ServantsRepository {
   async findByName(
     name: string,
     params?: PaginationParams,
-  ): Promise<FindManyResponse<Servant>> {
+  ): Promise<FindManyServantsResponse> {
     const page = params?.page ?? 1
 
     const filteredItems = this.items.filter((item) => item.name?.includes(name))
@@ -27,9 +29,7 @@ export class InMemoryServantsRepository extends ServantsRepository {
     })
   }
 
-  async findAll({
-    page,
-  }: PaginationParams): Promise<FindManyResponse<Servant>> {
+  async findAll({ page }: PaginationParams): Promise<FindManyServantsResponse> {
     return Promise.resolve({
       servants: this.items.slice((page - 1) * 10, page * 10),
       total: this.items.length,

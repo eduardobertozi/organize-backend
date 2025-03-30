@@ -1,6 +1,6 @@
 import { PaginationParams } from '@/core/pagination-params'
 import {
-  FindManyResponse,
+  FindManyServantsResponse,
   ServantsRepository,
 } from '@/domain/servants/application/repositories/servants.repository'
 import { Servant } from '@/domain/servants/enterprise/entities/servant'
@@ -33,7 +33,7 @@ export class PrismaServantsService implements ServantsRepository {
   async findByName(
     name: string,
     params?: PaginationParams,
-  ): Promise<FindManyResponse> {
+  ): Promise<FindManyServantsResponse> {
     const page = params?.page ?? 1
 
     const [total, servants] = await this.prisma.$transaction([
@@ -60,9 +60,7 @@ export class PrismaServantsService implements ServantsRepository {
     }
   }
 
-  async findAll({
-    page,
-  }: PaginationParams): Promise<{ total: number; servants: Servant[] }> {
+  async findAll({ page }: PaginationParams): Promise<FindManyServantsResponse> {
     const [total, servants] = await this.prisma.$transaction([
       this.prisma.servant.count(),
       this.prisma.servant.findMany({
