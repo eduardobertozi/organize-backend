@@ -41,7 +41,7 @@ describe('Find Servant By Name (E2E)', () => {
     )
 
     const response = await request(app.getHttpServer())
-      .get('/servants?page=1&name=Servant')
+      .get('/servants?page=1&name=Servant 1')
       .set('Authorization', `Bearer ${access_token}`)
       .send({})
 

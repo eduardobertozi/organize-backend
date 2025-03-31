@@ -40,9 +40,7 @@ export class PrismaServantsService implements ServantsRepository {
       this.prisma.servant.count(),
       this.prisma.servant.findMany({
         where: {
-          name: {
-            contains: name,
-          },
+          name,
         },
         take: 10,
         skip: (page - 1) * 10,

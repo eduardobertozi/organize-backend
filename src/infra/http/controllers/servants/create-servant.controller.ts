@@ -18,14 +18,15 @@ export class CreateServantController {
 
   @Post('servants')
   @UsePipes(CreateServantValidationPipe)
-  async createServant(@Body() servant: CreateServantDTO) {
+  async handle(@Body() servant: CreateServantDTO) {
     const result = await this.createServantUseCase.execute(servant)
 
     if (result.isLeft()) {
-      throw new BadRequestException()
+      throw new BadRequestException('Este serviço já existe!')
     }
 
     return {
+      message: 'Serviço criado com sucesso!',
       servant: ServantPresenter.toHTTP(result.value.servant),
     }
   }
