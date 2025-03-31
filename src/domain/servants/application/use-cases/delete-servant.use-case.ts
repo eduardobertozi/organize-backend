@@ -4,6 +4,7 @@ import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { ServantsRepository } from '../repositories/servants.repository'
 import { Injectable } from '@nestjs/common'
 import { UniqueEntityID } from '@/core/unique-entity-id'
+import { Servant } from '../../enterprise/entities/servant'
 
 interface DeleteServantUseCaseRequest {
   servantId: string
@@ -11,7 +12,9 @@ interface DeleteServantUseCaseRequest {
 
 type DeleteServantUseCaseResponse = Either<
   AlreadyExistsError | ResourceNotFoundError,
-  null
+  {
+    servant: Servant
+  }
 >
 
 @Injectable()
@@ -31,6 +34,8 @@ export class DeleteServantUseCase {
 
     await this.servantRepository.delete(servant)
 
-    return right(null)
+    return right({
+      servant,
+    })
   }
 }

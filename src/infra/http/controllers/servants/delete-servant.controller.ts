@@ -10,6 +10,7 @@ import {
   ServantIdParam,
   ServantIdParamValidationPipe,
 } from '@/infra/http/schemas/servant-id-param.schema'
+import { ServantPresenter } from '../../presenters/http-servants.presenter'
 
 @Controller()
 export class DeleteServantController {
@@ -24,6 +25,10 @@ export class DeleteServantController {
 
     if (result.isLeft()) {
       throw new BadRequestException()
+    }
+
+    return {
+      servant: ServantPresenter.toHTTP(result.value.servant),
     }
   }
 }
