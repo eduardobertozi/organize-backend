@@ -45,7 +45,8 @@ describe('DeleteSaleServantUseCase', () => {
     expect(inMemorySaleServantsRepository.items).toHaveLength(1)
 
     const result = await sut.execute({
-      saleServantId: saleServant.id.toString(),
+      servantId: saleServant.servantId,
+      saleId: saleServant.saleId,
     })
 
     expect(result.isRight()).toEqual(true)
@@ -54,7 +55,8 @@ describe('DeleteSaleServantUseCase', () => {
 
   it('should not be able delete a sale servant that does not exist', async () => {
     const result = await sut.execute({
-      saleServantId: 'invalid-id',
+      servantId: 'invalid-id',
+      saleId: 'invalid-id',
     })
 
     expect(result.isLeft()).toEqual(true)

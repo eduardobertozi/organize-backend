@@ -1,18 +1,24 @@
 import { Injectable } from '@nestjs/common'
 import { ServantProductsRepository } from '../repositories/servant-products.repository'
+import { ServantProduct } from '../../entreprise/entities/servant-product'
 import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { UniqueEntityID } from '@/core/unique-entity-id'
 
-interface DeleteServantProductUseCaseRequest {
+interface FindServantProductUseCaseRequest {
   productId: string
   servantId: string
 }
 
-type DeleteServantProductUseCaseResponse = Either<ResourceNotFoundError, null>
+type FindServantProductUseCaseResponse = Either<
+  ResourceNotFoundError,
+  {
+    servantProduct: ServantProduct
+  }
+>
 
 @Injectable()
-export class DeleteServantProductUseCase {
+export class FindServantProductUseCase {
   constructor(
     private readonly servantProductsRepository: ServantProductsRepository,
   ) {}
@@ -20,7 +26,7 @@ export class DeleteServantProductUseCase {
   async execute({
     productId,
     servantId,
-  }: DeleteServantProductUseCaseRequest): Promise<DeleteServantProductUseCaseResponse> {
+  }: FindServantProductUseCaseRequest): Promise<FindServantProductUseCaseResponse> {
     const servantProduct =
       await this.servantProductsRepository.findServantProduct({
         productId: new UniqueEntityID(productId),
@@ -31,8 +37,8 @@ export class DeleteServantProductUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    await this.servantProductsRepository.delete(servantProduct)
-
-    return right(null)
+    return right({
+      servantProduct,
+    })
   }
 }

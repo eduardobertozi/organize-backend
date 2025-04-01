@@ -43,6 +43,16 @@ export class CreateServantProductUseCase {
       return left(new ResourceNotFoundError())
     }
 
+    const servantProductAlreadyExists =
+      await this.servantProductsRepository.findServantProduct({
+        productId: new UniqueEntityID(params.productId),
+        servantId: new UniqueEntityID(params.servantId),
+      })
+
+    if (servantProductAlreadyExists) {
+      return left(new ResourceNotFoundError())
+    }
+
     await this.servantProductsRepository.create(servantProduct)
 
     return right({

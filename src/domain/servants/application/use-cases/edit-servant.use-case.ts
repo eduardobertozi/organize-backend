@@ -9,7 +9,6 @@ import { Servant } from '@/domain/servants/enterprise/entities/servant'
 interface EditServantUseCaseRequest {
   servantId: string
   name: string
-  productsIds: string[]
   productsPrice: number
   workForcePrice: number
   profitPercent: number
@@ -45,7 +44,6 @@ export class EditServantUseCase {
 
     servant.name = params.name
     servant.productsPrice = params.productsPrice
-    servant.productsIds = params.productsIds
     servant.profitPercent = params.profitPercent
     servant.workForcePrice = params.workForcePrice
 

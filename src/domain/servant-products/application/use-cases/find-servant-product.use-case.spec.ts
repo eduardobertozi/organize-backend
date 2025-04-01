@@ -1,21 +1,19 @@
 import { InMemoryServantProductsRepository } from 'test/in-memories/in-memory-servant-products.repository'
 import { makeServant } from 'test/factories/servants.factory'
-import { FindServantProductsByServantIdUseCase } from './find-servant-products-by-servant-id.use-case'
+import { FindServantProductUseCase } from './find-servant-product.use-case'
 import { ServantProduct } from '../../entreprise/entities/servant-product'
 import { makeProduct } from 'test/factories/products.factory'
 
-describe('Fetch All Servant Products', () => {
+describe('Find Servant Product', () => {
   let inMemoryServantProductsRepository: InMemoryServantProductsRepository
-  let sut: FindServantProductsByServantIdUseCase
+  let sut: FindServantProductUseCase
 
   beforeEach(() => {
     inMemoryServantProductsRepository = new InMemoryServantProductsRepository()
-    sut = new FindServantProductsByServantIdUseCase(
-      inMemoryServantProductsRepository,
-    )
+    sut = new FindServantProductUseCase(inMemoryServantProductsRepository)
   })
 
-  it('should be able to fetch all servant products', async () => {
+  it('should be able find a servant with servant and product id', async () => {
     const servant = makeServant()
     const product = makeProduct()
 
@@ -27,6 +25,7 @@ describe('Fetch All Servant Products', () => {
     await inMemoryServantProductsRepository.create(servantProduct)
 
     const result = await sut.execute({
+      productId: product.id.toString(),
       servantId: servant.id.toString(),
     })
 
@@ -36,6 +35,7 @@ describe('Fetch All Servant Products', () => {
 
   it('should not be able to fetch not existant servant products', async () => {
     const result = await sut.execute({
+      productId: 'product-id',
       servantId: 'servant-id',
     })
 

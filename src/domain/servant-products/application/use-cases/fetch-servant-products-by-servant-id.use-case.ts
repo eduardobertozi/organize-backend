@@ -5,11 +5,11 @@ import { Either, left, right } from '@/core/either'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { UniqueEntityID } from '@/core/unique-entity-id'
 
-interface FindServantProductsByServantIdUseCaseRequest {
+interface FetchServantProductsByServantIdUseCaseRequest {
   servantId: string
 }
 
-type FindServantProductsByServantIdUseCaseResponse = Either<
+type FetchServantProductsByServantIdUseCaseResponse = Either<
   ResourceNotFoundError,
   {
     servantProducts: ServantProduct[]
@@ -17,14 +17,14 @@ type FindServantProductsByServantIdUseCaseResponse = Either<
 >
 
 @Injectable()
-export class FindServantProductsByServantIdUseCase {
+export class FetchServantProductsByServantIdUseCase {
   constructor(
     private readonly servantProductsRepository: ServantProductsRepository,
   ) {}
 
   async execute({
     servantId,
-  }: FindServantProductsByServantIdUseCaseRequest): Promise<FindServantProductsByServantIdUseCaseResponse> {
+  }: FetchServantProductsByServantIdUseCaseRequest): Promise<FetchServantProductsByServantIdUseCaseResponse> {
     const servantProducts =
       await this.servantProductsRepository.fetchAllByServantId(
         new UniqueEntityID(servantId),

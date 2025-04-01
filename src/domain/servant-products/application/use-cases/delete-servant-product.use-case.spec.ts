@@ -16,6 +16,7 @@ describe('Delete Servant Product', () => {
     await inMemoryServantProductsRepository.create(servantProduct)
 
     const result = await sut.execute({
+      productId: servantProduct.productId,
       servantId: servantProduct.servantId,
     })
 

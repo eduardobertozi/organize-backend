@@ -34,7 +34,6 @@ describe('Create Servant', () => {
     const result = await sut.execute({
       name: 'Sample servant',
       productsPrice,
-      productsIds: products.map((product) => product.id.toString()),
       profitPercent: 48,
       workForcePrice: 25,
     })
@@ -43,20 +42,6 @@ describe('Create Servant', () => {
     expect(inMemoryServantsRepository.items).toHaveLength(1)
     expect(inMemoryServantsRepository.items[0].name).toBe('Sample servant')
     expect(inMemoryServantsRepository.items[0].price).toBe(43)
-  })
-
-  it('should be able to create a new servant with products', async () => {
-    const result = await sut.execute({
-      name: 'Sample servant',
-      productsPrice,
-      productsIds: products.map((product) => product.id.toString()),
-      profitPercent: 48,
-      workForcePrice: 25,
-    })
-
-    if (result.isRight()) {
-      expect(result.value.servant.productsIds).toHaveLength(2)
-    }
   })
 
   it('should not be able create a servant with this already exists', async () => {
@@ -68,7 +53,6 @@ describe('Create Servant', () => {
 
     const result = await sut.execute({
       name: 'Sample servant',
-      productsIds: products.map((product) => product.id.toString()),
       productsPrice: 0,
       profitPercent: 0,
       workForcePrice: 0,

@@ -5,6 +5,8 @@ import { InMemoryServantsRepository } from 'test/in-memories/in-memory-servants.
 import { InMemorySaleServantsRepository } from 'test/in-memories/in-memory-sale-servants.repository'
 import { makeSale } from 'test/factories/sales.factory'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
+import { makeSaleServant } from 'test/factories/sale-servants.factory'
+import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 
 describe('CreateSaleServantUseCase', () => {
   let inMemoryServantsRepository: InMemoryServantsRepository
@@ -64,5 +66,25 @@ describe('CreateSaleServantUseCase', () => {
 
     expect(result.isLeft()).toEqual(true)
     expect(result.value).toBeInstanceOf(ResourceNotFoundError)
+  })
+
+  it('should not be able create a sale servant when it already exists', async () => {
+    const servant = await inMemoryServantsRepository.create(makeServant())
+    const sale = await inMemorySalesRepository.create(makeSale())
+
+    const saleServant = await inMemorySaleServantsRepository.create(
+      makeSaleServant({
+        saleId: sale.id.toString(),
+        servantId: servant.id.toString(),
+      }),
+    )
+
+    const result = await sut.execute({
+      saleId: saleServant.saleId,
+      servantId: saleServant.servantId,
+    })
+
+    expect(result.isLeft()).toEqual(true)
+    expect(result.value).toBeInstanceOf(AlreadyExistsError)
   })
 })

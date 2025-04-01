@@ -6,6 +6,7 @@ import { SaleServantsRepository } from '../repositories/sale-servants.repository
 import { SalesRepository } from '@/domain/sales/application/repositories/sales.repository'
 import { ServantsRepository } from '@/domain/servants/application/repositories/servants.repository'
 import { UniqueEntityID } from '@/core/unique-entity-id'
+import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 
 interface CreateSaleServantUseCaseRequest {
   saleId: string
@@ -13,7 +14,7 @@ interface CreateSaleServantUseCaseRequest {
 }
 
 type CreateSaleServantUseCaseResponse = Either<
-  ResourceNotFoundError,
+  ResourceNotFoundError | AlreadyExistsError,
   {
     saleServant: SaleServant
   }
@@ -40,6 +41,16 @@ export class CreateSaleServantUseCase {
 
     if (!servant || !sale) {
       return left(new ResourceNotFoundError())
+    }
+
+    const saleServantsAlreadyExists =
+      await this.saleServantsRepository.findSaleServant({
+        saleId: sale.id,
+        servantId: servant.id,
+      })
+
+    if (saleServantsAlreadyExists) {
+      return left(new AlreadyExistsError())
     }
 
     const saleServant = await this.saleServantsRepository.create(

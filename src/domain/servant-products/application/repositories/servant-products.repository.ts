@@ -2,9 +2,13 @@ import { UniqueEntityID } from '@/core/unique-entity-id'
 import { ServantProduct } from '../../entreprise/entities/servant-product'
 
 export abstract class ServantProductsRepository {
-  abstract findUniqueByServantId(
-    servantId: UniqueEntityID,
-  ): Promise<ServantProduct | null>
+  abstract findServantProduct({
+    productId,
+    servantId,
+  }: {
+    productId: UniqueEntityID
+    servantId: UniqueEntityID
+  }): Promise<ServantProduct | null>
   abstract fetchAllByServantId(
     servantId: UniqueEntityID,
   ): Promise<ServantProduct[]>

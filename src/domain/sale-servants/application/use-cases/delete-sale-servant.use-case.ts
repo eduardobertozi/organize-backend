@@ -5,7 +5,8 @@ import { Injectable } from '@nestjs/common'
 import { SaleServantsRepository } from '../repositories/sale-servants.repository'
 
 interface DeleteSaleServantUseCaseRequest {
-  saleServantId: string
+  servantId: string
+  saleId: string
 }
 
 type DeleteSaleServantUseCaseResponse = Either<ResourceNotFoundError, null>
@@ -15,11 +16,13 @@ export class DeleteSaleServantUseCase {
   constructor(private saleServantsRepository: SaleServantsRepository) {}
 
   async execute({
-    saleServantId,
+    servantId,
+    saleId,
   }: DeleteSaleServantUseCaseRequest): Promise<DeleteSaleServantUseCaseResponse> {
-    const saleServant = await this.saleServantsRepository.findById(
-      new UniqueEntityID(saleServantId),
-    )
+    const saleServant = await this.saleServantsRepository.findSaleServant({
+      servantId: new UniqueEntityID(servantId),
+      saleId: new UniqueEntityID(saleId),
+    })
 
     if (!saleServant) {
       return left(new ResourceNotFoundError())

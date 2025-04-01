@@ -7,18 +7,28 @@ import { Injectable } from '@nestjs/common'
 export class InMemorySaleServantsRepository implements SaleServantsRepository {
   public items: SaleServant[] = []
 
-  async findById(id: UniqueEntityID): Promise<SaleServant | null> {
+  async findSaleServant({
+    servantId,
+    saleId,
+  }: {
+    servantId: UniqueEntityID
+    saleId: UniqueEntityID
+  }): Promise<SaleServant | null> {
     return Promise.resolve(
-      this.items.find((saleServant) => saleServant.id.equals(id)) ?? null,
+      this.items.find(
+        (saleServant) =>
+          saleServant.servantId === servantId.toString() &&
+          saleServant.saleId === saleId.toString(),
+      ) ?? null,
     )
   }
 
-  async findBySaleId(saleId: UniqueEntityID): Promise<SaleServant[]> {
-    return Promise.resolve(
-      this.items.filter(
-        (saleServant) => saleServant.saleId === saleId.toString(),
-      ),
+  async fetchAllBySaleId(saleId: UniqueEntityID): Promise<SaleServant[]> {
+    const saleServants = this.items.filter(
+      (saleServant) => saleServant.saleId === saleId.toString(),
     )
+
+    return Promise.resolve(saleServants)
   }
 
   async create(saleServant: SaleServant): Promise<SaleServant> {

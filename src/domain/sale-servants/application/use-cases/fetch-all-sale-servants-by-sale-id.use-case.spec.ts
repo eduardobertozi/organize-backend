@@ -1,17 +1,19 @@
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { makeSaleServant } from 'test/factories/sale-servants.factory'
 import { InMemorySaleServantsRepository } from 'test/in-memories/in-memory-sale-servants.repository'
-import { FindSaleServantBySaleIdUseCase } from './find-sale-servants-by-sale-id.use-case'
+import { FetchAllSaleServantsBySaleIdUseCase } from './fetch-all-sale-servants-by-sale-id.use-case'
 import { makeSale } from 'test/factories/sales.factory'
 import { makeServant } from 'test/factories/servants.factory'
 
 describe('FindSaleServantBySaleIdUseCase', () => {
   let inMemorySaleServantsRepository: InMemorySaleServantsRepository
-  let sut: FindSaleServantBySaleIdUseCase
+  let sut: FetchAllSaleServantsBySaleIdUseCase
 
   beforeEach(() => {
     inMemorySaleServantsRepository = new InMemorySaleServantsRepository()
-    sut = new FindSaleServantBySaleIdUseCase(inMemorySaleServantsRepository)
+    sut = new FetchAllSaleServantsBySaleIdUseCase(
+      inMemorySaleServantsRepository,
+    )
   })
 
   it('should be able to create a sale servant', async () => {

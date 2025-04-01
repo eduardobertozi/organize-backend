@@ -5,12 +5,19 @@ import { ServantProduct } from '@/domain/servant-products/entreprise/entities/se
 export class InMemoryServantProductsRepository extends ServantProductsRepository {
   public items: ServantProduct[] = []
 
-  async findUniqueByServantId(
-    servantId: UniqueEntityID,
-  ): Promise<ServantProduct | null> {
+  async findServantProduct({
+    productId,
+    servantId,
+  }: {
+    productId: UniqueEntityID
+    servantId: UniqueEntityID
+  }): Promise<ServantProduct | null> {
     return Promise.resolve(
-      this.items.find((item) => item.servantId === servantId.toString()) ??
-        null,
+      this.items.find(
+        (item) =>
+          item.productId === productId.toString() &&
+          item.servantId === servantId.toString(),
+      ) ?? null,
     )
   }
 
