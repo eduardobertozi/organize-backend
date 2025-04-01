@@ -5,12 +5,12 @@ import { Injectable } from '@nestjs/common'
 import { SaleServant } from '../../enterprise/entities/sale-servant'
 import { SaleServantsRepository } from '../repositories/sale-servants.repository'
 
-interface FindSaleServantByIdUseCaseRequest {
+interface FindSaleServantUseCaseRequest {
   servantId: string
   saleId: string
 }
 
-type FindSaleServantByIdUseCaseResponse = Either<
+type FindSaleServantUseCaseResponse = Either<
   ResourceNotFoundError,
   {
     saleServant: SaleServant
@@ -18,13 +18,13 @@ type FindSaleServantByIdUseCaseResponse = Either<
 >
 
 @Injectable()
-export class FindSaleServantByIdUseCase {
+export class FindSaleServantUseCase {
   constructor(private saleServantsRepository: SaleServantsRepository) {}
 
   async execute({
     servantId,
     saleId,
-  }: FindSaleServantByIdUseCaseRequest): Promise<FindSaleServantByIdUseCaseResponse> {
+  }: FindSaleServantUseCaseRequest): Promise<FindSaleServantUseCaseResponse> {
     const saleServant = await this.saleServantsRepository.findSaleServant({
       servantId: new UniqueEntityID(servantId),
       saleId: new UniqueEntityID(saleId),

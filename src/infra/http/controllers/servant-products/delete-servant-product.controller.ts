@@ -5,9 +5,15 @@ import {
   Delete,
   HttpCode,
   Param,
-  UsePipes,
 } from '@nestjs/common'
-import { ServantIdParamValidationPipe } from '../../schemas/servant-id-param.schema'
+import {
+  ServantIdParam,
+  ServantIdParamValidationPipe,
+} from '../../schemas/servant-id-param.schema'
+import {
+  ProductIdParam,
+  ProductIdParamValidationPipe,
+} from '../../schemas/product-id-param.schema'
 
 @Controller()
 export class DeleteServantProductController {
@@ -15,11 +21,16 @@ export class DeleteServantProductController {
     private readonly deleteServantProductUseCase: DeleteServantProductUseCase,
   ) {}
 
-  @Delete('servant-products/:servantId')
-  @UsePipes(ServantIdParamValidationPipe)
+  @Delete('servant-products/:productId/product/:servantId/servant')
   @HttpCode(204)
-  async handle(@Param('servantId') servantId: string) {
-    const result = await this.deleteServantProductUseCase.execute({ servantId })
+  async handle(
+    @Param('servantId', ServantIdParamValidationPipe) servantId: ServantIdParam,
+    @Param('productId', ProductIdParamValidationPipe) productId: ProductIdParam,
+  ) {
+    const result = await this.deleteServantProductUseCase.execute({
+      servantId,
+      productId,
+    })
 
     if (result.isLeft()) {
       throw new BadRequestException()

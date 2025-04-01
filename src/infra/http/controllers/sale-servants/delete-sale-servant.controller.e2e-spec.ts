@@ -47,22 +47,27 @@ describe('Delete Sale Servant (E2E)', () => {
 
     const servant = await servantsFactory.makePrismaServant()
     const sale = await salesFactory.makePrismaSale()
+    const servantId = servant.id.toString()
+    const saleId = sale.id.toString()
 
-    const saleServant = await saleServantsFactory.makePrismaSaleServant({
-      saleId: sale.id.toString(),
-      servantId: servant.id.toString(),
+    await saleServantsFactory.makePrismaSaleServant({
+      saleId,
+      servantId,
     })
 
     const response = await request(app.getHttpServer())
-      .delete(`/sale-servants/${saleServant.id.toString()}`)
+      .delete(`/sale-servants/${saleId}/sale/${servantId}/servant`)
       .set('Authorization', `Bearer ${access_token}`)
       .send({})
 
     expect(response.statusCode).toBe(204)
 
-    const saleServantsOnDatabase = await prisma.saleServants.findFirst({
+    const saleServantsOnDatabase = await prisma.saleServants.findUnique({
       where: {
-        saleId: sale.id.toString(),
+        saleId_servantId: {
+          saleId,
+          servantId,
+        },
       },
     })
 

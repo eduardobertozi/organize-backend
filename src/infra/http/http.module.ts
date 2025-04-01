@@ -1,71 +1,65 @@
-import { Module } from '@nestjs/common'
-import { DatabaseModule } from '../database/database.module'
-import { CryptographyModule } from '../cryptography/cryptography.module'
-import { StorageModule } from '../storage/storage.module'
-import { CreateAccountController } from './controllers/users/create-account.controller'
-import { RegisterUserUseCase } from '@/domain/user/application/use-cases/register-user'
-import { AuthenticateController } from './controllers/users/authenticate.controller'
-import { AuthenticateUserUseCase } from '@/domain/user/application/use-cases/authenticate-user'
-import { CreateProductController } from './controllers/products/create-product.controller'
 import { CreateProductUseCase } from '@/domain/products/application/use-cases/create-product.use-case'
-import { CreateSupplierController } from './controllers/suppliers/create-supplier.controller'
-import { CreateSupplierUseCase } from '@/domain/suppliers/application/use-cases/create-supplier.use-case'
-import { EditProductController } from './controllers/products/edit-product.controller'
-import { EditProductUseCase } from '@/domain/products/application/use-cases/edit-product.use-case'
-import { DeleteProductController } from './controllers/products/delete-product.controller'
 import { DeleteProductUseCase } from '@/domain/products/application/use-cases/delete-product.use-case'
-import { FindProductByIdController } from './controllers/products/find-product-by-id.controller'
+import { EditProductUseCase } from '@/domain/products/application/use-cases/edit-product.use-case'
+import { FetchAllProductsUseCase } from '@/domain/products/application/use-cases/fetch-all-products.use-case'
 import { FindProductByIdUseCase } from '@/domain/products/application/use-cases/find-product-by-id.use-case'
 import { FindProductByNameUseCase } from '@/domain/products/application/use-cases/find-product-by-name.use-case'
-import { FindProductsByNameController } from './controllers/products/find-products-by-name.controller'
-import { FetchAllProductsController } from './controllers/products/fetch-all-products.controller'
-import { FetchAllProductsUseCase } from '@/domain/products/application/use-cases/fetch-all-products.use-case'
-import { CreateServantController } from './controllers/servants/create-servant.controller'
-import { CreateServantUseCase } from '@/domain/servants/application/use-cases/create-servant.use-case'
-import { FetchAllServantsController } from './controllers/servants/fetch-all-servants.controller'
-import { FetchAllServantsUseCase } from '@/domain/servants/application/use-cases/fetch-all-servants.use-case'
-import { CreateServantProductController } from './controllers/servant-products/create-servant-products.controller'
-import { CreateServantProductUseCase } from '@/domain/servant-products/application/use-cases/create-servant-product.use-case'
-import { DeleteServantProductController } from './controllers/servant-products/delete-servant-product.controller'
-import { DeleteServantProductUseCase } from '@/domain/servant-products/application/use-cases/delete-servant-product.use-case'
-import { FindServantProductsByServantIdController } from './controllers/servant-products/find-servant-products-by-servant-id.controller'
-import { FindServantProductsByServantIdUseCase } from '@/domain/servant-products/application/use-cases/fetch-servant-products-by-servant-id.use-case'
-import { CreateSaleController } from './controllers/sales/create-sale.controller'
-import { CreateSaleUseCase } from '@/domain/sales/application/use-cases/create-sale.use-case'
-import { DeleteSaleController } from './controllers/sales/delete-sale.controller'
-import { DeleteSaleUseCase } from '@/domain/sales/application/use-cases/delete-sale.use-case'
-import { EditSaleController } from './controllers/sales/edit-sale.controller'
-import { EditSaleUseCase } from '@/domain/sales/application/use-cases/edit-sale.use-case'
-import { FetchAllSalesController } from './controllers/sales/fetch-all-sales.controller'
-import { FetchAllSalesUseCase } from '@/domain/sales/application/use-cases/fetch-all-sales.use-case'
-import { FindSaleByIdController } from './controllers/sales/find-sale-by-id.controller'
-import { FindSaleByIdUseCase } from '@/domain/sales/application/use-cases/find-sale-by-id.use-case'
-import { CreateSaleServantController } from './controllers/sale-servants/create-sale-servant.controller'
 import { CreateSaleServantUseCase } from '@/domain/sale-servants/application/use-cases/create-sale-servant.use-case'
-import { DeleteSaleServantController } from './controllers/sale-servants/delete-sale-servant.controller'
 import { DeleteSaleServantUseCase } from '@/domain/sale-servants/application/use-cases/delete-sale-servant.use-case'
-import { FindSaleServantBySaleIdController } from './controllers/sale-servants/find-sale-servant-by-sale-id.controller'
-import { FindSaleServantBySaleIdUseCase } from '@/domain/sale-servants/application/use-cases/fetch-all-sale-servants-by-sale-id.use-case'
-import { FindSaleServantByIdController } from './controllers/sale-servants/find-sale-servant-by-id.controller'
-import { FindSaleServantByIdUseCase } from '@/domain/sale-servants/application/use-cases/find-sale-servant-by-servant-id.use-case'
-import { UploadAttachmentsController } from './controllers/uploads/upload-attachment.controller'
-import { UploadAndCreateAttachmentUseCase } from '@/domain/uploads/upload-and-create-attachment.use-case'
-import { EditSupplierController } from './controllers/suppliers/edit-supplier.controller'
-import { EditSupplierUseCase } from '@/domain/suppliers/application/use-cases/edit-supplier.use-case'
-import { FetchAllSupplierController } from './controllers/suppliers/fetch-all-suppliers.controller'
-import { FetchAllSuppliersUseCase } from '@/domain/suppliers/application/use-cases/fetch-all-suppliers.use-case'
-import { FindSupplierByNameController } from '@/infra/http/controllers/suppliers/find-suppliers-by-name.controller'
-import { FindSupplierByNameUseCase } from '@/domain/suppliers/application/use-cases/find-supplier-by-name.use-case'
-import { FindSupplierByIdController } from '@/infra/http/controllers/suppliers/find-suppliers-by-id.controller'
-import { FindSupplierByIdUseCase } from '@/domain/suppliers/application/use-cases/find-supplier-by-id.use-case'
-import { EditServantController } from '@/infra/http/controllers/servants/edit-servant.controller'
-import { EditServantUseCase } from '@/domain/servants/application/use-cases/edit-servant.use-case'
-import { DeleteServantController } from '@/infra/http/controllers/servants/delete-servant.controller'
+import { CreateSaleUseCase } from '@/domain/sales/application/use-cases/create-sale.use-case'
+import { DeleteSaleUseCase } from '@/domain/sales/application/use-cases/delete-sale.use-case'
+import { EditSaleUseCase } from '@/domain/sales/application/use-cases/edit-sale.use-case'
+import { FetchAllSalesUseCase } from '@/domain/sales/application/use-cases/fetch-all-sales.use-case'
+import { FindSaleByIdUseCase } from '@/domain/sales/application/use-cases/find-sale-by-id.use-case'
+import { CreateServantProductUseCase } from '@/domain/servant-products/application/use-cases/create-servant-product.use-case'
+import { DeleteServantProductUseCase } from '@/domain/servant-products/application/use-cases/delete-servant-product.use-case'
+import { CreateServantUseCase } from '@/domain/servants/application/use-cases/create-servant.use-case'
 import { DeleteServantUseCase } from '@/domain/servants/application/use-cases/delete-servant.use-case'
-import { FindServantByNameController } from '@/infra/http/controllers/servants/find-servant-by-name.controller'
-import { FindServantByNameUseCase } from '@/domain/servants/application/use-cases/find-servant-by-name.use-case'
-import { FindServantByIdController } from '@/infra/http/controllers/servants/find-servant-by-id.controller'
+import { EditServantUseCase } from '@/domain/servants/application/use-cases/edit-servant.use-case'
+import { FetchAllServantsUseCase } from '@/domain/servants/application/use-cases/fetch-all-servants.use-case'
 import { FindServantByIdUseCase } from '@/domain/servants/application/use-cases/find-servant-by-id.use-case'
+import { FindServantByNameUseCase } from '@/domain/servants/application/use-cases/find-servant-by-name.use-case'
+import { CreateSupplierUseCase } from '@/domain/suppliers/application/use-cases/create-supplier.use-case'
+import { EditSupplierUseCase } from '@/domain/suppliers/application/use-cases/edit-supplier.use-case'
+import { FetchAllSuppliersUseCase } from '@/domain/suppliers/application/use-cases/fetch-all-suppliers.use-case'
+import { FindSupplierByIdUseCase } from '@/domain/suppliers/application/use-cases/find-supplier-by-id.use-case'
+import { FindSupplierByNameUseCase } from '@/domain/suppliers/application/use-cases/find-supplier-by-name.use-case'
+import { UploadAndCreateAttachmentUseCase } from '@/domain/uploads/upload-and-create-attachment.use-case'
+import { AuthenticateUserUseCase } from '@/domain/user/application/use-cases/authenticate-user'
+import { RegisterUserUseCase } from '@/domain/user/application/use-cases/register-user'
+import { DeleteServantController } from '@/infra/http/controllers/servants/delete-servant.controller'
+import { EditServantController } from '@/infra/http/controllers/servants/edit-servant.controller'
+import { FindServantByIdController } from '@/infra/http/controllers/servants/find-servant-by-id.controller'
+import { FindServantByNameController } from '@/infra/http/controllers/servants/find-servant-by-name.controller'
+import { FindSupplierByIdController } from '@/infra/http/controllers/suppliers/find-suppliers-by-id.controller'
+import { FindSupplierByNameController } from '@/infra/http/controllers/suppliers/find-suppliers-by-name.controller'
+import { Module } from '@nestjs/common'
+import { CryptographyModule } from '../cryptography/cryptography.module'
+import { DatabaseModule } from '../database/database.module'
+import { StorageModule } from '../storage/storage.module'
+import { CreateProductController } from './controllers/products/create-product.controller'
+import { DeleteProductController } from './controllers/products/delete-product.controller'
+import { EditProductController } from './controllers/products/edit-product.controller'
+import { FetchAllProductsController } from './controllers/products/fetch-all-products.controller'
+import { FindProductByIdController } from './controllers/products/find-product-by-id.controller'
+import { FindProductsByNameController } from './controllers/products/find-products-by-name.controller'
+import { CreateSaleServantController } from './controllers/sale-servants/create-sale-servant.controller'
+import { DeleteSaleServantController } from './controllers/sale-servants/delete-sale-servant.controller'
+import { CreateSaleController } from './controllers/sales/create-sale.controller'
+import { DeleteSaleController } from './controllers/sales/delete-sale.controller'
+import { EditSaleController } from './controllers/sales/edit-sale.controller'
+import { FetchAllSalesController } from './controllers/sales/fetch-all-sales.controller'
+import { FindSaleByIdController } from './controllers/sales/find-sale-by-id.controller'
+import { CreateServantProductController } from './controllers/servant-products/create-servant-products.controller'
+import { DeleteServantProductController } from './controllers/servant-products/delete-servant-product.controller'
+import { CreateServantController } from './controllers/servants/create-servant.controller'
+import { FetchAllServantsController } from './controllers/servants/fetch-all-servants.controller'
+import { CreateSupplierController } from './controllers/suppliers/create-supplier.controller'
+import { EditSupplierController } from './controllers/suppliers/edit-supplier.controller'
+import { FetchAllSupplierController } from './controllers/suppliers/fetch-all-suppliers.controller'
+import { UploadAttachmentsController } from './controllers/uploads/upload-attachment.controller'
+import { AuthenticateController } from './controllers/users/authenticate.controller'
+import { CreateAccountController } from './controllers/users/create-account.controller'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -90,7 +84,6 @@ import { FindServantByIdUseCase } from '@/domain/servants/application/use-cases/
     FindServantByIdController,
     CreateServantProductController,
     DeleteServantProductController,
-    FindServantProductsByServantIdController,
     FindSupplierByIdController,
     CreateSaleController,
     DeleteSaleController,
@@ -99,8 +92,6 @@ import { FindServantByIdUseCase } from '@/domain/servants/application/use-cases/
     FindSaleByIdController,
     CreateSaleServantController,
     DeleteSaleServantController,
-    FindSaleServantBySaleIdController,
-    FindSaleServantByIdController,
     UploadAttachmentsController,
   ],
   providers: [
@@ -125,7 +116,6 @@ import { FindServantByIdUseCase } from '@/domain/servants/application/use-cases/
     FindServantByIdUseCase,
     CreateServantProductUseCase,
     DeleteServantProductUseCase,
-    FindServantProductsByServantIdUseCase,
     CreateSaleUseCase,
     DeleteSaleUseCase,
     EditSaleUseCase,
@@ -133,8 +123,6 @@ import { FindServantByIdUseCase } from '@/domain/servants/application/use-cases/
     FindSaleByIdUseCase,
     CreateSaleServantUseCase,
     DeleteSaleServantUseCase,
-    FindSaleServantBySaleIdUseCase,
-    FindSaleServantByIdUseCase,
     UploadAndCreateAttachmentUseCase,
   ],
 })

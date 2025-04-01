@@ -6,6 +6,14 @@ import {
   HttpCode,
   Param,
 } from '@nestjs/common'
+import {
+  SaleIdParam,
+  SaleIdParamValidationPipe,
+} from '../../schemas/sale-id-param.schema'
+import {
+  ServantIdParam,
+  ServantIdParamValidationPipe,
+} from '../../schemas/servant-id-param.schema'
 
 @Controller()
 export class DeleteSaleServantController {
@@ -13,11 +21,15 @@ export class DeleteSaleServantController {
     private readonly deleteSaleServantUseCase: DeleteSaleServantUseCase,
   ) {}
 
-  @Delete('sale-servants/:saleServantId')
+  @Delete('sale-servants/:saleId/sale/:servantId/servant')
   @HttpCode(204)
-  async handle(@Param('saleServantId') saleServantId: string) {
+  async handle(
+    @Param('saleId', SaleIdParamValidationPipe) saleId: SaleIdParam,
+    @Param('servantId', ServantIdParamValidationPipe) servantId: ServantIdParam,
+  ) {
     const result = await this.deleteSaleServantUseCase.execute({
-      saleServantId,
+      saleId,
+      servantId,
     })
 
     if (result.isLeft()) {

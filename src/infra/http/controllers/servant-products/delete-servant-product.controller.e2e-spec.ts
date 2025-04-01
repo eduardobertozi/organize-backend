@@ -52,10 +52,13 @@ describe('Delete Servant Product (E2E)', () => {
     const access_token = jwt.sign({ sub: user.id.toString() })
 
     const supplier = await suppliersFactory.makePrismaSuppliers()
-    const product = await productsFactory.makePrismaProducts({
-      supplierId: supplier.id,
-    })
+    const supplierId = supplier.id
+
+    const product = await productsFactory.makePrismaProducts({ supplierId })
+    const productId = product.id.toString()
+
     const servant = await servantsFactory.makePrismaServant()
+    const servantId = servant.id.toString()
 
     await servantProductFactory.makePrismaServantProduct({
       productId: product.id.toString(),
@@ -63,7 +66,7 @@ describe('Delete Servant Product (E2E)', () => {
     })
 
     const response = await request(app.getHttpServer())
-      .delete(`/servant-products/${servant.id.toString()}`)
+      .delete(`/servant-products/${productId}/product/${servantId}/servant`)
       .set('Authorization', `Bearer ${access_token}`)
       .send({})
 
@@ -72,8 +75,8 @@ describe('Delete Servant Product (E2E)', () => {
     const servantProductOnDatabase = await prisma.servantProducts.findUnique({
       where: {
         servantId_productId: {
-          servantId: servant.id.toString(),
-          productId: product.id.toString(),
+          servantId,
+          productId,
         },
       },
     })
