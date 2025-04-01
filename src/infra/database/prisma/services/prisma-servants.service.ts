@@ -36,7 +36,7 @@ export class PrismaServantsService implements ServantsRepository {
         name,
       },
       include: {
-        products: true,
+        products: { select: { id: true, price: true } },
       },
     })
 
@@ -62,11 +62,9 @@ export class PrismaServantsService implements ServantsRepository {
         },
         skip: (page - 1) * 10,
         include: {
-          products: true,
+          products: { select: { id: true, price: true } },
         },
-        orderBy: {
-          createdAt: 'desc',
-        },
+        orderBy: { createdAt: 'desc' },
       }),
     ])
 

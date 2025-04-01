@@ -29,6 +29,8 @@ export class FetchAllServantsUseCase {
       page,
     })
 
+    console.log(servants, 'SERVANTS')
+
     const paginationResponse = PaginationResponse.create({
       total,
       page,

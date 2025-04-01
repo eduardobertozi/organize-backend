@@ -3,7 +3,7 @@ import { Servant } from '@/domain/servants/enterprise/entities/servant'
 import { Prisma, Servant as PrismaServant, Product } from '@prisma/client'
 
 type ServantWithProducts = PrismaServant & {
-  products: Product[]
+  products: Pick<Product, 'id' | 'price'>[]
 }
 
 export class PrismaServantMapper {
