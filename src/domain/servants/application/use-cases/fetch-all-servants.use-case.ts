@@ -4,6 +4,12 @@ import { ServantsRepository } from '../repositories/servants.repository'
 import { Injectable } from '@nestjs/common'
 import { PaginationResponse } from '@/core/pagination-response'
 
+/**
+ * TODO:
+ * - implement q param to find many servants with search text in name
+ * - change respective test this
+ * */
+
 interface FetchAllServantsUseCaseRequest {
   page?: number
 }

@@ -3,9 +3,11 @@ import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { Servant } from '../../enterprise/entities/servant'
 import { ServantsRepository } from '../repositories/servants.repository'
 import { Injectable } from '@nestjs/common'
+import { Product } from '@/domain/products/enterprise/entities/product'
 
 interface CreateServantUseCaseRequest {
   name: string
+  products: Product[]
   productsPrice: number
   workForcePrice: number
   profitPercent: number
@@ -26,18 +28,18 @@ export class CreateServantUseCase {
     params: CreateServantUseCaseRequest,
   ): Promise<CreateServantUseCaseResponse> {
     const servant = Servant.create(params)
-    const { servants: servantExists } = await this.servantRepository.findByName(
+    const servantAlreadyExists = await this.servantRepository.findByName(
       servant.name,
     )
 
-    if (!servantExists || servantExists.length > 0) {
+    if (servantAlreadyExists) {
       return left(new AlreadyExistsError())
     }
 
-    const createdServant = await this.servantRepository.create(servant)
+    await this.servantRepository.create(servant)
 
     return right({
-      servant: createdServant,
+      servant,
     })
   }
 }

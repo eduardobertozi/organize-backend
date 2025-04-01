@@ -53,6 +53,6 @@ describe('Find Servant By Name (E2E)', () => {
       }),
     )
 
-    expect(response.body.servants).toHaveLength(10)
+    expect(response.body.servants).toHaveLength(1)
   })
 })

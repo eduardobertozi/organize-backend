@@ -38,6 +38,7 @@ describe('Create Servant (E2E)', () => {
     const access_token = jwt.sign({ sub: user.id.toString() })
 
     const supplier = await suppliersFactory.makePrismaSuppliers()
+
     const product = await productsFactory.makePrismaProducts({
       supplierId: supplier.id,
     })
@@ -48,6 +49,7 @@ describe('Create Servant (E2E)', () => {
       .send({
         name: 'New Servant',
         productsPrice: product.price,
+        products: [],
         workForcePrice: 20,
         profitPercent: 100,
       })

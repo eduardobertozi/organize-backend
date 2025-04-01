@@ -15,23 +15,26 @@ export class InMemoryServantsRepository extends ServantsRepository {
     )
   }
 
-  async findByName(
-    name: string,
-    params?: PaginationParams,
-  ): Promise<FindManyServantsResponse> {
-    const page = params?.page ?? 1
-
-    const filteredItems = this.items.filter((item) => item.name?.includes(name))
-
-    return Promise.resolve({
-      servants: filteredItems.slice((page - 1) * 10, page * 10),
-      total: this.items.length,
-    })
+  async findByName(name: string): Promise<Servant | null> {
+    return Promise.resolve(
+      this.items.find((item) => item.name === name) ?? null,
+    )
   }
 
-  async findAll({ page }: PaginationParams): Promise<FindManyServantsResponse> {
+  async findAll({
+    q,
+    page,
+  }: PaginationParams): Promise<FindManyServantsResponse> {
+    let servants: Servant[] = this.items.slice((page - 1) * 10, page * 10)
+
+    if (q) {
+      servants = this.items.filter((item) =>
+        item.name.toLowerCase().includes(q.toLowerCase()),
+      )
+    }
+
     return Promise.resolve({
-      servants: this.items.slice((page - 1) * 10, page * 10),
+      servants,
       total: this.items.length,
     })
   }

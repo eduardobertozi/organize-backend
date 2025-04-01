@@ -1,18 +1,17 @@
-import { Either, right } from '@/core/either'
+import { Either, left, right } from '@/core/either'
 import { Servant } from '../../enterprise/entities/servant'
 import { ServantsRepository } from '../repositories/servants.repository'
 import { Injectable } from '@nestjs/common'
-import { PaginationResponse } from '@/core/pagination-response'
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 
 interface FindServantByNameUseCaseRequest {
   name: string
-  page?: number
 }
 
 type FindServantByNameUseCaseResponse = Either<
-  null,
-  PaginationResponse & {
-    servants: Servant[]
+  ResourceNotFoundError,
+  {
+    servant: Servant
   }
 >
 
@@ -22,23 +21,15 @@ export class FindServantByNameUseCase {
 
   async execute({
     name,
-    page = 1,
   }: FindServantByNameUseCaseRequest): Promise<FindServantByNameUseCaseResponse> {
-    const { total, servants } = await this.servantRepository.findByName(name, {
-      page,
-    })
+    const servant = await this.servantRepository.findByName(name)
 
-    const { hasMore, nextPage, previousPage } = PaginationResponse.create({
-      total,
-      page,
-    })
+    if (!servant) {
+      return left(new ResourceNotFoundError())
+    }
 
     return right({
-      total,
-      hasMore,
-      nextPage,
-      previousPage,
-      servants,
+      servant,
     })
   }
 }

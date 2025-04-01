@@ -30,20 +30,13 @@ export class PrismaServantsService implements ServantsRepository {
     return PrismaServantMapper.toDomain(servant)
   }
 
-  async findByName(
-    name: string,
-    params?: PaginationParams,
-  ): Promise<FindManyServantsResponse> {
-    const page = params?.page ?? 1
-
+  async findByName(name: string): Promise<FindManyServantsResponse> {
     const [total, servants] = await this.prisma.$transaction([
       this.prisma.servant.count(),
       this.prisma.servant.findMany({
         where: {
           name,
         },
-        take: 10,
-        skip: (page - 1) * 10,
         include: {
           products: true,
         },
@@ -66,6 +59,9 @@ export class PrismaServantsService implements ServantsRepository {
         skip: (page - 1) * 10,
         include: {
           products: true,
+        },
+        orderBy: {
+          createdAt: 'desc',
         },
       }),
     ])

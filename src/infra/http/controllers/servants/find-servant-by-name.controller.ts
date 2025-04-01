@@ -10,6 +10,12 @@ import {
   NameQueryValidationPipe,
 } from '@/infra/http/schemas/name-query-param.schema'
 
+/**
+ * TODO:
+ * - Change response from many to one servant
+ * - change respective test this
+ * */
+
 @Controller()
 export class FindServantByNameController {
   constructor(private readonly findServantByName: FindServantByNameUseCase) {}

@@ -32,6 +32,8 @@ model Servant {
   products       Product[]
   servantProduct ServantProduct[]
   saleServant    SaleServant[]
+  createdAt      DateTime         @default(now())
+  updatedAt      DateTime         @updatedAt
 
   @@map("servants")
 }

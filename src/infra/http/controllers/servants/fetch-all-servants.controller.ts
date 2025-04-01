@@ -6,6 +6,12 @@ import {
   PageQueryValidationPipe,
 } from '../../schemas/page-query-param.schema'
 
+/**
+ * TODO:
+ * - implement q param to find many servants with search text in name
+ * - change respective test this
+ * */
+
 @Controller()
 export class FetchAllServantsController {
   constructor(

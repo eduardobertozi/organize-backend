@@ -9,10 +9,7 @@ export interface FindManyServantsResponse {
 
 export abstract class ServantsRepository {
   abstract findById(id: UniqueEntityID): Promise<Servant | null>
-  abstract findByName(
-    name: string,
-    params?: PaginationParams,
-  ): Promise<FindManyServantsResponse>
+  abstract findByName(name: string): Promise<Servant | null>
   abstract findAll(params: PaginationParams): Promise<FindManyServantsResponse>
   abstract create(servant: Servant): Promise<Servant>
   abstract save(servant: Servant): Promise<Servant>

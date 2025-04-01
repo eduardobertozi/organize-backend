@@ -37,6 +37,7 @@ export class EditServantController {
     }
 
     return {
+      message: 'Serviço atualizado com sucesso!',
       servant: ServantPresenter.toHTTP(result.value.servant),
     }
   }
