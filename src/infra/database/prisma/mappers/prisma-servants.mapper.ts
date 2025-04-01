@@ -12,6 +12,7 @@ export class PrismaServantMapper {
       {
         name: raw.name,
         price: raw.price,
+        productsIds: raw.products.map((product) => product.id),
         productsPrice: raw.products.reduce(
           (acc, product) => acc + product.price,
           0,

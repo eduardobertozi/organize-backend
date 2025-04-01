@@ -8,6 +8,7 @@ export interface ServantProps {
   workForcePrice: number
   profitPercent: number
   price?: number
+  productsIds?: string[]
   createdAt?: Date | null
   updatedAt?: Date | null
 }
@@ -24,6 +25,10 @@ export class Servant extends Entity<ServantProps> {
 
   get price(): number {
     return this.props.price ?? 0
+  }
+
+  get productsIds(): string[] {
+    return this.props.productsIds ?? []
   }
 
   get productsPrice(): number {

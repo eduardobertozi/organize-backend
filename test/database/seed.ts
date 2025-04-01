@@ -13,7 +13,7 @@ async function main() {
     },
   })
 
-  await prisma.product.createManyAndReturn({
+  const products = await prisma.product.createManyAndReturn({
     data: [
       {
         name: 'Lâmina de barbear',
@@ -30,13 +30,24 @@ async function main() {
     ],
   })
 
-  await prisma.servant.createMany({
+  const servant = await prisma.servant.create({
+    data: {
+      name: 'Servant 1',
+      profitPercent: 10,
+      workForcePrice: 20,
+      price: ((0.6 + 20) * 10) / 100,
+    },
+  })
+
+  await prisma.servantProducts.createMany({
     data: [
       {
-        name: 'Servant 1',
-        profitPercent: 10,
-        workForcePrice: 20,
-        price: ((0.6 + 20) * 10) / 100,
+        productId: products[0].id,
+        servantId: servant.id,
+      },
+      {
+        productId: products[1].id,
+        servantId: servant.id,
       },
     ],
   })
