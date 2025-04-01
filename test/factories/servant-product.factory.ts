@@ -31,7 +31,7 @@ export class ServantProductsFactory {
   ) {
     const servant = makeServantProduct(override, id)
 
-    const prismaServant = await this.prisma.servantProduct.create({
+    const prismaServant = await this.prisma.servantProducts.create({
       data: {
         productId: servant.productId,
         servantId: servant.servantId,

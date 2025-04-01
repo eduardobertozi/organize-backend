@@ -1,4 +1,4 @@
-import { FindSaleServantByIdUseCase } from '@/domain/sale-servants/application/use-cases/find-sale-servant-by-id.use-case'
+import { FindSaleServantByIdUseCase } from '@/domain/sale-servants/application/use-cases/find-sale-servant-by-servant-id.use-case'
 import { BadRequestException, Controller, Get, Param } from '@nestjs/common'
 import { SaleServantsPresenter } from '../../presenters/http-sale-servants.presenter'
 import {

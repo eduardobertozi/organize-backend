@@ -61,13 +61,15 @@ describe('Create Servant (E2E)', () => {
 
     expect(response.statusCode).toBe(201)
 
-    const servantProductssOnDatabase = await prisma.servantProduct.findFirst({
+    const servantProductsOnDatabase = await prisma.servantProducts.findUnique({
       where: {
-        productId: product.id.toString(),
-        servantId: servant.id.toString(),
+        servantId_productId: {
+          servantId: servant.id.toString(),
+          productId: product.id.toString(),
+        },
       },
     })
 
-    expect(servantProductssOnDatabase).toBeTruthy()
+    expect(servantProductsOnDatabase).toBeTruthy()
   })
 })

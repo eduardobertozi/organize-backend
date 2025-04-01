@@ -64,9 +64,9 @@ describe('Create Sale Servant (E2E)', () => {
       }),
     )
 
-    const saleServantsOnDatabase = await prisma.saleServant.findFirst({
+    const saleServantsOnDatabase = await prisma.saleServants.findFirst({
       where: {
-        id: saleServant.id,
+        saleId: sale.id.toString(),
       },
     })
 

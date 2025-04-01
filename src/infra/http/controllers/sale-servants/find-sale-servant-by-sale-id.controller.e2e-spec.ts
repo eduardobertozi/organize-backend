@@ -60,7 +60,7 @@ describe('Find Sale Servant by Sale Id (E2E)', () => {
 
     expect(response.statusCode).toBe(200)
 
-    const saleServantsOnDatabase = await prisma.saleServant.findFirst({
+    const saleServantsOnDatabase = await prisma.saleServants.findFirst({
       where: {
         saleId: sale.id.toString(),
       },

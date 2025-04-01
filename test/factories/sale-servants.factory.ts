@@ -31,7 +31,7 @@ export class SaleServantsFactory {
   ): Promise<SaleServant> {
     const sale = makeSaleServant(data)
 
-    await this.prisma.saleServant.create({
+    await this.prisma.saleServants.create({
       data: PrismaSaleServantsMapper.toPrisma(sale),
     })
 

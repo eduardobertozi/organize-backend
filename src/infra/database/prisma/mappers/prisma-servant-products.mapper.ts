@@ -1,5 +1,5 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { Prisma, ServantProduct as PrismaServantProduct } from '@prisma/client'
+import { Prisma, ServantProducts as PrismaServantProduct } from '@prisma/client'
 import { ServantProduct } from '@/domain/servant-products/entreprise/entities/servant-product'
 
 export class PrismaServantProductsMapper {
@@ -9,15 +9,14 @@ export class PrismaServantProductsMapper {
         productId: raw.productId,
         servantId: raw.servantId,
       },
-      new UniqueEntityID(raw.id),
+      new UniqueEntityID(),
     )
   }
 
   static toPrisma(
     servant: ServantProduct,
-  ): Prisma.ServantProductUncheckedCreateInput {
+  ): Prisma.ServantProductsUncheckedCreateInput {
     return {
-      id: servant.id.toString(),
       productId: servant.productId,
       servantId: servant.servantId,
     }

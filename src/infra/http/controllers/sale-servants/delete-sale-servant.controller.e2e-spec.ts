@@ -60,9 +60,9 @@ describe('Delete Sale Servant (E2E)', () => {
 
     expect(response.statusCode).toBe(204)
 
-    const saleServantsOnDatabase = await prisma.saleServant.findFirst({
+    const saleServantsOnDatabase = await prisma.saleServants.findFirst({
       where: {
-        id: saleServant.id.toString(),
+        saleId: sale.id.toString(),
       },
     })
 

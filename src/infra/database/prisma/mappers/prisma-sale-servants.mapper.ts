@@ -1,6 +1,6 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
 import { SaleServant } from '@/domain/sale-servants/enterprise/entities/sale-servant'
-import { Prisma, SaleServant as PrismaSaleServant } from '@prisma/client'
+import { Prisma, SaleServants as PrismaSaleServant } from '@prisma/client'
 
 export class PrismaSaleServantsMapper {
   static toDomain(raw: PrismaSaleServant): SaleServant {
@@ -9,13 +9,12 @@ export class PrismaSaleServantsMapper {
         saleId: raw.saleId,
         servantId: raw.servantId,
       },
-      new UniqueEntityID(raw.id),
+      new UniqueEntityID(),
     )
   }
 
-  static toPrisma(sale: SaleServant): Prisma.SaleServantUncheckedCreateInput {
+  static toPrisma(sale: SaleServant): Prisma.SaleServantsUncheckedCreateInput {
     return {
-      id: sale.id.toString(),
       saleId: sale.saleId,
       servantId: sale.servantId,
     }

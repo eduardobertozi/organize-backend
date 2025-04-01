@@ -16,7 +16,6 @@ export class PrismaServantMapper {
           (acc, product) => acc + product.price,
           0,
         ),
-        productsIds: raw.products.map((product) => product.id),
         profitPercent: raw.profitPercent,
         workForcePrice: raw.workForcePrice,
       },
@@ -29,11 +28,6 @@ export class PrismaServantMapper {
       id: servant.id.toString(),
       name: servant.name,
       price: servant.price,
-      products: {
-        connect: servant.productsIds?.map((productId) => ({
-          id: productId,
-        })),
-      },
       profitPercent: servant.profitPercent,
       workForcePrice: servant.workForcePrice,
     }

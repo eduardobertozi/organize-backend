@@ -57,12 +57,10 @@ describe('Find Servant Products (E2E)', () => {
     })
     const servant = await servantsFactory.makePrismaServant()
 
-    const servantProduct = await servantProductFactory.makePrismaServantProduct(
-      {
-        productId: product.id.toString(),
-        servantId: servant.id.toString(),
-      },
-    )
+    await servantProductFactory.makePrismaServantProduct({
+      productId: product.id.toString(),
+      servantId: servant.id.toString(),
+    })
 
     const response = await request(app.getHttpServer())
       .get(`/servant-products/${servant.id.toString()}`)
@@ -71,9 +69,12 @@ describe('Find Servant Products (E2E)', () => {
 
     expect(response.statusCode).toBe(200)
 
-    const servantProductOnDatabase = await prisma.servantProduct.findUnique({
+    const servantProductOnDatabase = await prisma.servantProducts.findUnique({
       where: {
-        id: servantProduct.id.toString(),
+        servantId_productId: {
+          servantId: servant.id.toString(),
+          productId: product.id.toString(),
+        },
       },
     })
 
