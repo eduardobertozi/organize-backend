@@ -5,12 +5,10 @@ import {
   PageQueryParam,
   PageQueryValidationPipe,
 } from '../../schemas/page-query-param.schema'
-
-/**
- * TODO:
- * - implement q param to find many servants with search text in name
- * - change respective test this
- * */
+import {
+  QueryParam,
+  QueryValidationPipe,
+} from '../../schemas/q-query-param.schema'
 
 @Controller()
 export class FetchAllServantsController {
@@ -19,8 +17,11 @@ export class FetchAllServantsController {
   ) {}
 
   @Get('servants/all')
-  async handle(@Query('page', PageQueryValidationPipe) page: PageQueryParam) {
-    const result = await this.fetchAllServantsUseCase.execute({ page })
+  async handle(
+    @Query('page', PageQueryValidationPipe) page: PageQueryParam,
+    @Query('q', QueryValidationPipe) q: QueryParam,
+  ) {
+    const result = await this.fetchAllServantsUseCase.execute({ q, page })
 
     if (result.isLeft()) {
       throw new BadRequestException()

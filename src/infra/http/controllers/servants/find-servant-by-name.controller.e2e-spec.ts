@@ -32,16 +32,16 @@ describe('Find Servant By Name (E2E)', () => {
     const user = await usersFactory.makePrismaUser()
     const access_token = jwt.sign({ sub: user.id.toString() })
 
-    await Promise.all(
+    const servants = await Promise.all(
       Array.from({ length: 12 }).map((_v, i) =>
         servantsFactory.makePrismaServant({
-          name: `Servant ${i}`,
+          name: `Servant ${i + 1}`,
         }),
       ),
     )
 
     const response = await request(app.getHttpServer())
-      .get('/servants?page=1&name=Servant 1')
+      .get('/servants?name=Servant 1')
       .set('Authorization', `Bearer ${access_token}`)
       .send({})
 
@@ -49,10 +49,10 @@ describe('Find Servant By Name (E2E)', () => {
 
     expect(response.body).toEqual(
       expect.objectContaining({
-        servants: expect.any(Array),
+        servant: expect.objectContaining({
+          id: servants[0].id.toString(),
+        }),
       }),
     )
-
-    expect(response.body.servants).toHaveLength(1)
   })
 })

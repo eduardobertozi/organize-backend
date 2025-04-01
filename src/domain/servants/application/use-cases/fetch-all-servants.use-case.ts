@@ -4,13 +4,8 @@ import { ServantsRepository } from '../repositories/servants.repository'
 import { Injectable } from '@nestjs/common'
 import { PaginationResponse } from '@/core/pagination-response'
 
-/**
- * TODO:
- * - implement q param to find many servants with search text in name
- * - change respective test this
- * */
-
 interface FetchAllServantsUseCaseRequest {
+  q?: string
   page?: number
 }
 
@@ -26,9 +21,13 @@ export class FetchAllServantsUseCase {
   constructor(private readonly servantRepository: ServantsRepository) {}
 
   async execute({
+    q,
     page = 1,
   }: FetchAllServantsUseCaseRequest): Promise<FetchAllServantsUseCaseResponse> {
-    const { servants, total } = await this.servantRepository.findAll({ page })
+    const { servants, total } = await this.servantRepository.findAll({
+      q,
+      page,
+    })
 
     const paginationResponse = PaginationResponse.create({
       total,

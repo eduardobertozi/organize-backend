@@ -30,32 +30,36 @@ export class PrismaServantsService implements ServantsRepository {
     return PrismaServantMapper.toDomain(servant)
   }
 
-  async findByName(name: string): Promise<FindManyServantsResponse> {
-    const [total, servants] = await this.prisma.$transaction([
-      this.prisma.servant.count(),
-      this.prisma.servant.findMany({
-        where: {
-          name,
-        },
-        include: {
-          products: true,
-        },
-      }),
-    ])
+  async findByName(name: string): Promise<Servant | null> {
+    const servant = await this.prisma.servant.findFirst({
+      where: {
+        name,
+      },
+      include: {
+        products: true,
+      },
+    })
 
-    return {
-      total: total,
-      servants: servants.map((servant) =>
-        PrismaServantMapper.toDomain(servant),
-      ),
+    if (!servant) {
+      return null
     }
+
+    return PrismaServantMapper.toDomain(servant)
   }
 
-  async findAll({ page }: PaginationParams): Promise<FindManyServantsResponse> {
+  async findAll({
+    page,
+    q,
+  }: PaginationParams): Promise<FindManyServantsResponse> {
     const [total, servants] = await this.prisma.$transaction([
       this.prisma.servant.count(),
       this.prisma.servant.findMany({
         take: 10,
+        where: {
+          name: {
+            contains: q,
+          },
+        },
         skip: (page - 1) * 10,
         include: {
           products: true,
