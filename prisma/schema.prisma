@@ -24,43 +24,46 @@ model User {
 }
 
 model Servant {
-  id             String           @id @default(uuid())
+  id             String @id @default(uuid())
   name           String
   price          Float
   profitPercent  Float
   workForcePrice Float
-  products       Product[]
-  servantProduct ServantProduct[]
-  saleServant    SaleServant[]
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
+
+  products ServantProducts[]
+  sales    SaleServants[]
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("servants")
 }
 
-model ServantProduct {
-  id        String  @id @default(uuid())
-  servant   Servant @relation(fields: [servantId], references: [id])
-  servantId String  @map("servant_id")
-  product   Product @relation(fields: [productId], references: [id])
-  productId String  @map("product_id")
+model ServantProducts {
+  servantId String @map("servant_id")
+  productId String @map("product_id")
 
+  servant Servant @relation(fields: [servantId], references: [id])
+  product Product @relation(fields: [productId], references: [id])
+
+  @@id([servantId, productId])
   @@map("servant_products")
 }
 
 model Product {
-  id             String           @id @default(uuid())
-  name           String
-  price          Float
-  reference      String
-  supplier       Supplier         @relation(fields: [supplierId], references: [id])
-  supplierId     String           @map("supplier_id")
-  servant        Servant?         @relation(fields: [servantId], references: [id])
-  servantId      String?          @map("servant_id")
-  attachments    Attachment[]
-  createdAt      DateTime         @default(now())
-  updatedAt      DateTime         @updatedAt
-  servantProduct ServantProduct[]
+  id         String @id @default(uuid())
+  name       String
+  price      Float
+  reference  String
+  supplierId String @map("supplier_id")
+
+  attachments Attachment[]
+  servants    ServantProducts[]
+
+  supplier Supplier @relation(fields: [supplierId], references: [id])
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("products")
 }
@@ -80,23 +83,25 @@ model Supplier {
 }
 
 model Sale {
-  id          String        @id @default(uuid())
+  id          String   @id @default(uuid())
   description String?
   amount      Float
-  createdAt   DateTime      @default(now())
-  updatedAt   DateTime      @updatedAt
-  saleServant SaleServant[]
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  servants SaleServants[]
 
   @@map("sales")
 }
 
-model SaleServant {
-  id        String  @id @default(uuid())
-  sale      Sale    @relation(fields: [saleId], references: [id])
-  saleId    String  @map("sale_id")
-  servant   Servant @relation(fields: [servantId], references: [id])
-  servantId String  @map("servant_id")
+model SaleServants {
+  saleId    String @map("sale_id")
+  servantId String @map("servant_id")
 
+  sale    Sale    @relation(fields: [saleId], references: [id])
+  servant Servant @relation(fields: [servantId], references: [id])
+
+  @@id([saleId, servantId])
   @@map("sale_servants")
 }
 

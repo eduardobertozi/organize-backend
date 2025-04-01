@@ -9,22 +9,8 @@ import { PrismaSaleServantsMapper } from '../mappers/prisma-sale-servants.mapper
 export class PrismaSaleServantsService implements SaleServantsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findById(id: UniqueEntityID): Promise<SaleServant | null> {
-    const saleServant = await this.prisma.saleServant.findUnique({
-      where: {
-        id: id.toString(),
-      },
-    })
-
-    if (!saleServant) {
-      return null
-    }
-
-    return PrismaSaleServantsMapper.toDomain(saleServant)
-  }
-
   async findBySaleId(saleId: UniqueEntityID): Promise<SaleServant[]> {
-    const saleServants = await this.prisma.saleServant.findMany({
+    const saleServants = await this.prisma.saleServants.findMany({
       where: {
         saleId: saleId.toString(),
       },
@@ -36,7 +22,7 @@ export class PrismaSaleServantsService implements SaleServantsRepository {
   }
 
   async create(saleServant: SaleServant): Promise<SaleServant> {
-    const createdSaleServant = await this.prisma.saleServant.create({
+    const createdSaleServant = await this.prisma.saleServants.create({
       data: PrismaSaleServantsMapper.toPrisma(saleServant),
     })
 
@@ -44,9 +30,12 @@ export class PrismaSaleServantsService implements SaleServantsRepository {
   }
 
   async delete(saleServant: SaleServant): Promise<void> {
-    await this.prisma.saleServant.delete({
+    await this.prisma.saleServants.delete({
       where: {
-        id: saleServant.id.toString(),
+        saleId_servantId: {
+          saleId: saleServant.saleId.toString(),
+          servantId: saleServant.servantId.toString(),
+        },
       },
     })
   }

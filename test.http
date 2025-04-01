@@ -1,5 +1,5 @@
 @base_url = http://localhost:8000
-@token = {{create_session.response.body.access_token}}
+@token = eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIzZGJjNjIwNy1hZmY1LTRkOGItOWVhYy1kODlmNWU3YzhkNDIiLCJpYXQiOjE3NDM1MTM0MzR9.kcY5VVsRnQ0bvP2ufI4rMijLKdnUjsKL-pAKGnLrp7o66YYprDEL3tMV2d6ukRDty-ybut8XjeImkLJdyPISsQyxgqGYR_HS1v_Rw17AdDKvBLKYdwPhGU101KSGcZC8KJ_d-Xz3oZTufNUxsjANDt4mUz_RlAqsyXsNwuAHUg6vWiiBhHiIeUBNIbyNDJweCGs6Avih16D3qnvRKOcCx-DmK0yUWbcMiaVHqphGAF1Hk_FRzQa3f9CUuMXiZB1ysRHdMbqbNANYHMupBv84A1GmPebwEqT0t2uzioKi2fbwUXN-qDV8g9CavWuCyeGEMXwWW90B3j2ueDAYf3Zorw
 
 ### 
 # @name create_account

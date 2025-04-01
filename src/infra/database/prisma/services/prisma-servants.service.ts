@@ -19,7 +19,13 @@ export class PrismaServantsService implements ServantsRepository {
         id: id.toString(),
       },
       include: {
-        products: true,
+        products: {
+          select: {
+            product: {
+              select: { id: true, price: true, name: true },
+            },
+          },
+        },
       },
     })
 
@@ -27,7 +33,16 @@ export class PrismaServantsService implements ServantsRepository {
       return null
     }
 
-    return PrismaServantMapper.toDomain(servant)
+    const formattedServant = {
+      ...servant,
+      products: servant.products.map((product) => ({
+        id: product.product.id,
+        price: product.product.price,
+        name: product.product.name,
+      })),
+    }
+
+    return PrismaServantMapper.toDomain(formattedServant)
   }
 
   async findByName(name: string): Promise<Servant | null> {
@@ -36,7 +51,13 @@ export class PrismaServantsService implements ServantsRepository {
         name,
       },
       include: {
-        products: { select: { id: true, price: true } },
+        products: {
+          select: {
+            product: {
+              select: { id: true, price: true, name: true },
+            },
+          },
+        },
       },
     })
 
@@ -44,7 +65,16 @@ export class PrismaServantsService implements ServantsRepository {
       return null
     }
 
-    return PrismaServantMapper.toDomain(servant)
+    const formattedServant = {
+      ...servant,
+      products: servant.products.map((product) => ({
+        id: product.product.id,
+        price: product.product.price,
+        name: product.product.name,
+      })),
+    }
+
+    return PrismaServantMapper.toDomain(formattedServant)
   }
 
   async findAll({
@@ -62,15 +92,30 @@ export class PrismaServantsService implements ServantsRepository {
         },
         skip: (page - 1) * 10,
         include: {
-          products: { select: { id: true, price: true } },
+          products: {
+            select: {
+              product: {
+                select: { id: true, price: true, name: true },
+              },
+            },
+          },
         },
         orderBy: { createdAt: 'desc' },
       }),
     ])
 
+    const formattedServants = servants.map((servant) => ({
+      ...servant,
+      products: servant.products.map((product) => ({
+        id: product.product.id,
+        price: product.product.price,
+        name: product.product.name,
+      })),
+    }))
+
     return {
       total: total,
-      servants: servants.map((servant) =>
+      servants: formattedServants.map((servant) =>
         PrismaServantMapper.toDomain(servant),
       ),
     }

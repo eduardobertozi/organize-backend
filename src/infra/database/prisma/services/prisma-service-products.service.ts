@@ -9,10 +9,10 @@ import { UniqueEntityID } from '@/core/unique-entity-id'
 export class PrismaServantProductsService implements ServantProductsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findUniqueByServantId(
+  async findByServantId(
     servantId: UniqueEntityID,
   ): Promise<ServantProduct | null> {
-    const servantProduct = await this.prisma.servantProduct.findFirst({
+    const servantProduct = await this.prisma.servantProducts.findFirst({
       where: {
         servantId: servantId.toString(),
       },
@@ -28,7 +28,7 @@ export class PrismaServantProductsService implements ServantProductsRepository {
   async fetchAllByServantId(
     servantId: UniqueEntityID,
   ): Promise<ServantProduct[]> {
-    const servantProducts = await this.prisma.servantProduct.findMany({
+    const servantProducts = await this.prisma.servantProducts.findMany({
       where: {
         servantId: servantId.toString(),
       },
@@ -40,7 +40,7 @@ export class PrismaServantProductsService implements ServantProductsRepository {
   }
 
   async create(servantProduct: ServantProduct): Promise<void> {
-    await this.prisma.servantProduct.create({
+    await this.prisma.servantProducts.create({
       data: {
         servantId: servantProduct.servantId,
         productId: servantProduct.productId,
@@ -49,9 +49,12 @@ export class PrismaServantProductsService implements ServantProductsRepository {
   }
 
   async delete(servantProduct: ServantProduct): Promise<void> {
-    await this.prisma.servantProduct.delete({
+    await this.prisma.servantProducts.delete({
       where: {
-        id: servantProduct.id.toString(),
+        servantId_productId: {
+          productId: servantProduct.productId,
+          servantId: servantProduct.servantId,
+        },
       },
     })
   }
