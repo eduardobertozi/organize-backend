@@ -9,12 +9,19 @@ import { UniqueEntityID } from '@/core/unique-entity-id'
 export class PrismaServantProductsService implements ServantProductsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findByServantId(
-    servantId: UniqueEntityID,
-  ): Promise<ServantProduct | null> {
-    const servantProduct = await this.prisma.servantProducts.findFirst({
+  async findServantProduct({
+    productId,
+    servantId,
+  }: {
+    productId: UniqueEntityID
+    servantId: UniqueEntityID
+  }): Promise<ServantProduct | null> {
+    const servantProduct = await this.prisma.servantProducts.findUnique({
       where: {
-        servantId: servantId.toString(),
+        servantId_productId: {
+          productId: productId.toString(),
+          servantId: servantId.toString(),
+        },
       },
     })
 

@@ -9,16 +9,41 @@ import { PrismaSaleServantsMapper } from '../mappers/prisma-sale-servants.mapper
 export class PrismaSaleServantsService implements SaleServantsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findBySaleId(saleId: UniqueEntityID): Promise<SaleServant[]> {
-    const saleServants = await this.prisma.saleServants.findMany({
+  async fetchAllBySaleId(saleId: UniqueEntityID): Promise<SaleServant[]> {
+    const saleServants = this.prisma.saleServants.findMany({
       where: {
         saleId: saleId.toString(),
       },
     })
 
-    return saleServants.map((saleServant) =>
-      PrismaSaleServantsMapper.toDomain(saleServant),
+    return saleServants.then((saleServants) =>
+      saleServants.map((saleServant) =>
+        PrismaSaleServantsMapper.toDomain(saleServant),
+      ),
     )
+  }
+
+  async findSaleServant({
+    servantId,
+    saleId,
+  }: {
+    servantId: UniqueEntityID
+    saleId: UniqueEntityID
+  }): Promise<SaleServant | null> {
+    const saleServant = await this.prisma.saleServants.findUnique({
+      where: {
+        saleId_servantId: {
+          saleId: saleId.toString(),
+          servantId: servantId.toString(),
+        },
+      },
+    })
+
+    if (!saleServant) {
+      return null
+    }
+
+    return PrismaSaleServantsMapper.toDomain(saleServant)
   }
 
   async create(saleServant: SaleServant): Promise<SaleServant> {
