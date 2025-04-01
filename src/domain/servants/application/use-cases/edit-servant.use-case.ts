@@ -9,6 +9,7 @@ import { Servant } from '@/domain/servants/enterprise/entities/servant'
 interface EditServantUseCaseRequest {
   servantId: string
   name: string
+  productsIds: string[]
   productsPrice: number
   workForcePrice: number
   profitPercent: number
@@ -36,15 +37,15 @@ export class EditServantUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    const newNameBelongsToAnotherExistandServant =
-      await this.servantRepository.findByName(params.name)
+    const existingServant = await this.servantRepository.findByName(params.name)
 
-    if (newNameBelongsToAnotherExistandServant) {
+    if (existingServant && !existingServant.id.equals(servant.id)) {
       return left(new AlreadyExistsError())
     }
 
     servant.name = params.name
     servant.productsPrice = params.productsPrice
+    servant.productsIds = params.productsIds
     servant.profitPercent = params.profitPercent
     servant.workForcePrice = params.workForcePrice
 

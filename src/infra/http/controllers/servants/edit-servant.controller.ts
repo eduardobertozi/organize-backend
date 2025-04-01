@@ -25,11 +25,11 @@ export class EditServantController {
   @HttpCode(200)
   async handle(
     @Param('servantId', ServantIdParamValidationPipe) servantId: ServantIdParam,
-    @Body(CreateServantValidationPipe) body: CreateServantDTO,
+    @Body(CreateServantValidationPipe) servant: CreateServantDTO,
   ) {
     const result = await this.editServantUseCase.execute({
       servantId,
-      ...body,
+      ...servant,
     })
 
     if (result.isLeft()) {

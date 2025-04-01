@@ -64,11 +64,31 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "Corte",
-  "productIds": [],
-  "productsPrice": 10,
-  "workForcePrice": 20,
-  "profitPercent": 112
+  "name": "Limpeza Facial",
+  "profitPercent": 48,
+  "workForcePrice": 30,
+  "price": 30.488,
+  "productsPrice": 0.6,
+  "products": [
+    {
+      "id": "a889a9ee-1f01-4599-9049-c68a3575e4db",
+      "name": "Lâmina de barbear",
+      "price": 0.5,
+      "supplierId": "1a59a5d8-900c-4988-90ce-49db2b80d8cb",
+      "reference": "REF123",
+      "attachments": [],
+      "createdAt": "2025-03-31T03:46:47.461Z"
+    },
+    {
+      "id": "0cd33cae-b9ee-452a-b782-ded516dce053",
+      "name": "Gola higiênica",
+      "price": 0.1,
+      "supplierId": "1a59a5d8-900c-4988-90ce-49db2b80d8cb",
+      "reference": "REF123",
+      "attachments": [],
+      "createdAt": "2025-03-31T03:46:47.461Z"
+    }
+  ]
 }
 
 ###

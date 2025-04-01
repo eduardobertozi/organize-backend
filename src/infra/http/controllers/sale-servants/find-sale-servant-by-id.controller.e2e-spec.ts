@@ -47,6 +47,7 @@ describe('Find Sale Servant by Id (E2E)', () => {
 
     const servant = await servantsFactory.makePrismaServant()
     const sale = await salesFactory.makePrismaSale()
+
     const saleServant = await saleServantsFactory.makePrismaSaleServant({
       saleId: sale.id.toString(),
       servantId: servant.id.toString(),

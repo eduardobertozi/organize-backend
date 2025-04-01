@@ -1,7 +1,6 @@
 import { Entity } from '@/core/entities/entity'
 import { Optional } from '@/core/optional'
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { Product } from '@/domain/products/enterprise/entities/product'
 
 export interface ServantProps {
   name: string
@@ -9,7 +8,7 @@ export interface ServantProps {
   workForcePrice: number
   profitPercent: number
   price?: number
-  products?: Product[] | null
+  productsIds: string[]
   createdAt?: Date | null
   updatedAt?: Date | null
 }
@@ -55,8 +54,13 @@ export class Servant extends Entity<ServantProps> {
     this.touch()
   }
 
-  get products(): Product[] | null {
-    return this.props.products!
+  get productsIds(): string[] {
+    return this.props.productsIds
+  }
+
+  set productsIds(productsIds: string[]) {
+    this.props.productsIds = productsIds
+    this.touch()
   }
 
   get createdAt(): Date | null | undefined {

@@ -40,6 +40,7 @@ describe('Edit Servant (E2E)', () => {
         name: 'New Servant Name',
         productsPrice: servant.productsPrice,
         workForcePrice: servant.workForcePrice,
+        productsIds: [],
         profitPercent: servant.productsPrice,
       })
 

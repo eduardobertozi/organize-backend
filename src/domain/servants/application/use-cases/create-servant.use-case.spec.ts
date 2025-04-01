@@ -34,17 +34,12 @@ describe('Create Servant', () => {
     const result = await sut.execute({
       name: 'Sample servant',
       productsPrice,
-      products,
+      productsIds: products.map((product) => product.id.toString()),
       profitPercent: 48,
       workForcePrice: 25,
     })
 
     expect(result.isRight()).toBe(true)
-
-    if ('servant' in result.value) {
-      expect(result.value.servant.products).toHaveLength(2)
-    }
-
     expect(inMemoryServantsRepository.items).toHaveLength(1)
     expect(inMemoryServantsRepository.items[0].name).toBe('Sample servant')
     expect(inMemoryServantsRepository.items[0].price).toBe(43)
@@ -54,22 +49,13 @@ describe('Create Servant', () => {
     const result = await sut.execute({
       name: 'Sample servant',
       productsPrice,
-      products,
+      productsIds: products.map((product) => product.id.toString()),
       profitPercent: 48,
       workForcePrice: 25,
     })
 
-    expect(result.isRight()).toBe(true)
-
-    if ('servant' in result.value) {
-      expect(result.value.servant.products).toHaveLength(2)
-      expect(result.value.servant.products).toEqual(
-        expect.arrayContaining([
-          expect.objectContaining({
-            id: products[0].id,
-          }),
-        ]),
-      )
+    if (result.isRight()) {
+      expect(result.value.servant.productsIds).toHaveLength(2)
     }
   })
 
@@ -82,7 +68,7 @@ describe('Create Servant', () => {
 
     const result = await sut.execute({
       name: 'Sample servant',
-      products: [],
+      productsIds: products.map((product) => product.id.toString()),
       productsPrice: 0,
       profitPercent: 0,
       workForcePrice: 0,

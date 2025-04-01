@@ -3,11 +3,10 @@ import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { Servant } from '../../enterprise/entities/servant'
 import { ServantsRepository } from '../repositories/servants.repository'
 import { Injectable } from '@nestjs/common'
-import { Product } from '@/domain/products/enterprise/entities/product'
 
 interface CreateServantUseCaseRequest {
   name: string
-  products: Product[]
+  productsIds: string[]
   productsPrice: number
   workForcePrice: number
   profitPercent: number
