@@ -5,7 +5,9 @@ export class ServantPresenter {
     return {
       id: servant.id.toString(),
       name: servant.name,
-      products: servant.products,
+      products: servant.products
+        .getItems()
+        .map((product) => product.productId.toString()),
       productsPrice: servant.productsPrice,
       workForcePrice: servant.workForcePrice,
       profitPercent: servant.profitPercent,

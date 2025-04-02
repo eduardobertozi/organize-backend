@@ -43,8 +43,8 @@ model ServantProducts {
   servantId String @map("servant_id")
   productId String @map("product_id")
 
-  servant Servant @relation(fields: [servantId], references: [id])
-  product Product @relation(fields: [productId], references: [id])
+  servant Servant @relation(fields: [servantId], references: [id], onDelete: Cascade)
+  product Product @relation(fields: [productId], references: [id], onDelete: Cascade)
 
   @@id([servantId, productId])
   @@map("servant_products")
@@ -98,8 +98,8 @@ model SaleServants {
   saleId    String @map("sale_id")
   servantId String @map("servant_id")
 
-  sale    Sale    @relation(fields: [saleId], references: [id])
-  servant Servant @relation(fields: [servantId], references: [id])
+  sale    Sale    @relation(fields: [saleId], references: [id], onDelete: Cascade)
+  servant Servant @relation(fields: [servantId], references: [id], onDelete: Cascade)
 
   @@id([saleId, servantId])
   @@map("sale_servants")
