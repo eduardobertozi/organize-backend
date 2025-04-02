@@ -30,6 +30,7 @@ export class EditServantController {
     const result = await this.editServantUseCase.execute({
       servantId,
       ...servant,
+      productsIds: servant.products,
     })
 
     if (result.isLeft()) {

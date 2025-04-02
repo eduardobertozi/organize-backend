@@ -2,9 +2,9 @@ import { UniqueEntityID } from '@/core/unique-entity-id'
 import {
   ServantProduct,
   ServantProductProps,
-} from '@/domain/servant-products/entreprise/entities/servant-product'
+} from '@/domain/servants/enterprise/entities/servant-product'
+
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
-import { faker } from '@faker-js/faker'
 import { Injectable } from '@nestjs/common'
 
 export function makeServantProduct(
@@ -13,8 +13,8 @@ export function makeServantProduct(
 ) {
   return ServantProduct.create(
     {
-      productId: faker.string.uuid(),
-      servantId: faker.string.uuid(),
+      productId: new UniqueEntityID(),
+      servantId: new UniqueEntityID(),
       ...override,
     },
     id,
@@ -33,8 +33,8 @@ export class ServantProductsFactory {
 
     const prismaServant = await this.prisma.servantProducts.create({
       data: {
-        productId: servant.productId,
-        servantId: servant.servantId,
+        productId: servant.productId.toString(),
+        servantId: servant.servantId.toString(),
       },
     })
 

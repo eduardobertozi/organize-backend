@@ -45,10 +45,10 @@ export class PrismaServantProductsService implements ServantProductsRepository {
     )
   }
 
-  async deleteManyByProductId(productId: UniqueEntityID): Promise<void> {
+  async deleteManyByServantId(servantId: UniqueEntityID): Promise<void> {
     await this.prisma.servantProducts.deleteMany({
       where: {
-        productId: productId.toString(),
+        servantId: servantId.toString(),
       },
     })
   }
