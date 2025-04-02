@@ -7,6 +7,7 @@ import { UniqueEntityID } from '@/core/unique-entity-id'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { PrismaServantMapper } from '@/infra/database/prisma/mappers/prisma-servants.mapper'
+import { ServantProductsList } from '@/domain/servants/enterprise/entities/servant-products-list'
 
 export function makeServant(
   override: Partial<ServantProps> = {},
@@ -15,6 +16,7 @@ export function makeServant(
   return Servant.create(
     {
       name: faker.lorem.sentence(),
+      products: new ServantProductsList(),
       productsPrice: faker.number.float({
         min: 30,
         max: 40,

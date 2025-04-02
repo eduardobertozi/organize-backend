@@ -1,5 +1,6 @@
 import { PaginationParams } from '@/core/pagination-params'
 import { UniqueEntityID } from '@/core/unique-entity-id'
+import { ServantProductsRepository } from '@/domain/servants/application/repositories/servant-products.repository'
 import {
   FindManyServantsResponse,
   ServantsRepository,
@@ -8,6 +9,12 @@ import { Servant } from '@/domain/servants/enterprise/entities/servant'
 
 export class InMemoryServantsRepository extends ServantsRepository {
   public items: Servant[] = []
+
+  constructor(
+    private readonly servantProductsRepository: ServantProductsRepository,
+  ) {
+    super()
+  }
 
   async findById(id: UniqueEntityID) {
     return Promise.resolve(
@@ -41,6 +48,11 @@ export class InMemoryServantsRepository extends ServantsRepository {
 
   async create(servant: Servant) {
     await Promise.resolve(this.items.push(servant))
+
+    await this.servantProductsRepository?.createMany(
+      servant.products?.getItems(),
+    )
+
     return servant
   }
 
@@ -52,6 +64,15 @@ export class InMemoryServantsRepository extends ServantsRepository {
     }
 
     await Promise.resolve((this.items[index] = servant))
+
+    await this.servantProductsRepository?.createMany(
+      servant.products?.getNewItems(),
+    )
+
+    await this.servantProductsRepository?.deleteMany(
+      servant.products?.getRemovedItems(),
+    )
+
     return servant
   }
 
@@ -61,5 +82,7 @@ export class InMemoryServantsRepository extends ServantsRepository {
     if (index !== -1) {
       await Promise.resolve(this.items.splice(index, 1))
     }
+
+    await this.servantProductsRepository?.deleteManyByServantId(servant.id)
   }
 }

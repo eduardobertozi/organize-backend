@@ -8,10 +8,14 @@ import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { PrismaServantMapper } from '../mappers/prisma-servants.mapper'
 import { UniqueEntityID } from '@/core/unique-entity-id'
+import { ServantProductsRepository } from '@/domain/servants/application/repositories/servant-products.repository'
 
 @Injectable()
 export class PrismaServantsService implements ServantsRepository {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly servantProductsRepository: ServantProductsRepository,
+  ) {}
 
   async findById(id: UniqueEntityID): Promise<Servant | null> {
     const servant = await this.prisma.servant.findUnique({
@@ -125,6 +129,8 @@ export class PrismaServantsService implements ServantsRepository {
     await this.prisma.servant.create({
       data: PrismaServantMapper.toPrisma(servant),
     })
+
+    await this.servantProductsRepository.createMany(servant.products.getItems())
 
     return servant
   }

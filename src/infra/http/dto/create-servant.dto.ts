@@ -6,6 +6,7 @@ const CreateServantSchema = z.object({
   productsPrice: z.number(),
   workForcePrice: z.number(),
   profitPercent: z.number(),
+  products: z.array(z.string().uuid()),
 })
 
 export const CreateServantValidationPipe = new ZodValidationPipe(
@@ -17,4 +18,5 @@ export class CreateServantDTO {
   productsPrice: number
   workForcePrice: number
   profitPercent: number
+  products: string[]
 }

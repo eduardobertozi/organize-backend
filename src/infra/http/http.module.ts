@@ -11,8 +11,6 @@ import { DeleteSaleUseCase } from '@/domain/sales/application/use-cases/delete-s
 import { EditSaleUseCase } from '@/domain/sales/application/use-cases/edit-sale.use-case'
 import { FetchAllSalesUseCase } from '@/domain/sales/application/use-cases/fetch-all-sales.use-case'
 import { FindSaleByIdUseCase } from '@/domain/sales/application/use-cases/find-sale-by-id.use-case'
-import { CreateServantProductUseCase } from '@/domain/servant-products/application/use-cases/create-servant-product.use-case'
-import { DeleteServantProductUseCase } from '@/domain/servant-products/application/use-cases/delete-servant-product.use-case'
 import { CreateServantUseCase } from '@/domain/servants/application/use-cases/create-servant.use-case'
 import { DeleteServantUseCase } from '@/domain/servants/application/use-cases/delete-servant.use-case'
 import { EditServantUseCase } from '@/domain/servants/application/use-cases/edit-servant.use-case'
@@ -50,8 +48,6 @@ import { DeleteSaleController } from './controllers/sales/delete-sale.controller
 import { EditSaleController } from './controllers/sales/edit-sale.controller'
 import { FetchAllSalesController } from './controllers/sales/fetch-all-sales.controller'
 import { FindSaleByIdController } from './controllers/sales/find-sale-by-id.controller'
-import { CreateServantProductController } from './controllers/servant-products/create-servant-products.controller'
-import { DeleteServantProductController } from './controllers/servant-products/delete-servant-product.controller'
 import { CreateServantController } from './controllers/servants/create-servant.controller'
 import { FetchAllServantsController } from './controllers/servants/fetch-all-servants.controller'
 import { CreateSupplierController } from './controllers/suppliers/create-supplier.controller'
@@ -82,8 +78,6 @@ import { CreateAccountController } from './controllers/users/create-account.cont
     FetchAllServantsController,
     FindServantByNameController,
     FindServantByIdController,
-    CreateServantProductController,
-    DeleteServantProductController,
     FindSupplierByIdController,
     CreateSaleController,
     DeleteSaleController,
@@ -114,8 +108,6 @@ import { CreateAccountController } from './controllers/users/create-account.cont
     FetchAllServantsUseCase,
     FindServantByNameUseCase,
     FindServantByIdUseCase,
-    CreateServantProductUseCase,
-    DeleteServantProductUseCase,
     CreateSaleUseCase,
     DeleteSaleUseCase,
     EditSaleUseCase,

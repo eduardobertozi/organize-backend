@@ -13,6 +13,8 @@ describe('Create Servant (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let usersFactory: UsersFactory
+  let suppliersFactory: SuppliersFactory
+  let productsFactory: ProductsFactory
   let jwt: JwtService
 
   beforeAll(async () => {
@@ -24,6 +26,8 @@ describe('Create Servant (E2E)', () => {
     app = moduleRef.createNestApplication()
     prisma = moduleRef.get(PrismaService)
     usersFactory = moduleRef.get(UsersFactory)
+    suppliersFactory = moduleRef.get(SuppliersFactory)
+    productsFactory = moduleRef.get(ProductsFactory)
     jwt = moduleRef.get(JwtService)
 
     await app.init()
@@ -33,6 +37,15 @@ describe('Create Servant (E2E)', () => {
     const user = await usersFactory.makePrismaUser()
     const access_token = jwt.sign({ sub: user.id.toString() })
 
+    const supplier = await suppliersFactory.makePrismaSuppliers()
+
+    const product1 = await productsFactory.makePrismaProducts({
+      supplierId: supplier.id,
+    })
+    const product2 = await productsFactory.makePrismaProducts({
+      supplierId: supplier.id,
+    })
+
     const response = await request(app.getHttpServer())
       .post('/servants')
       .set('Authorization', `Bearer ${access_token}`)
@@ -41,6 +54,7 @@ describe('Create Servant (E2E)', () => {
         productsPrice: 50,
         workForcePrice: 20,
         profitPercent: 48,
+        products: [product1.id.toString(), product2.id.toString()],
       })
 
     expect(response.statusCode).toBe(201)
@@ -61,5 +75,13 @@ describe('Create Servant (E2E)', () => {
     })
 
     expect(servantsOnDatabase).toBeTruthy()
+
+    const servantProductsOnDatabase = await prisma.servantProducts.findMany({
+      where: {
+        servantId: servant.id,
+      },
+    })
+
+    expect(servantProductsOnDatabase).toBeTruthy()
   })
 })

@@ -2,23 +2,20 @@ import { Entity } from '@/core/entities/entity'
 import { UniqueEntityID } from '@/core/unique-entity-id'
 
 export interface ServantProductProps {
-  servantId: string
-  productId: string
+  productId: UniqueEntityID
+  servantId: UniqueEntityID
 }
 
 export class ServantProduct extends Entity<ServantProductProps> {
-  get servantId(): string {
-    return this.props.servantId
-  }
-
-  get productId(): string {
+  get productId() {
     return this.props.productId
   }
 
-  static create(
-    props: ServantProductProps,
-    id?: UniqueEntityID,
-  ): ServantProduct {
+  get servantId() {
+    return this.props.servantId
+  }
+
+  static create(props: ServantProductProps, id?: UniqueEntityID) {
     return new ServantProduct(props, id)
   }
 }

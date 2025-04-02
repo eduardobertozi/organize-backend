@@ -1,19 +1,20 @@
-import { Entity } from '@/core/entities/entity'
+import { AggregateRoot } from '@/core/entities/aggregate-root'
 import { Optional } from '@/core/optional'
 import { UniqueEntityID } from '@/core/unique-entity-id'
+import { ServantProductsList } from './servant-products-list'
 
 export interface ServantProps {
   name: string
+  products: ServantProductsList
   productsPrice: number
   workForcePrice: number
   profitPercent: number
   price?: number
-  productsIds?: string[]
   createdAt?: Date | null
   updatedAt?: Date | null
 }
 
-export class Servant extends Entity<ServantProps> {
+export class Servant extends AggregateRoot<ServantProps> {
   get name(): string {
     return this.props.name
   }
@@ -27,8 +28,13 @@ export class Servant extends Entity<ServantProps> {
     return this.props.price ?? 0
   }
 
-  get productsIds(): string[] {
-    return this.props.productsIds ?? []
+  get products(): ServantProductsList {
+    return this.props.products
+  }
+
+  set products(servantProductsList: ServantProductsList) {
+    this.props.products = servantProductsList
+    this.touch()
   }
 
   get productsPrice(): number {

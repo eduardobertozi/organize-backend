@@ -19,7 +19,10 @@ export class CreateServantController {
   @Post('servants')
   @UsePipes(CreateServantValidationPipe)
   async handle(@Body() servant: CreateServantDTO) {
-    const result = await this.createServantUseCase.execute(servant)
+    const result = await this.createServantUseCase.execute({
+      ...servant,
+      productsIds: servant.products,
+    })
 
     if (result.isLeft()) {
       throw new BadRequestException('Este serviço já existe!')
