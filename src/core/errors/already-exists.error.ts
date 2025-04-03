@@ -1,6 +1,6 @@
 export class AlreadyExistsError extends Error {
   constructor() {
-    super('Resource already exists')
+    super('Este item já existe.')
     this.name = 'AlreadyExistsError'
   }
 }
