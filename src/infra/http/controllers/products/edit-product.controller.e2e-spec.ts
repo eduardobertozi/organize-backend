@@ -85,6 +85,7 @@ describe('Edit Product (E2E)', () => {
         price: 100,
         reference: '123456',
         supplierId,
+        stock: 1,
         attachments: [attachment1.id.toString(), attachment3.id.toString()],
       })
 

@@ -33,6 +33,7 @@ describe('Edit Product', () => {
       price: 0,
       reference: '1234',
       supplierId: 'supplier-1',
+      stock: 0,
       attachmentsIds: ['1', '2'],
     })
 
@@ -47,6 +48,7 @@ describe('Edit Product', () => {
       price: 0,
       reference: '1234',
       supplierId: 'supplier-1',
+      stock: 0,
       attachmentsIds: ['1', '2'],
     })
 
@@ -73,6 +75,7 @@ describe('Edit Product', () => {
       price: 0,
       reference: '1234',
       supplierId: 'supplier-1',
+      stock: 0,
       attachmentsIds: ['1', '2'],
     })
 

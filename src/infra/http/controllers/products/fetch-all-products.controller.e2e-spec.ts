@@ -52,6 +52,7 @@ describe('Fetch All Products (E2E)', () => {
 
     expect(response.statusCode).toBe(200)
     expect(response.body.products).toBeTruthy()
+
     expect(response.body).toEqual(
       expect.objectContaining({
         total: 12,
@@ -59,6 +60,13 @@ describe('Fetch All Products (E2E)', () => {
         nextPage: 2,
         previousPage: null,
       }),
+    )
+    expect(response.body.products).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          attachments: expect.any(Array),
+        }),
+      ]),
     )
   })
 })

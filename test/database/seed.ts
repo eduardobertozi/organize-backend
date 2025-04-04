@@ -20,12 +20,14 @@ async function main() {
         price: 0.5,
         reference: 'REF123',
         supplierId: supplier.id,
+        stock: 10,
       },
       {
         name: 'Gola higiênica',
         price: 0.1,
         reference: 'REF123',
         supplierId: supplier.id,
+        stock: 10,
       },
     ],
   })

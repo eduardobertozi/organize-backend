@@ -7,10 +7,11 @@ import {
   Param,
   Put,
 } from '@nestjs/common'
+
 import {
-  EditProductDTO,
-  EditProductValidationPipe,
-} from '../../dto/edit-product.dto'
+  CreateProductDto,
+  CreateProductValidationPipe,
+} from '../../dto/create-product.dto'
 
 @Controller()
 export class EditProductController {
@@ -20,7 +21,7 @@ export class EditProductController {
   @HttpCode(204)
   async handle(
     @Param('productId') productId: string,
-    @Body(EditProductValidationPipe) body: EditProductDTO,
+    @Body(CreateProductValidationPipe) body: CreateProductDto,
   ) {
     const result = await this.editProductUseCase.execute({
       ...body,

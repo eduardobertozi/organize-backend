@@ -7,6 +7,10 @@ export class ProductPresenter {
       name: product.name,
       price: product.price,
       supplierId: product.supplierId.toString(),
+      stock: product.stock,
+      attachments: product.attachments
+        .getItems()
+        .map((attachment) => attachment.id.toString()),
       reference: product.reference,
       createdAt: product.createdAt,
       updatedAt: product.updatedAt,

@@ -8,6 +8,7 @@ export interface ProductProps {
   reference: string
   attachments: ProductAttachmentsList
   supplierId?: UniqueEntityID
+  stock: number
   createdAt?: Date | null
   updatedAt?: Date | null
 }
@@ -40,6 +41,15 @@ export class Product extends AggregateRoot<ProductProps> {
     this.touch()
   }
 
+  get attachments() {
+    return this.props.attachments
+  }
+
+  set attachments(attachments: ProductAttachmentsList) {
+    this.props.attachments = attachments
+    this.touch()
+  }
+
   get supplierId() {
     return this.props.supplierId!
   }
@@ -49,12 +59,12 @@ export class Product extends AggregateRoot<ProductProps> {
     this.touch()
   }
 
-  get attachments() {
-    return this.props.attachments
+  get stock() {
+    return this.props.stock
   }
 
-  set attachments(attachments: ProductAttachmentsList) {
-    this.props.attachments = attachments
+  set stock(stock: number) {
+    this.props.stock = stock
     this.touch()
   }
 

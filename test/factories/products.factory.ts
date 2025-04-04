@@ -16,9 +16,10 @@ export function makeProduct(
   return Product.create(
     {
       name: faker.commerce.productName(),
-      price: faker.number.float(),
+      price: faker.number.float({ min: 10, max: 50, fractionDigits: 2 }),
       reference: faker.lorem.word(),
       supplierId: new UniqueEntityID(),
+      stock: faker.number.int({ min: 1, max: 100 }),
       attachments: new ProductAttachmentsList(),
       ...override,
     },
@@ -33,9 +34,13 @@ export class ProductsFactory {
   async makePrismaProducts(data: Partial<ProductProps> = {}): Promise<Product> {
     const product = makeProduct(data)
 
-    await this.prismaService.product.create({
-      data: PrismaProductMapper.toPrisma(product),
-    })
+    try {
+      await this.prismaService.product.create({
+        data: PrismaProductMapper.toPrisma(product),
+      })
+    } catch (error) {
+      console.log('ERROR:', error)
+    }
 
     return product
   }

@@ -56,6 +56,7 @@ model Product {
   price      Float
   reference  String
   supplierId String @map("supplier_id")
+  stock      Int    @default(1)
 
   attachments Attachment[]
   servants    ServantProducts[]

@@ -22,6 +22,7 @@ export class PrismaProductsService implements ProductsRepository {
       where: {
         id: id.toString(),
       },
+      include: { attachments: { select: { url: true } } },
     })
 
     if (!product) {
@@ -47,6 +48,7 @@ export class PrismaProductsService implements ProductsRepository {
         },
         skip: (page - 1) * 10,
         take: 10,
+        include: { attachments: { select: { url: true } } },
       }),
     ])
 
@@ -66,6 +68,7 @@ export class PrismaProductsService implements ProductsRepository {
       this.prisma.product.findMany({
         skip: (page - 1) * 10,
         take: 10,
+        include: { attachments: { select: { url: true } } },
       }),
     ])
 
