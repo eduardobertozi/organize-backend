@@ -6,6 +6,7 @@ import { PaginationResponse } from '@/core/pagination-response'
 
 interface FetchAllProductsUseCaseRequest {
   page?: number
+  q?: string
 }
 
 type FetchAllProductsUseCaseResponse = Either<
@@ -21,8 +22,12 @@ export class FetchAllProductsUseCase {
 
   async execute({
     page = 1,
+    q,
   }: FetchAllProductsUseCaseRequest): Promise<FetchAllProductsUseCaseResponse> {
-    const { products, total } = await this.productsRepository.findAll({ page })
+    const { products, total } = await this.productsRepository.findAll({
+      page,
+      q,
+    })
 
     const paginationResponse = PaginationResponse.create({
       total,

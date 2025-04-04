@@ -30,37 +30,23 @@ describe('Find Products By Name (E2E)', () => {
     await app.init()
   })
 
-  test('[GET] /products/?name=&page=', async () => {
+  test('[GET] /products/?name=', async () => {
     const user = await usersFactory.makePrismaUser()
     const access_token = jwt.sign({ sub: user.id.toString() })
 
-    /* Create a supplier */
     const supplier = await suppliersFactory.makePrismaSuppliers()
 
-    /* Create a product related by supplier */
-    await Promise.all(
-      Array.from({ length: 12 }).map((_v, i) =>
-        productsFactory.makePrismaProducts({
-          supplierId: supplier.id,
-          name: `Product ${i}`,
-        }),
-      ),
-    )
+    await productsFactory.makePrismaProducts({
+      supplierId: supplier.id,
+      name: `Product 1`,
+    })
 
     const response = await request(app.getHttpServer())
-      .get('/products?name=Product&page=1')
+      .get('/products?name=Product 1')
       .set('Authorization', `Bearer ${access_token}`)
       .send({})
 
     expect(response.statusCode).toBe(200)
-    expect(response.body.products).toBeTruthy()
-    expect(response.body).toEqual(
-      expect.objectContaining({
-        total: 12,
-        hasMore: true,
-        nextPage: 2,
-        previousPage: null,
-      }),
-    )
+    expect(response.body.product).toBeTruthy()
   })
 })

@@ -3,13 +3,18 @@ import { InMemoryServantsRepository } from 'test/in-memories/in-memory-servants.
 import { makeServant } from 'test/factories/servants.factory'
 import { FindServantByIdUseCase } from './find-servant-by-id.use-case'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
+import { InMemoryServantProductsRepository } from 'test/in-memories/in-memory-servant-products.repository'
 
 describe('Find Servant By Id', () => {
+  let inMemoryServantProductsRepository: InMemoryServantProductsRepository
   let inMemoryServantsRepository: InMemoryServantsRepository
   let sut: FindServantByIdUseCase
 
   beforeEach(() => {
-    inMemoryServantsRepository = new InMemoryServantsRepository()
+    inMemoryServantProductsRepository = new InMemoryServantProductsRepository()
+    inMemoryServantsRepository = new InMemoryServantsRepository(
+      inMemoryServantProductsRepository,
+    )
     sut = new FindServantByIdUseCase(inMemoryServantsRepository)
   })
 

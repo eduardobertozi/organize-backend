@@ -27,7 +27,7 @@ describe('Fetch All Suppliers (E2E)', () => {
     await app.init()
   })
 
-  test('[PUT] /suppliers/:suppliersId', async () => {
+  test('[PUT] /suppliers/all', async () => {
     const user = await usersFactory.makePrismaUser()
     const access_token = jwt.sign({ sub: user.id.toString() })
 
@@ -36,7 +36,7 @@ describe('Fetch All Suppliers (E2E)', () => {
     )
 
     const response = await request(app.getHttpServer())
-      .get('/suppliers?page=1')
+      .get('/suppliers/all?page=1')
       .set('Authorization', `Bearer ${access_token}`)
       .send({})
 
@@ -45,7 +45,7 @@ describe('Fetch All Suppliers (E2E)', () => {
     expect(response.body.suppliers).toHaveLength(10)
 
     const response2 = await request(app.getHttpServer())
-      .get('/suppliers?page=2')
+      .get('/suppliers/all?page=2')
       .set('Authorization', `Bearer ${access_token}`)
       .send({})
 

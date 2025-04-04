@@ -9,10 +9,7 @@ export interface FindManyProductsResponse {
 
 export abstract class ProductsRepository {
   abstract findById(id: UniqueEntityID): Promise<Product | null>
-  abstract findByName(
-    name: string,
-    params?: PaginationParams,
-  ): Promise<FindManyProductsResponse>
+  abstract findByName(name: string): Promise<Product | null>
   abstract findAll(params: PaginationParams): Promise<FindManyProductsResponse>
   abstract create(product: Product): Promise<void>
   abstract save(product: Product): Promise<void>

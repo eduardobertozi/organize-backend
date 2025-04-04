@@ -5,10 +5,6 @@ import {
   NameQueryParam,
   NameQueryValidationPipe,
 } from '../../schemas/name-query-param.schema'
-import {
-  PageQueryParam,
-  PageQueryValidationPipe,
-} from '../../schemas/page-query-param.schema'
 
 @Controller()
 export class FindProductsByNameController {
@@ -17,13 +13,9 @@ export class FindProductsByNameController {
   ) {}
 
   @Get('products')
-  async handle(
-    @Query('name', NameQueryValidationPipe) name: NameQueryParam,
-    @Query('page', PageQueryValidationPipe) page: PageQueryParam,
-  ) {
+  async handle(@Query('name', NameQueryValidationPipe) name: NameQueryParam) {
     const result = await this.findProductByNameUseCase.execute({
       name,
-      page,
     })
 
     if (result.isLeft()) {
@@ -31,10 +23,7 @@ export class FindProductsByNameController {
     }
 
     return {
-      ...result.value,
-      products: result.value.products.map((product) =>
-        ProductPresenter.toHTTP(product),
-      ),
+      product: ProductPresenter.toHTTP(result.value.product),
     }
   }
 }

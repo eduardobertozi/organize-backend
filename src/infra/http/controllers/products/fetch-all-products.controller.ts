@@ -5,6 +5,10 @@ import {
   PageQueryParam,
   PageQueryValidationPipe,
 } from '../../schemas/page-query-param.schema'
+import {
+  QueryParam,
+  QueryValidationPipe,
+} from '../../schemas/q-query-param.schema'
 
 @Controller()
 export class FetchAllProductsController {
@@ -13,7 +17,10 @@ export class FetchAllProductsController {
   ) {}
 
   @Get('products/all')
-  async handle(@Query('page', PageQueryValidationPipe) page: PageQueryParam) {
+  async handle(
+    @Query('page', PageQueryValidationPipe) page: PageQueryParam,
+    @Query('q', QueryValidationPipe) q: QueryParam,
+  ) {
     const result = await this.fetchAllProductsUseCase.execute({
       page,
     })

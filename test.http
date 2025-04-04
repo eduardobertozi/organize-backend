@@ -52,8 +52,28 @@ Authorization: Bearer {{token}}
   "name": "New Product",
   "price": 100,
   "reference": "123456",
-  "supplierId": "225225b3-e6ee-40f4-88de-dc41c0433337",
+  "supplierId": "cab5b590-e058-4af6-98a5-bb94a15df339",
+  "stock": 10,
   "attachments": []
+}
+
+### 
+# @name upload_product
+PUT {{base_url}}/products/876e117c-b703-46fe-8a48-a4e945ad15b0
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "name": "Lâmina de barbear",
+  "price": 0.5,
+  "reference": "REF123",
+  "attachments": [
+    "fff153fe-1d04-432c-b67b-c362a6ce7517",
+    "1b17abd3-41c6-452c-93ef-a93adf4c0f45",
+    "c1da39f6-1892-403b-bc43-3e510ef5bff"
+  ],
+  "supplierId": "cab5b590-e058-4af6-98a5-bb94a15df339",
+  "stock": 10
 }
 
 ### 

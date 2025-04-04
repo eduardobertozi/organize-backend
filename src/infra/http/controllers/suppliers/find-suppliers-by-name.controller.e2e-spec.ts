@@ -27,24 +27,20 @@ describe('Find Suppliers By Name (E2E)', () => {
     await app.init()
   })
 
-  test('[GET] /suppliers', async () => {
+  test('[GET] /suppliers?name=', async () => {
     const user = await usersFactory.makePrismaUser()
     const access_token = jwt.sign({ sub: user.id.toString() })
 
-    await Promise.all(
-      Array.from({ length: 12 }, (_, index) =>
-        suppliersFactory.makePrismaSuppliers({
-          name: `Supplier ${index + 1}`,
-        }),
-      ),
-    )
+    await suppliersFactory.makePrismaSuppliers({
+      name: `Supplier 3`,
+    })
 
     const response = await request(app.getHttpServer())
-      .get('/suppliers?page=1&name=Supplier%3')
+      .get('/suppliers?name=Supplier 3')
       .set('Authorization', `Bearer ${access_token}`)
       .send({})
 
     expect(response.statusCode).toBe(200)
-    expect(response.body.suppliers).toBeTruthy()
+    expect(response.body.supplier).toBeTruthy()
   })
 })

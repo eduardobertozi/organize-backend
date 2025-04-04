@@ -1,18 +1,17 @@
-import { Either, right } from '@/core/either'
+import { Either, left, right } from '@/core/either'
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
+import { Injectable } from '@nestjs/common'
 import { Product } from '../../enterprise/entities/product'
 import { ProductsRepository } from '../repositories/products.repository'
-import { Injectable } from '@nestjs/common'
-import { PaginationResponse } from '@/core/pagination-response'
 
 interface FindProductByNameUseCaseRequest {
   name: string
-  page?: number
 }
 
 type FindProductByNameUseCaseResponse = Either<
-  null,
-  PaginationResponse & {
-    products: Product[]
+  ResourceNotFoundError,
+  {
+    product: Product
   }
 >
 
@@ -22,21 +21,15 @@ export class FindProductByNameUseCase {
 
   async execute({
     name,
-    page = 1,
   }: FindProductByNameUseCaseRequest): Promise<FindProductByNameUseCaseResponse> {
-    const { products, total } = await this.productsRepository.findByName(name, {
-      page,
-    })
+    const product = await this.productsRepository.findByName(name)
 
-    const paginationResponse = PaginationResponse.create({
-      total,
-      page,
-    })
+    if (!product) {
+      return left(new ResourceNotFoundError())
+    }
 
     return right({
-      ...paginationResponse,
-      total,
-      products,
+      product,
     })
   }
 }

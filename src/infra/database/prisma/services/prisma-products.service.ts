@@ -32,40 +32,33 @@ export class PrismaProductsService implements ProductsRepository {
     return PrismaProductMapper.toDomain(product)
   }
 
-  async findByName(
-    name: string,
-    params?: PaginationParams,
-  ): Promise<FindManyProductsResponse> {
-    const page = params?.page ?? 1
+  async findByName(name: string): Promise<Product | null> {
+    const product = await this.prisma.product.findFirst({
+      where: {
+        name,
+      },
+    })
 
+    if (!product) {
+      return null
+    }
+
+    return PrismaProductMapper.toDomain(product)
+  }
+
+  async findAll({
+    page = 1,
+    q,
+  }: PaginationParams): Promise<FindManyProductsResponse> {
     const [total, products] = await this.prisma.$transaction([
       this.prisma.product.count(),
       this.prisma.product.findMany({
         where: {
           name: {
-            contains: name,
+            contains: q,
+            mode: 'insensitive',
           },
         },
-        skip: (page - 1) * 10,
-        take: 10,
-        include: { attachments: { select: { url: true } } },
-      }),
-    ])
-
-    return {
-      total,
-      products: products.map((product) =>
-        PrismaProductMapper.toDomain(product),
-      ),
-    }
-  }
-
-  async findAll({
-    page = 1,
-  }: PaginationParams): Promise<FindManyProductsResponse> {
-    const [total, products] = await this.prisma.$transaction([
-      this.prisma.product.count(),
-      this.prisma.product.findMany({
         skip: (page - 1) * 10,
         take: 10,
         include: { attachments: { select: { url: true } } },

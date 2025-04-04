@@ -41,10 +41,11 @@ export class EditProductUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    const { products: newNameBelongsToAnotherExistandProduct } =
-      await this.productsRepository.findByName(params.name)
+    const existingProduct = await this.productsRepository.findByName(
+      params.name,
+    )
 
-    if (newNameBelongsToAnotherExistandProduct.length > 0) {
+    if (existingProduct && !existingProduct.id.equals(product.id)) {
       return left(new AlreadyExistsError())
     }
 

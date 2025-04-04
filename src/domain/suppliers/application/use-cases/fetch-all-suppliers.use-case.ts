@@ -25,6 +25,8 @@ export class FetchAllSuppliersUseCase {
   }: FetchAllSuppliersUseCaseRequest): Promise<FetchAllSuppliersUseCaseResponse> {
     const suppliers = await this.suppliersRepository.findAll({ page, q })
 
+    /* TODO: implement pagination return data */
+
     return right({
       suppliers,
     })

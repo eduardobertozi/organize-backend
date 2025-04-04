@@ -7,7 +7,7 @@ const CreateProductSchema = z.object({
   reference: z.string(),
   supplierId: z.string().uuid(),
   stock: z.coerce.number(),
-  attachments: z.array(z.string().uuid()),
+  attachments: z.array(z.string()),
 })
 
 export const CreateProductValidationPipe = new ZodValidationPipe(

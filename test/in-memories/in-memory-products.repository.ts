@@ -22,25 +22,27 @@ export class InMemoryProductsRepository extends ProductsRepository {
     )
   }
 
-  async findByName(
-    name: string,
-    params?: PaginationParams,
-  ): Promise<FindManyProductsResponse> {
-    const page = params?.page ?? 1
-    const filteredItems = this.items.filter((item) => item.name?.includes(name))
-
-    return Promise.resolve({
-      total: filteredItems.length,
-      products: filteredItems.slice((page - 1) * 10, page * 10),
-    })
+  async findByName(name: string): Promise<Product | null> {
+    return Promise.resolve(
+      this.items.find((item) => item.name === name) ?? null,
+    )
   }
 
   async findAll({
     page = 1,
+    q,
   }: PaginationParams): Promise<FindManyProductsResponse> {
+    let products: Product[] = this.items.slice((page - 1) * 10, page * 10)
+
+    if (q) {
+      products = this.items.filter((item) =>
+        item.name.toLowerCase().includes(q.toLowerCase()),
+      )
+    }
+
     return Promise.resolve({
+      products,
       total: this.items.length,
-      products: this.items.slice((page - 1) * 10, page * 10),
     })
   }
 
