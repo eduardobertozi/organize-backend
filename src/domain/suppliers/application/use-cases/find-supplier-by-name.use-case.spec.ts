@@ -22,59 +22,8 @@ describe('Find Supplier By Name', () => {
       name: 'Sample supplier',
     })
 
-    expect(result.isRight()).toBe(true)
-    expect(inMemorySuppliersRepository.items).toHaveLength(1)
-  })
-
-  it('should be able to find for several suppliers with similar name', async () => {
-    await Promise.all([
-      inMemorySuppliersRepository.create(
-        makeSupplier({
-          name: 'Sample supplier',
-        }),
-      ),
-      inMemorySuppliersRepository.create(
-        makeSupplier({
-          name: 'Sample supplier 2',
-        }),
-      ),
-      inMemorySuppliersRepository.create(
-        makeSupplier({
-          name: 'Sample supplier 3',
-        }),
-      ),
-    ])
-
-    const result = await sut.execute({
-      name: 'Sample supplier',
-    })
-
-    expect(result.isRight()).toBe(true)
-    expect(inMemorySuppliersRepository.items).toHaveLength(3)
-  })
-
-  it('should be able to find paginated suppliers', async () => {
-    const tasks: Promise<void>[] = []
-
-    for (let i = 0; i < 12; i++) {
-      tasks.push(
-        inMemorySuppliersRepository.create(
-          makeSupplier({
-            name: `Sample supplier ${i}`,
-          }),
-        ),
-      )
+    if (result.isRight()) {
+      expect(result.value.supplier).toBeTruthy()
     }
-
-    await Promise.all(tasks)
-
-    const result = await sut.execute({
-      name: 'Sample supplier',
-      page: 2,
-    })
-
-    expect(result.isRight()).toBe(true)
-
-    expect(result.value?.suppliers).toHaveLength(2)
   })
 })

@@ -5,6 +5,7 @@ import { Injectable } from '@nestjs/common'
 
 interface FetchAllSuppliersUseCaseRequest {
   page?: number
+  q?: string
 }
 
 type FetchAllSuppliersUseCaseResponse = Either<
@@ -20,8 +21,9 @@ export class FetchAllSuppliersUseCase {
 
   async execute({
     page = 1,
+    q,
   }: FetchAllSuppliersUseCaseRequest): Promise<FetchAllSuppliersUseCaseResponse> {
-    const suppliers = await this.suppliersRepository.findAll({ page })
+    const suppliers = await this.suppliersRepository.findAll({ page, q })
 
     return right({
       suppliers,

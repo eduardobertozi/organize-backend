@@ -23,11 +23,12 @@ export class CreateSupplierUseCase {
     params: CreateSupplierUseCaseRequest,
   ): Promise<CreateSupplierUseCaseResponse> {
     const supplier = Supplier.create(params)
+
     const supplierExists = await this.suppliersRepository.findByName(
       supplier.name,
     )
 
-    if (!supplierExists || supplierExists.length > 0) {
+    if (supplierExists) {
       return left(new AlreadyExistsError())
     }
 

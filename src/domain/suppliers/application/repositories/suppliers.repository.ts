@@ -4,10 +4,7 @@ import { UniqueEntityID } from '@/core/unique-entity-id'
 
 export abstract class SuppliersRepository {
   abstract findById(id: UniqueEntityID): Promise<Supplier | null>
-  abstract findByName(
-    name: string,
-    params?: PaginationParams,
-  ): Promise<Supplier[]>
+  abstract findByName(name: string): Promise<Supplier | null>
   abstract findAll(params: PaginationParams): Promise<Supplier[]>
   abstract create(supplier: Supplier): Promise<void>
   abstract save(supplier: Supplier): Promise<void>

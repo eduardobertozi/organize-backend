@@ -5,6 +5,10 @@ import {
   PageQueryParam,
   PageQueryValidationPipe,
 } from '../../schemas/page-query-param.schema'
+import {
+  QueryParam,
+  QueryValidationPipe,
+} from '../../schemas/q-query-param.schema'
 
 @Controller()
 export class FetchAllSupplierController {
@@ -13,9 +17,13 @@ export class FetchAllSupplierController {
   ) {}
 
   @Get('/suppliers')
-  async handle(@Query('page', PageQueryValidationPipe) page: PageQueryParam) {
+  async handle(
+    @Query('page', PageQueryValidationPipe) page: PageQueryParam,
+    @Query('q', QueryValidationPipe) q: QueryParam,
+  ) {
     const result = await this.fetchAllSuppliersUseCase.execute({
       page,
+      q,
     })
 
     if (result.isLeft()) {

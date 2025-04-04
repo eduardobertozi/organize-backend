@@ -38,10 +38,11 @@ export class EditSupplierUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    const newNameBelongsToAnotherExistandSupplier =
-      await this.suppliersRepository.findByName(params.name)
+    const supplierExists = await this.suppliersRepository.findByName(
+      params.name,
+    )
 
-    if (newNameBelongsToAnotherExistandSupplier.length > 0) {
+    if (supplierExists) {
       return left(new AlreadyExistsError())
     }
 

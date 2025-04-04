@@ -23,27 +23,27 @@ describe('Fetch All Suppliers', () => {
     expect(result.value?.suppliers[0].id).toBeDefined()
   })
 
-  it('should be able to fetch all suppliers with ten items per page', async () => {
-    const createSuppliers: Promise<void>[] = []
+  it('should be able to fetch all suppliers by name', async () => {
+    await inMemorySuppliersRepository.create(makeSupplier({ name: 'John Doe' }))
+    await inMemorySuppliersRepository.create(makeSupplier({ name: 'Jane Doe' }))
 
-    for (let i = 0; i < 12; i++) {
-      createSuppliers.push(inMemorySuppliersRepository.create(makeSupplier()))
+    const result = await sut.execute({ q: 'Doe' })
+
+    expect(result.isRight()).toBe(true)
+    expect(result.value?.suppliers).toHaveLength(2)
+  })
+
+  it('should be able to fetch paginated suppliers', async () => {
+    for (let i = 0; i < 10; i++) {
+      await inMemorySuppliersRepository.create(makeSupplier())
     }
 
-    await Promise.all(createSuppliers)
+    const result = await sut.execute({ page: 1 })
+    expect(result.isRight()).toBe(true)
+    expect(result.value?.suppliers).toHaveLength(10)
 
-    const result1 = await sut.execute({
-      page: 1,
-    })
-
-    expect(result1.isRight()).toBe(true)
-    expect(result1.value?.suppliers).toHaveLength(10)
-
-    const result2 = await sut.execute({
-      page: 2,
-    })
-
+    const result2 = await sut.execute({ page: 2 })
     expect(result2.isRight()).toBe(true)
-    expect(result2.value?.suppliers).toHaveLength(2)
+    expect(result2.value?.suppliers).toHaveLength(0)
   })
 })

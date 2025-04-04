@@ -24,27 +24,28 @@ export class PrismaSuppliersService implements SuppliersRepository {
     return PrismaSuppliersMapper.toDomain(supplier)
   }
 
-  async findByName(
-    name: string,
-    params?: PaginationParams,
-  ): Promise<Supplier[]> {
-    const page = params?.page ?? 1
+  async findByName(name: string): Promise<Supplier | null> {
+    const supplier = await this.prisma.supplier.findFirst({
+      where: {
+        name,
+      },
+    })
 
+    if (!supplier) {
+      return null
+    }
+
+    return PrismaSuppliersMapper.toDomain(supplier)
+  }
+
+  async findAll({ page, q }: PaginationParams): Promise<Supplier[]> {
     const suppliers = await this.prisma.supplier.findMany({
       where: {
         name: {
-          contains: name,
+          contains: q,
+          mode: 'insensitive',
         },
       },
-      skip: (page - 1) * 10,
-      take: 10,
-    })
-
-    return suppliers.map((supplier) => PrismaSuppliersMapper.toDomain(supplier))
-  }
-
-  async findAll({ page }: PaginationParams): Promise<Supplier[]> {
-    const suppliers = await this.prisma.supplier.findMany({
       take: 10,
       skip: (page - 1) * 10,
     })

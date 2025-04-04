@@ -92,6 +92,7 @@ export class PrismaServantsService implements ServantsRepository {
         where: {
           name: {
             contains: q,
+            mode: 'insensitive',
           },
         },
         skip: (page - 1) * 10,

@@ -12,11 +12,10 @@ export class InMemorySuppliersRepository extends SuppliersRepository {
     )
   }
 
-  async findByName(name: string, params?: PaginationParams) {
-    const page = params?.page ?? 1
-
-    const filteredItems = this.items.filter((item) => item.name?.includes(name))
-    return Promise.resolve(filteredItems.slice((page - 1) * 10, page * 10))
+  async findByName(name: string) {
+    return Promise.resolve(
+      this.items.find((item) => item.name === name) ?? null,
+    )
   }
 
   async findAll({ page }: PaginationParams) {
