@@ -16,7 +16,7 @@ export class FetchAllSupplierController {
     private readonly fetchAllSuppliersUseCase: FetchAllSuppliersUseCase,
   ) {}
 
-  @Get('/suppliers')
+  @Get('/suppliers/all')
   async handle(
     @Query('page', PageQueryValidationPipe) page: PageQueryParam,
     @Query('q', QueryValidationPipe) q: QueryParam,

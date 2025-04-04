@@ -29,13 +29,18 @@ Content-Type: application/json
 Authorization: Bearer {{token}}
 
 {
-  "name": "Denis",
-  "email": "denis@example.com",
+  "name": "Eduardo Bertozi",
+  "email": "eduardo@example.com",
   "phone": "47999999999",
-  "city": "Jaraguá do Sul",
+  "city": "Barra Velha",
   "state": "SC",
   "address": "Rua do Comércio, 123"
 }
+
+###
+# @name fetch_suppliers
+GET {{base_url}}/suppliers/all?page=1
+Authorization: Bearer {{token}}
 
 ### 
 # @name create_product
