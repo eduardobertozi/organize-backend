@@ -23,7 +23,7 @@ export class CreateSupplierController {
     const result = await this.createSupplierUseCase.execute(body)
 
     if (result.isLeft()) {
-      throw new BadRequestException()
+      throw new BadRequestException(result.value.message)
     }
 
     return {

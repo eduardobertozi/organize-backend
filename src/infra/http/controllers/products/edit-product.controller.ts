@@ -12,6 +12,7 @@ import {
   CreateProductDto,
   CreateProductValidationPipe,
 } from '../../dto/create-product.dto'
+import { ProductPresenter } from '../../presenters/http-products.presenter'
 
 @Controller()
 export class EditProductController {
@@ -30,7 +31,12 @@ export class EditProductController {
     })
 
     if (result.isLeft()) {
-      throw new BadRequestException()
+      throw new BadRequestException(result.value.message)
+    }
+
+    return {
+      message: 'Produto atualizado com sucesso!',
+      product: ProductPresenter.toHTTP(result.value.product),
     }
   }
 }

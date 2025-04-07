@@ -4,6 +4,7 @@ import {
   CreateProductDto,
   CreateProductValidationPipe,
 } from '../../dto/create-product.dto'
+import { ProductPresenter } from '../../presenters/http-products.presenter'
 
 @Controller()
 export class CreateProductController {
@@ -17,7 +18,12 @@ export class CreateProductController {
     })
 
     if (result.isLeft()) {
-      throw new BadRequestException()
+      throw new BadRequestException(result.value.message)
+    }
+
+    return {
+      message: 'Produto criado com sucesso!',
+      product: ProductPresenter.toHTTP(result.value.product),
     }
   }
 }

@@ -16,7 +16,12 @@ interface CreateProductUseCaseRequest {
   attachmentsIds: string[]
 }
 
-type CreateProductUseCaseResponse = Either<AlreadyExistsError, null>
+type CreateProductUseCaseResponse = Either<
+  AlreadyExistsError,
+  {
+    product: Product
+  }
+>
 
 @Injectable()
 export class CreateProductUseCase {
@@ -51,6 +56,8 @@ export class CreateProductUseCase {
 
     await this.productsRepository.create(product)
 
-    return right(null)
+    return right({
+      product,
+    })
   }
 }
