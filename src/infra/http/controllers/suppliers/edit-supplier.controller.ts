@@ -37,6 +37,9 @@ export class EditSupplierController {
       throw new BadRequestException()
     }
 
-    return SupplierPresenter.toHTTP(result.value.supplier)
+    return {
+      message: 'Fornecedor atualizado com sucesso!',
+      supplier: SupplierPresenter.toHTTP(result.value.supplier),
+    }
   }
 }

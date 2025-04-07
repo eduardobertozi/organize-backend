@@ -11,6 +11,7 @@ import {
   CreateSupplierSchema,
 } from '../../dto/create-supplier.dto'
 import { ZodValidationPipe } from '../../pipes/zod-validation.pipe'
+import { SupplierPresenter } from '../../presenters/http-supplier.presenter'
 
 @Controller()
 export class CreateSupplierController {
@@ -23,6 +24,11 @@ export class CreateSupplierController {
 
     if (result.isLeft()) {
       throw new BadRequestException()
+    }
+
+    return {
+      message: 'Fornecedor criado com sucesso!',
+      supplier: SupplierPresenter.toHTTP(result.value.supplier),
     }
   }
 }

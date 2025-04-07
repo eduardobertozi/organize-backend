@@ -13,7 +13,12 @@ interface CreateSupplierUseCaseRequest {
   address: string
 }
 
-type CreateSupplierUseCaseResponse = Either<AlreadyExistsError, null>
+type CreateSupplierUseCaseResponse = Either<
+  AlreadyExistsError,
+  {
+    supplier: Supplier
+  }
+>
 
 @Injectable()
 export class CreateSupplierUseCase {
@@ -34,6 +39,8 @@ export class CreateSupplierUseCase {
 
     await this.suppliersRepository.create(supplier)
 
-    return right(null)
+    return right({
+      supplier,
+    })
   }
 }
