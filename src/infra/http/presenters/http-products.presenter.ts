@@ -8,9 +8,11 @@ export class ProductPresenter {
       price: product.price,
       supplierId: product.supplierId.toString(),
       stock: product.stock,
-      attachments: product.attachments
-        .getItems()
-        .map((attachment) => attachment.id.toString()),
+      attachments: product.attachmentsList?.map((attachment) => ({
+        id: attachment.id.toString(),
+        title: attachment.title,
+        url: attachment.url,
+      })),
       reference: product.reference,
       createdAt: product.createdAt,
       updatedAt: product.updatedAt,

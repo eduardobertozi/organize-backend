@@ -78,7 +78,7 @@ Authorization: Bearer {{token}}
 
 ### 
 # @name fetch_all_products
-GET {{base_url}}/products
+GET {{base_url}}/products/all
 Content-Type: application/json
 Authorization: Bearer {{token}}
 

@@ -1,16 +1,20 @@
 import { AggregateRoot } from '@/core/entities/aggregate-root'
 import { UniqueEntityID } from '@/core/unique-entity-id'
 import { ProductAttachmentsList } from './product-attachments-list'
+import { Attachment } from '@/domain/attachments/enterprise/entities/attachment'
 
 export interface ProductProps {
   name: string
   price: number
   reference: string
-  attachments: ProductAttachmentsList
-  supplierId?: UniqueEntityID
   stock: number
+  attachments: ProductAttachmentsList
+
+  supplierId?: UniqueEntityID
   createdAt?: Date | null
   updatedAt?: Date | null
+
+  attachmentsList?: Attachment[]
 }
 
 export class Product extends AggregateRoot<ProductProps> {
@@ -48,6 +52,10 @@ export class Product extends AggregateRoot<ProductProps> {
   set attachments(attachments: ProductAttachmentsList) {
     this.props.attachments = attachments
     this.touch()
+  }
+
+  get attachmentsList() {
+    return this.props.attachmentsList
   }
 
   get supplierId() {
