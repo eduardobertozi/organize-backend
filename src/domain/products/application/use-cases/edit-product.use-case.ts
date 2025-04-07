@@ -7,6 +7,7 @@ import { ProductAttachmentsList } from '../../enterprise/entities/product-attach
 import { ProductAttachment } from '../../enterprise/entities/product-attachment'
 import { Injectable } from '@nestjs/common'
 import { ProductsAttachmentsRepository } from '../repositories/product-attachments.repository'
+import { Product } from '../../enterprise/entities/product'
 
 interface EditProductUseCaseRequest {
   productId: string
@@ -20,7 +21,9 @@ interface EditProductUseCaseRequest {
 
 type EditProductUseCaseResponse = Either<
   AlreadyExistsError | ResourceNotFoundError,
-  null
+  {
+    product: Product
+  }
 >
 
 @Injectable()
@@ -33,6 +36,8 @@ export class EditProductUseCase {
   async execute(
     params: EditProductUseCaseRequest,
   ): Promise<EditProductUseCaseResponse> {
+    const changeProductAttachments = params.attachmentsIds.length > 0
+
     const product = await this.productsRepository.findById(
       new UniqueEntityID(params.productId),
     )
@@ -49,33 +54,34 @@ export class EditProductUseCase {
       return left(new AlreadyExistsError())
     }
 
-    const currentProductAttachments =
-      await this.productAttachmentsRepository.findManyByProductId(
-        new UniqueEntityID(params.productId),
+    if (changeProductAttachments) {
+      const currentProductAttachments =
+        await this.productAttachmentsRepository.findManyByProductId(
+          new UniqueEntityID(params.productId),
+        )
+      const productAttachmentsList = new ProductAttachmentsList(
+        currentProductAttachments,
       )
-
-    const productAttachmentsList = new ProductAttachmentsList(
-      currentProductAttachments,
-    )
-
-    const productAttachments = params.attachmentsIds.map((attachmentId) => {
-      return ProductAttachment.create({
-        attachmentId: new UniqueEntityID(attachmentId),
-        productId: product.id,
+      const productAttachments = params.attachmentsIds.map((attachmentId) => {
+        return ProductAttachment.create({
+          attachmentId: new UniqueEntityID(attachmentId),
+          productId: product.id,
+        })
       })
-    })
-
-    productAttachmentsList.update(productAttachments)
+      productAttachmentsList.update(productAttachments)
+      product.attachments = productAttachmentsList
+    }
 
     product.name = params.name
     product.price = params.price
     product.reference = params.reference
     product.supplierId = new UniqueEntityID(params.supplierId)
     product.stock = params.stock
-    product.attachments = productAttachmentsList
 
     await this.productsRepository.save(product)
 
-    return right(null)
+    return right({
+      product,
+    })
   }
 }
