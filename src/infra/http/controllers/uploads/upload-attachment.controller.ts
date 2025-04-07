@@ -1,5 +1,6 @@
 import { InvalidAttachmentType } from '@/domain/uploads/errors/invalid-attachment-type'
 import { UploadAndCreateAttachmentUseCase } from '@/domain/uploads/upload-and-create-attachment.use-case'
+
 import {
   BadRequestException,
   Controller,

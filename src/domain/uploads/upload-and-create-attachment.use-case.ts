@@ -28,6 +28,7 @@ export class UploadAndCreateAttachmentUseCase {
   async execute({
     fileName,
     fileType,
+    body,
   }: UploadAndCreateAttachmentRequest): Promise<UploadAndCreateAttachmentResponse> {
     const validFileType = /^(image\/(jpeg|png))$|^application\/pdf$/.test(
       fileType,
@@ -40,7 +41,7 @@ export class UploadAndCreateAttachmentUseCase {
     const { url } = await this.uploader.upload({
       fileName,
       fileType,
-      body: Buffer.from(''),
+      body,
     })
 
     const attachment = Attachment.create({

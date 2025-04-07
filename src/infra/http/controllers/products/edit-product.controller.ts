@@ -29,8 +29,6 @@ export class EditProductController {
       attachmentsIds: body.attachments,
     })
 
-    console.log(result)
-
     if (result.isLeft()) {
       throw new BadRequestException()
     }

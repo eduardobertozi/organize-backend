@@ -34,13 +34,9 @@ export class ProductsFactory {
   async makePrismaProducts(data: Partial<ProductProps> = {}): Promise<Product> {
     const product = makeProduct(data)
 
-    try {
-      await this.prismaService.product.create({
-        data: PrismaProductMapper.toPrisma(product),
-      })
-    } catch (error) {
-      console.log('ERROR:', error)
-    }
+    await this.prismaService.product.create({
+      data: PrismaProductMapper.toPrisma(product),
+    })
 
     return product
   }
