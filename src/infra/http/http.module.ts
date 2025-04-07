@@ -56,6 +56,8 @@ import { FetchAllSupplierController } from './controllers/suppliers/fetch-all-su
 import { UploadAttachmentsController } from './controllers/uploads/upload-attachment.controller'
 import { AuthenticateController } from './controllers/users/authenticate.controller'
 import { CreateAccountController } from './controllers/users/create-account.controller'
+import { DeleteSupplierController } from './controllers/suppliers/delete-supplier.controller'
+import { DeleteSupplierUseCase } from '@/domain/suppliers/application/use-cases/delete-supplier.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -65,6 +67,7 @@ import { CreateAccountController } from './controllers/users/create-account.cont
     CreateProductController,
     CreateSupplierController,
     EditSupplierController,
+    DeleteSupplierController,
     FetchAllSupplierController,
     FindSupplierByNameController,
     EditProductController,
@@ -94,6 +97,7 @@ import { CreateAccountController } from './controllers/users/create-account.cont
     CreateProductUseCase,
     CreateSupplierUseCase,
     EditSupplierUseCase,
+    DeleteSupplierUseCase,
     FetchAllSuppliersUseCase,
     FindSupplierByNameUseCase,
     FindSupplierByIdUseCase,
