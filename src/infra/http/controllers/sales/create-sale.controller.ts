@@ -19,7 +19,10 @@ export class CreateSaleController {
   @Post('sales')
   @UsePipes(CreateSaleValidationPipe)
   async handle(@Body() body: CreateSaleDTO) {
-    const result = await this.createSaleUseCase.execute(body)
+    const result = await this.createSaleUseCase.execute({
+      ...body,
+      servantsIds: body.servants,
+    })
 
     if (result.isLeft()) {
       throw new BadRequestException()

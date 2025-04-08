@@ -4,8 +4,6 @@ import { EditProductUseCase } from '@/domain/products/application/use-cases/edit
 import { FetchAllProductsUseCase } from '@/domain/products/application/use-cases/fetch-all-products.use-case'
 import { FindProductByIdUseCase } from '@/domain/products/application/use-cases/find-product-by-id.use-case'
 import { FindProductByNameUseCase } from '@/domain/products/application/use-cases/find-product-by-name.use-case'
-import { CreateSaleServantUseCase } from '@/domain/sale-servants/application/use-cases/create-sale-servant.use-case'
-import { DeleteSaleServantUseCase } from '@/domain/sale-servants/application/use-cases/delete-sale-servant.use-case'
 import { CreateSaleUseCase } from '@/domain/sales/application/use-cases/create-sale.use-case'
 import { DeleteSaleUseCase } from '@/domain/sales/application/use-cases/delete-sale.use-case'
 import { EditSaleUseCase } from '@/domain/sales/application/use-cases/edit-sale.use-case'
@@ -18,6 +16,7 @@ import { FetchAllServantsUseCase } from '@/domain/servants/application/use-cases
 import { FindServantByIdUseCase } from '@/domain/servants/application/use-cases/find-servant-by-id.use-case'
 import { FindServantByNameUseCase } from '@/domain/servants/application/use-cases/find-servant-by-name.use-case'
 import { CreateSupplierUseCase } from '@/domain/suppliers/application/use-cases/create-supplier.use-case'
+import { DeleteSupplierUseCase } from '@/domain/suppliers/application/use-cases/delete-supplier.use-case'
 import { EditSupplierUseCase } from '@/domain/suppliers/application/use-cases/edit-supplier.use-case'
 import { FetchAllSuppliersUseCase } from '@/domain/suppliers/application/use-cases/fetch-all-suppliers.use-case'
 import { FindSupplierByIdUseCase } from '@/domain/suppliers/application/use-cases/find-supplier-by-id.use-case'
@@ -41,8 +40,6 @@ import { EditProductController } from './controllers/products/edit-product.contr
 import { FetchAllProductsController } from './controllers/products/fetch-all-products.controller'
 import { FindProductByIdController } from './controllers/products/find-product-by-id.controller'
 import { FindProductsByNameController } from './controllers/products/find-products-by-name.controller'
-import { CreateSaleServantController } from './controllers/sale-servants/create-sale-servant.controller'
-import { DeleteSaleServantController } from './controllers/sale-servants/delete-sale-servant.controller'
 import { CreateSaleController } from './controllers/sales/create-sale.controller'
 import { DeleteSaleController } from './controllers/sales/delete-sale.controller'
 import { EditSaleController } from './controllers/sales/edit-sale.controller'
@@ -51,13 +48,12 @@ import { FindSaleByIdController } from './controllers/sales/find-sale-by-id.cont
 import { CreateServantController } from './controllers/servants/create-servant.controller'
 import { FetchAllServantsController } from './controllers/servants/fetch-all-servants.controller'
 import { CreateSupplierController } from './controllers/suppliers/create-supplier.controller'
+import { DeleteSupplierController } from './controllers/suppliers/delete-supplier.controller'
 import { EditSupplierController } from './controllers/suppliers/edit-supplier.controller'
 import { FetchAllSupplierController } from './controllers/suppliers/fetch-all-suppliers.controller'
 import { UploadAttachmentsController } from './controllers/uploads/upload-attachment.controller'
 import { AuthenticateController } from './controllers/users/authenticate.controller'
 import { CreateAccountController } from './controllers/users/create-account.controller'
-import { DeleteSupplierController } from './controllers/suppliers/delete-supplier.controller'
-import { DeleteSupplierUseCase } from '@/domain/suppliers/application/use-cases/delete-supplier.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -87,8 +83,6 @@ import { DeleteSupplierUseCase } from '@/domain/suppliers/application/use-cases/
     EditSaleController,
     FetchAllSalesController,
     FindSaleByIdController,
-    CreateSaleServantController,
-    DeleteSaleServantController,
     UploadAttachmentsController,
   ],
   providers: [
@@ -117,8 +111,6 @@ import { DeleteSupplierUseCase } from '@/domain/suppliers/application/use-cases/
     EditSaleUseCase,
     FetchAllSalesUseCase,
     FindSaleByIdUseCase,
-    CreateSaleServantUseCase,
-    DeleteSaleServantUseCase,
     UploadAndCreateAttachmentUseCase,
   ],
 })

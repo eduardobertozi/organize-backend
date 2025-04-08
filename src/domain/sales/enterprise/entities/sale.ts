@@ -1,10 +1,11 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
 import { Entity } from '@/core/entities/entity'
+import { SaleServantList } from './sale-servant-list'
 
 export interface SaleProps {
   description?: string | null
   amount: number
-
+  servants: SaleServantList
   createdAt?: Date | null
   updatedAt?: Date | null
 }
@@ -25,6 +26,15 @@ export class Sale extends Entity<SaleProps> {
 
   set description(description: string) {
     this.props.description = description
+    this.touch()
+  }
+
+  get servants(): SaleServantList {
+    return this.props.servants
+  }
+
+  set servants(servants: SaleServantList) {
+    this.props.servants = servants
     this.touch()
   }
 

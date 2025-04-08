@@ -3,10 +3,14 @@ import { SalesRepository } from '../repositories/sales.repository'
 import { Sale } from '../../enterprise/entities/sale'
 import { Either, left, right } from '@/core/either'
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
+import { SaleServantList } from '../../enterprise/entities/sale-servant-list'
+import { SaleServant } from '../../enterprise/entities/sale-servant'
+import { UniqueEntityID } from '@/core/unique-entity-id'
 
 interface CreateSaleUseCaseRequest {
   description?: string | null
   amount: number
+  servantsIds: string[]
 }
 
 type CreateSaleUseCaseResponse = Either<
@@ -23,14 +27,27 @@ export class CreateSaleUseCase {
   async execute(
     params: CreateSaleUseCaseRequest,
   ): Promise<CreateSaleUseCaseResponse> {
-    const createSale = Sale.create(params)
-    const saleExists = await this.salesRepository.findById(createSale.id)
+    const sale = Sale.create({
+      ...params,
+      servants: new SaleServantList(),
+    })
+
+    const saleExists = await this.salesRepository.findById(sale.id)
 
     if (saleExists) {
       return left(new AlreadyExistsError())
     }
 
-    const sale = await this.salesRepository.create(createSale)
+    const saleServants = params.servantsIds.map((servantId) =>
+      SaleServant.create({
+        servantId: new UniqueEntityID(servantId),
+        saleId: sale.id,
+      }),
+    )
+
+    sale.servants = new SaleServantList(saleServants)
+
+    await this.salesRepository.create(sale)
 
     return right({
       sale,

@@ -42,6 +42,7 @@ describe('Edit Sale (E2E)', () => {
       .send({
         description: 'New Description',
         amount: 100,
+        servants: [],
       })
 
     expect(response.statusCode).toBe(204)

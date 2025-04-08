@@ -27,12 +27,14 @@ describe('CreateSaleUseCase', () => {
     const result = await sut.execute({
       description: 'New Sale',
       amount: servant.price + servant2.price,
+      servantsIds: [servant.id.toString(), servant2.id.toString()],
     })
 
     expect(result.isRight()).toEqual(true)
 
     if ('sale' in result.value) {
       expect(result.value.sale.amount).toBe(80)
+      expect(result.value.sale.servants.getItems()).toHaveLength(2)
     }
   })
 })

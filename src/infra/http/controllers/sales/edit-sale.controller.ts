@@ -31,6 +31,7 @@ export class EditSaleController {
     const result = await this.editSaleUseCase.execute({
       saleId,
       ...body,
+      servantsIds: body.servants,
     })
 
     if (result.isLeft()) {

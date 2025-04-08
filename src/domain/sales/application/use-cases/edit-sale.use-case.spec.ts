@@ -3,14 +3,21 @@ import { makeServant } from 'test/factories/servants.factory'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 import { EditSaleUseCase } from './edit-sale.use-case'
 import { makeSale } from 'test/factories/sales.factory'
+import { InMemorySaleServantsRepository } from 'test/in-memories/in-memory-sale-servants.repository'
 
 describe('EditSaleUseCase', () => {
   let inMemorySalesRepository: InMemorySalesRepository
+  let inMemorySaleServantsRepository: InMemorySaleServantsRepository
   let sut: EditSaleUseCase
 
   beforeEach(() => {
     inMemorySalesRepository = new InMemorySalesRepository()
-    sut = new EditSaleUseCase(inMemorySalesRepository)
+    inMemorySaleServantsRepository = new InMemorySaleServantsRepository()
+
+    sut = new EditSaleUseCase(
+      inMemorySalesRepository,
+      inMemorySaleServantsRepository,
+    )
   })
 
   it('should be able to edit a sale', async () => {
@@ -30,6 +37,7 @@ describe('EditSaleUseCase', () => {
       saleId: sale.id.toString(),
       description: 'New Sale',
       amount: servant.price,
+      servantsIds: [servant.id.toString()],
     })
 
     expect(result.isRight()).toEqual(true)
@@ -49,6 +57,7 @@ describe('EditSaleUseCase', () => {
       saleId: 'sale-id',
       description: 'New Sale',
       amount: 40,
+      servantsIds: [],
     })
 
     expect(result.isLeft()).toEqual(true)
