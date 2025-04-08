@@ -1,4 +1,7 @@
-import { SuppliersRepository } from '@/domain/suppliers/application/repositories/suppliers.repository'
+import {
+  FindManyProductsResponse,
+  SuppliersRepository,
+} from '@/domain/suppliers/application/repositories/suppliers.repository'
 import { Injectable } from '@nestjs/common'
 import { PrismaService } from '../prisma.service'
 import { Supplier } from '@/domain/suppliers/enterprise/entities/supplier'
@@ -38,19 +41,31 @@ export class PrismaSuppliersService implements SuppliersRepository {
     return PrismaSuppliersMapper.toDomain(supplier)
   }
 
-  async findAll({ page, q }: PaginationParams): Promise<Supplier[]> {
-    const suppliers = await this.prisma.supplier.findMany({
-      where: {
-        name: {
-          contains: q,
-          mode: 'insensitive',
+  async findAll({
+    page,
+    q,
+  }: PaginationParams): Promise<FindManyProductsResponse> {
+    const [total, suppliers] = await this.prisma.$transaction([
+      this.prisma.servant.count(),
+      this.prisma.supplier.findMany({
+        take: 10,
+        where: {
+          name: {
+            contains: q,
+            mode: 'insensitive',
+          },
         },
-      },
-      take: 10,
-      skip: (page - 1) * 10,
-    })
+        skip: (page - 1) * 10,
+        orderBy: { createdAt: 'desc' },
+      }),
+    ])
 
-    return suppliers.map((supplier) => PrismaSuppliersMapper.toDomain(supplier))
+    return {
+      total: total,
+      suppliers: suppliers.map((supplier) =>
+        PrismaSuppliersMapper.toDomain(supplier),
+      ),
+    }
   }
 
   async create(supplier: Supplier): Promise<void> {

@@ -23,6 +23,7 @@ export class FetchAllProductsController {
   ) {
     const result = await this.fetchAllProductsUseCase.execute({
       page,
+      q,
     })
 
     if (result.isLeft()) {

@@ -18,8 +18,20 @@ export class InMemorySuppliersRepository extends SuppliersRepository {
     )
   }
 
-  async findAll({ page }: PaginationParams) {
-    return Promise.resolve(this.items.slice((page - 1) * 10, page * 10))
+  async findAll({ page, q }: PaginationParams) {
+    const filteredItems = this.items.filter((item) =>
+      item.name.toLowerCase().includes(q?.toLowerCase() ?? ''),
+    )
+
+    const start = (page - 1) * 10
+    const end = start + 10
+
+    const paginatedItems = filteredItems.slice(start, end)
+
+    return Promise.resolve({
+      total: filteredItems.length,
+      suppliers: paginatedItems,
+    })
   }
 
   async create(supplier: Supplier) {
