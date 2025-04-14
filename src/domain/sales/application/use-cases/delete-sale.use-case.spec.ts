@@ -3,13 +3,18 @@ import { DeleteSaleUseCase } from './delete-sale.use-case'
 import { makeServant } from 'test/factories/servants.factory'
 import { makeSale } from 'test/factories/sales.factory'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
+import { InMemorySaleServantsRepository } from 'test/in-memories/in-memory-sale-servants.repository'
 
 describe('DeleteSaleUseCase', () => {
+  let inMemorySaleServantsRepository: InMemorySaleServantsRepository
   let inMemorySalesRepository: InMemorySalesRepository
   let sut: DeleteSaleUseCase
 
   beforeEach(() => {
-    inMemorySalesRepository = new InMemorySalesRepository()
+    inMemorySaleServantsRepository = new InMemorySaleServantsRepository()
+    inMemorySalesRepository = new InMemorySalesRepository(
+      inMemorySaleServantsRepository,
+    )
     sut = new DeleteSaleUseCase(inMemorySalesRepository)
   })
 

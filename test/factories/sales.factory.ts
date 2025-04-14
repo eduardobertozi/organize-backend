@@ -1,5 +1,6 @@
 import { UniqueEntityID } from '@/core/unique-entity-id'
 import { Sale, SaleProps } from '@/domain/sales/enterprise/entities/sale'
+import { SaleServantList } from '@/domain/sales/enterprise/entities/sale-servant-list'
 import { PrismaSaleMapper } from '@/infra/database/prisma/mappers/prisma-sale.mapper'
 import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { faker } from '@faker-js/faker'
@@ -13,6 +14,7 @@ export function makeSale(
     {
       description: faker.lorem.sentence(),
       amount: faker.number.float(),
+      servants: new SaleServantList(),
       ...override,
     },
     id,

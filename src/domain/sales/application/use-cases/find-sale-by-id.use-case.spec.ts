@@ -3,13 +3,18 @@ import { makeServant } from 'test/factories/servants.factory'
 import { makeSale } from 'test/factories/sales.factory'
 import { FindSaleByIdUseCase } from './find-sale-by-id.use-case'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
+import { InMemorySaleServantsRepository } from 'test/in-memories/in-memory-sale-servants.repository'
 
 describe('FindSaleByIdUseCase', () => {
+  let inMemorySaleServantsRepository: InMemorySaleServantsRepository
   let inMemorySalesRepository: InMemorySalesRepository
   let sut: FindSaleByIdUseCase
 
   beforeEach(() => {
-    inMemorySalesRepository = new InMemorySalesRepository()
+    inMemorySaleServantsRepository = new InMemorySaleServantsRepository()
+    inMemorySalesRepository = new InMemorySalesRepository(
+      inMemorySaleServantsRepository,
+    )
     sut = new FindSaleByIdUseCase(inMemorySalesRepository)
   })
 

@@ -2,13 +2,18 @@ import { InMemorySalesRepository } from 'test/in-memories/in-memory-sales.reposi
 import { makeServant } from 'test/factories/servants.factory'
 import { makeSale } from 'test/factories/sales.factory'
 import { FetchAllSalesUseCase } from './fetch-all-sales.use-case'
+import { InMemorySaleServantsRepository } from 'test/in-memories/in-memory-sale-servants.repository'
 
 describe('FetchAllSalesUseCase', () => {
+  let inMemorySaleServantsRepository: InMemorySaleServantsRepository
   let inMemorySalesRepository: InMemorySalesRepository
   let sut: FetchAllSalesUseCase
 
   beforeEach(() => {
-    inMemorySalesRepository = new InMemorySalesRepository()
+    inMemorySaleServantsRepository = new InMemorySaleServantsRepository()
+    inMemorySalesRepository = new InMemorySalesRepository(
+      inMemorySaleServantsRepository,
+    )
     sut = new FetchAllSalesUseCase(inMemorySalesRepository)
   })
 
@@ -35,9 +40,8 @@ describe('FetchAllSalesUseCase', () => {
     })
 
     expect(result.isRight()).toEqual(true)
-
-    expect(result.value!.sales).toHaveLength(10)
     expect(inMemorySalesRepository.items).toHaveLength(12)
+    expect(result.value!.sales).toHaveLength(10)
 
     const result2 = await sut.execute({
       page: 2,

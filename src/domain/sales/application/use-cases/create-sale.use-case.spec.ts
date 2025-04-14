@@ -1,13 +1,18 @@
 import { InMemorySalesRepository } from 'test/in-memories/in-memory-sales.repository'
 import { CreateSaleUseCase } from './create-sale.use-case'
 import { makeServant } from 'test/factories/servants.factory'
+import { InMemorySaleServantsRepository } from 'test/in-memories/in-memory-sale-servants.repository'
 
 describe('CreateSaleUseCase', () => {
+  let inMemorySaleServantsRepository: InMemorySaleServantsRepository
   let inMemorySalesRepository: InMemorySalesRepository
   let sut: CreateSaleUseCase
 
   beforeEach(() => {
-    inMemorySalesRepository = new InMemorySalesRepository()
+    inMemorySaleServantsRepository = new InMemorySaleServantsRepository()
+    inMemorySalesRepository = new InMemorySalesRepository(
+      inMemorySaleServantsRepository,
+    )
     sut = new CreateSaleUseCase(inMemorySalesRepository)
   })
 
