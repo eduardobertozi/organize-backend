@@ -64,6 +64,9 @@ export class PrismaSalesService implements SalesRepository {
             },
           },
         },
+        orderBy: {
+          createdAt: 'desc',
+        },
       }),
     ])
 

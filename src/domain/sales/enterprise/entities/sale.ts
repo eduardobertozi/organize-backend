@@ -51,14 +51,12 @@ export class Sale extends Entity<SaleProps> {
   }
 
   static create(props: SaleProps, id?: UniqueEntityID): Sale {
-    const sale = new Sale(
+    return new Sale(
       {
         ...props,
         createdAt: props.createdAt ?? new Date(),
       },
       id,
     )
-
-    return sale
   }
 }

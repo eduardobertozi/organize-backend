@@ -26,6 +26,8 @@ export class PrismaSaleMapper {
             }),
           ),
         ),
+        createdAt: raw.createdAt,
+        updatedAt: raw.updatedAt,
       },
       new UniqueEntityID(raw.id),
     )
@@ -36,6 +38,8 @@ export class PrismaSaleMapper {
       id: sale.id.toString(),
       amount: sale.amount,
       description: sale.description,
+      createdAt: sale.createdAt!,
+      updatedAt: sale.updatedAt!,
     }
   }
 }

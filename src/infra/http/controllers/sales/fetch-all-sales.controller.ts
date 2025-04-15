@@ -10,7 +10,7 @@ import { SalePresenter } from '../../presenters/http-sale.presenter'
 export class FetchAllSalesController {
   constructor(private readonly fetchAllSalesUseCase: FetchAllSalesUseCase) {}
 
-  @Get('sales')
+  @Get('sales/all')
   async handle(@Query('page', PageQueryValidationPipe) page: PageQueryParam) {
     const result = await this.fetchAllSalesUseCase.execute({
       page,
