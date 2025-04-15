@@ -6,7 +6,7 @@ export class ProductPresenter {
       id: product.id.toString(),
       name: product.name,
       price: product.price,
-      supplierId: product.supplierId.toString(),
+      supplierId: product.supplierId?.toString(),
       stock: product.stock,
       attachments: product.attachmentsList?.map((attachment) => ({
         id: attachment.id.toString(),

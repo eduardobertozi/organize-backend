@@ -42,7 +42,7 @@ export class PrismaProductMapper {
       name: product.name,
       price: product.price,
       reference: product.reference,
-      supplierId: product.supplierId.toString(),
+      supplierId: product.supplierId?.toString(),
       stock: product.stock,
     }
   }
