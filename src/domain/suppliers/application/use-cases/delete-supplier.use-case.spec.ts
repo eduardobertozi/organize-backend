@@ -15,23 +15,21 @@ describe('Delete Supplier', () => {
   beforeEach(() => {
     inMemoryProductsRepository = new InMemoryProductsRepository()
     inMemorySuppliersRepository = new InMemorySuppliersRepository()
-    sut = new DeleteSupplierUseCase(
-      inMemorySuppliersRepository,
-      inMemoryProductsRepository,
-    )
+    sut = new DeleteSupplierUseCase(inMemorySuppliersRepository)
   })
 
   it('should be able to delete a existant supplier', async () => {
     const supplier = makeSupplier({}, new UniqueEntityID('supplier-1'))
     await inMemorySuppliersRepository.create(supplier)
 
-    await inMemoryProductsRepository.create(
-      makeProduct({ supplierId: supplier.id }),
-    )
+    const product = makeProduct({ supplierId: supplier.id })
+    await inMemoryProductsRepository.create(product)
 
     const result = await sut.execute({
       supplierId: 'supplier-1',
     })
+
+    await inMemoryProductsRepository.delete(product)
 
     const productsOfSuppler = await inMemoryProductsRepository.findBySupplierId(
       supplier.id,

@@ -76,17 +76,6 @@ export class InMemoryProductsRepository extends ProductsRepository {
     )
   }
 
-  async removeSupplierFromProducts(supplierId: UniqueEntityID): Promise<void> {
-    const productsOfSupplier = this.items.filter((product) =>
-      product.supplierId?.equals(supplierId),
-    )
-
-    for (const product of productsOfSupplier) {
-      product.supplierId = null
-      await this.save(product)
-    }
-  }
-
   async delete(product: Product): Promise<void> {
     const index = this.items.findIndex((item) => item.id.equals(product.id))
 

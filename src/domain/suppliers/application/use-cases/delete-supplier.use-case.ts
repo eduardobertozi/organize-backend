@@ -1,10 +1,9 @@
 import { Either, left, right } from '@/core/either'
 import { AlreadyExistsError } from '@/core/errors/already-exists.error'
 import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
-import { SuppliersRepository } from '../repositories/suppliers.repository'
-import { Injectable } from '@nestjs/common'
 import { UniqueEntityID } from '@/core/unique-entity-id'
-import { ProductsRepository } from '@/domain/products/application/repositories/products.repository'
+import { Injectable } from '@nestjs/common'
+import { SuppliersRepository } from '../repositories/suppliers.repository'
 
 interface DeleteSupplierUseCaseRequest {
   supplierId: string
@@ -17,10 +16,7 @@ type DeleteSupplierUseCaseResponse = Either<
 
 @Injectable()
 export class DeleteSupplierUseCase {
-  constructor(
-    private readonly suppliersRepository: SuppliersRepository,
-    private readonly productsRepository: ProductsRepository,
-  ) {}
+  constructor(private readonly suppliersRepository: SuppliersRepository) {}
 
   async execute({
     supplierId,
@@ -33,7 +29,6 @@ export class DeleteSupplierUseCase {
       return left(new ResourceNotFoundError())
     }
 
-    await this.productsRepository.removeSupplierFromProducts(supplierExists.id)
     await this.suppliersRepository.delete(supplierExists)
 
     return right(null)

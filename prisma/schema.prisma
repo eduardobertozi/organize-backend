@@ -51,17 +51,17 @@ model ServantProducts {
 }
 
 model Product {
-  id         String @id @default(uuid())
+  id         String  @id @default(uuid())
   name       String
   price      Float
   reference  String
-  supplierId String @map("supplier_id")
-  stock      Int    @default(1)
+  supplierId String? @map("supplier_id")
+  stock      Int     @default(1)
 
   attachments Attachment[]
   servants    ServantProducts[]
 
-  supplier Supplier @relation(fields: [supplierId], references: [id])
+  supplier Supplier? @relation(fields: [supplierId], references: [id], onDelete: SetNull)
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

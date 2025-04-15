@@ -9,7 +9,7 @@ import { ProductAttachmentsList } from '@/domain/products/enterprise/entities/pr
 import { Attachment } from '@/domain/attachments/enterprise/entities/attachment'
 
 type ProductWithAttachments = PrismaProduct & {
-  attachments: PrismaAttachment[]
+  attachments?: PrismaAttachment[]
 }
 
 export class PrismaProductMapper {
@@ -22,7 +22,7 @@ export class PrismaProductMapper {
         supplierId: new UniqueEntityID(raw.supplierId ?? ''),
         stock: raw.stock,
         attachments: new ProductAttachmentsList(),
-        attachmentsList: raw.attachments.map((attachment) => {
+        attachmentsList: raw.attachments?.map((attachment) => {
           return Attachment.create(
             {
               title: attachment.title,

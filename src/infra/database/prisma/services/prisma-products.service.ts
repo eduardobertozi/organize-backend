@@ -47,6 +47,16 @@ export class PrismaProductsService implements ProductsRepository {
     return PrismaProductMapper.toDomain(product)
   }
 
+  async findBySupplierId(supplierId: UniqueEntityID): Promise<Product[]> {
+    const products = await this.prisma.product.findMany({
+      where: {
+        supplierId: supplierId.toString(),
+      },
+    })
+
+    return products.map((product) => PrismaProductMapper.toDomain(product))
+  }
+
   async findAll({
     page = 1,
     q,
