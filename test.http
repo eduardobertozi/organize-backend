@@ -42,6 +42,18 @@ Authorization: Bearer {{token}}
 GET {{base_url}}/suppliers/all?page=1
 Authorization: Bearer {{token}}
 
+### 
+# @name create_sale
+POST {{base_url}}/sales
+Content-Type: application/json
+Authorization: Bearer {{token}}
+
+{
+  "description": "New Sale",
+  "amount": 100,
+  "servants": []
+}
+
 ###
 # @name fetch_sales
 GET {{base_url}}/sales/all?page=1

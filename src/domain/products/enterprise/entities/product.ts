@@ -10,7 +10,7 @@ export interface ProductProps {
   stock: number
   attachments: ProductAttachmentsList
 
-  supplierId?: UniqueEntityID
+  supplierId?: UniqueEntityID | null
   createdAt?: Date | null
   updatedAt?: Date | null
 
@@ -62,7 +62,7 @@ export class Product extends AggregateRoot<ProductProps> {
     return this.props.supplierId!
   }
 
-  set supplierId(supplierId: UniqueEntityID) {
+  set supplierId(supplierId: UniqueEntityID | null) {
     this.props.supplierId = supplierId
     this.touch()
   }

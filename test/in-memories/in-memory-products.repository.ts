@@ -28,6 +28,12 @@ export class InMemoryProductsRepository extends ProductsRepository {
     )
   }
 
+  async findBySupplierId(supplierId: UniqueEntityID) {
+    return Promise.resolve(
+      this.items.filter((item) => item.supplierId?.equals(supplierId)) ?? [],
+    )
+  }
+
   async findAll({
     page = 1,
     q,
@@ -68,6 +74,17 @@ export class InMemoryProductsRepository extends ProductsRepository {
     await this.productAttachmentsRepository?.deleteMany(
       product.attachments.getRemovedItems(),
     )
+  }
+
+  async removeSupplierFromProducts(supplierId: UniqueEntityID): Promise<void> {
+    const productsOfSupplier = this.items.filter((product) =>
+      product.supplierId?.equals(supplierId),
+    )
+
+    for (const product of productsOfSupplier) {
+      product.supplierId = null
+      await this.save(product)
+    }
   }
 
   async delete(product: Product): Promise<void> {
