@@ -3,7 +3,10 @@ import {
   Customer,
   CustomerProps,
 } from '@/domain/customers/enterprise/entities/customer.entity'
+import { PrismaCustomerMapper } from '@/infra/database/prisma/mappers/prisma-customers.mapper'
+import { PrismaService } from '@/infra/database/prisma/prisma.service'
 import { faker } from '@faker-js/faker'
+import { Injectable } from '@nestjs/common'
 
 export function makeCustomer(
   override: Partial<CustomerProps> = {},
@@ -24,20 +27,25 @@ export function makeCustomer(
   )
 }
 
-// @Injectable()
-// export class CustomersFactory {
-//   constructor(private readonly prisma: PrismaService) {}
+@Injectable()
+export class CustomersFactory {
+  constructor(private readonly prisma: PrismaService) {}
 
-//   async makePrismaCustomer(
-//     override: Partial<CustomerProps> = {},
-//     id?: UniqueEntityID,
-//   ) {
-//     const Customer = makeCustomer(override, id)
+  async makePrismaCustomer(
+    override: Partial<CustomerProps> = {},
+    id?: UniqueEntityID,
+  ) {
+    const customer = makeCustomer(override, id)
 
-//     await this.prisma.user.create({
-//       data: PrismaCustomerMapper.toPrisma(Customer),
-//     })
+    await this.prisma.user.create({
+      data: {
+        name: customer.name,
+        username: faker.internet.username(),
+        password: faker.internet.password(),
+        ...PrismaCustomerMapper.toPrisma(customer),
+      },
+    })
 
-//     return Customer
-//   }
-// }
+    return customer
+  }
+}
