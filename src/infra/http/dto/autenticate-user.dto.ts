@@ -1,11 +1,11 @@
 import { z } from 'zod'
 
 export const AuthenticateUserSchema = z.object({
-  email: z.string().email(),
+  username: z.string(),
   password: z.string().min(6),
 })
 
 export class AuthenticateUserDTO {
-  email: string
+  username: string
   password: string
 }

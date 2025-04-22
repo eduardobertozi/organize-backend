@@ -6,7 +6,7 @@ import { UsersRepository } from '../repositories/users.repository'
 import { WrongCredentialsError } from './errors/wrong-credentials-error'
 
 interface AuthenticateUserRequest {
-  email: string
+  username: string
   password: string
 }
 
@@ -26,10 +26,10 @@ export class AuthenticateUserUseCase {
   ) {}
 
   async execute({
-    email,
+    username,
     password,
   }: AuthenticateUserRequest): Promise<AuthenticateUserResponse> {
-    const user = await this.usersRepository.findByEmail(email)
+    const user = await this.usersRepository.findByUsername(username)
 
     if (!user) {
       return left(new WrongCredentialsError())

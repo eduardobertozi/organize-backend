@@ -16,7 +16,7 @@ describe('Register User', () => {
   it('should be able to register a new user', async () => {
     const result = await sut.execute({
       name: 'John Doe',
-      email: 'johndoe@example.com',
+      username: 'johndoe@example.com',
       password: '123456',
     })
 
@@ -29,7 +29,7 @@ describe('Register User', () => {
   it('should hash user password upon registration', async () => {
     const result = await sut.execute({
       name: 'John Doe',
-      email: 'johndoe@example.com',
+      username: 'johndoe@example.com',
       password: '123456',
     })
 

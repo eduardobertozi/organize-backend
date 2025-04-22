@@ -7,7 +7,7 @@ export class PrismaUserMapper {
     return User.create(
       {
         name: raw.name,
-        email: raw.email,
+        username: raw.username,
         password: raw.password,
       },
       new UniqueEntityID(raw.id),
@@ -18,7 +18,7 @@ export class PrismaUserMapper {
     return {
       id: user.id.toString(),
       name: user.name,
-      email: user.email,
+      username: user.username,
       password: user.password,
     }
   }

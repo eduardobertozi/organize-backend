@@ -27,7 +27,7 @@ describe('Fetch all Sales (E2E)', () => {
     await app.init()
   })
 
-  test('[GET] /sales', async () => {
+  test('[GET] /sales/all', async () => {
     const user = await usersFactory.makePrismaUser()
     const access_token = jwt.sign({ sub: user.id.toString() })
 
@@ -36,7 +36,7 @@ describe('Fetch all Sales (E2E)', () => {
     )
 
     const response = await request(app.getHttpServer())
-      .get('/sales?page=1')
+      .get('/sales/all?page=1')
       .set('Authorization', `Bearer ${access_token}`)
       .send({})
 
@@ -45,7 +45,7 @@ describe('Fetch all Sales (E2E)', () => {
     expect(response.body.sales).toHaveLength(10)
 
     const response2 = await request(app.getHttpServer())
-      .get('/sales?page=2')
+      .get('/sales/all?page=2')
       .set('Authorization', `Bearer ${access_token}`)
       .send({})
 

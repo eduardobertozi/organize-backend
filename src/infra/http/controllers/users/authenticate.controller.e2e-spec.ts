@@ -24,12 +24,12 @@ describe('Authenticate (E2E)', () => {
 
   test('[POST] /sessions', async () => {
     await usersFactory.makePrismaUser({
-      email: 'johndoe@example.com',
+      username: 'johndoe@example.com',
       password: await hash('123456', 8),
     })
 
     const response = await request(app.getHttpServer()).post('/sessions').send({
-      email: 'johndoe@example.com',
+      username: 'johndoe@example.com',
       password: '123456',
     })
 

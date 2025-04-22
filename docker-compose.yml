@@ -1,6 +1,7 @@
 services:
   postgres:
     image: bitnami/postgresql:latest
+    container_name: organize_postgres
     ports:
       - 5432:5432
     environment:
@@ -9,3 +10,9 @@ services:
       POSTGRES_DB: organize
     volumes:
       - ./data/pg:/data/postgres
+    networks:
+      - organize_network
+
+networks:
+  organize_network:
+    driver: bridge

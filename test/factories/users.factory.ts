@@ -12,7 +12,7 @@ export function makeUser(
   return User.create(
     {
       name: faker.person.fullName(),
-      email: faker.internet.email(),
+      username: faker.internet.email(),
       password: faker.internet.password(),
       ...override,
     },

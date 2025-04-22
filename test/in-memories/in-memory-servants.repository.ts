@@ -11,7 +11,7 @@ export class InMemoryServantsRepository extends ServantsRepository {
   public items: Servant[] = []
 
   constructor(
-    private readonly servantProductsRepository: ServantProductsRepository,
+    private readonly servantProductsRepository?: ServantProductsRepository,
   ) {
     super()
   }

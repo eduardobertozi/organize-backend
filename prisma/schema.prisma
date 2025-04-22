@@ -14,11 +14,17 @@ enum UserRole {
 }
 
 model User {
-  id       String   @id @default(uuid())
+  id       String  @id @default(uuid())
   name     String
-  email    String   @unique
+  username String  @unique
   password String
-  role     UserRole @default(EMPLOYEE)
+  email    String?
+  phone    String?
+  address  String?
+  city     String?
+  state    String?
+
+  role UserRole @default(EMPLOYEE)
 
   @@map("users")
 }

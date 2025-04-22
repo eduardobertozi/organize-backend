@@ -4,8 +4,8 @@ import { UsersRepository } from '../../src/domain/user/application/repositories/
 export class InMemoryUsersRepository implements UsersRepository {
   public items: User[] = []
 
-  findByEmail(email: string): Promise<User | null> {
-    const user = this.items.find((user) => user.email === email)
+  findByUsername(username: string): Promise<User | null> {
+    const user = this.items.find((user) => user.username === username)
     return Promise.resolve(user || null)
   }
 
