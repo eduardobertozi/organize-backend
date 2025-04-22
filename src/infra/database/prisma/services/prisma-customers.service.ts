@@ -79,7 +79,10 @@ export class PrismaCustomersService implements CustomersRepository {
       where: {
         id: customer.userId!.toString(),
       },
-      data: PrismaCustomerMapper.toPrisma(customer),
+      data: {
+        ...PrismaCustomerMapper.toPrisma(customer),
+        role: 'CUSTOMER',
+      },
     })
 
     return customer
