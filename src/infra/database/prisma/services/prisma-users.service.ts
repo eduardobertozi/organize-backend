@@ -8,9 +8,9 @@ import { PrismaUserMapper } from '../mappers/prisma-users.mapper'
 export class PrismaUsersService implements UsersRepository {
   constructor(private readonly prisma: PrismaService) {}
 
-  async findByEmail(email: string): Promise<User | null> {
+  async findByUsername(username: string): Promise<User | null> {
     const user = await this.prisma.user.findUnique({
-      where: { email },
+      where: { username },
     })
 
     if (!user) {
