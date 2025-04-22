@@ -4,6 +4,7 @@ import { UniqueEntityID } from '@/core/unique-entity-id'
 import { Injectable } from '@nestjs/common'
 import { Customer } from '../../enterprise/entities/customer.entity'
 import { CustomersRepository } from '../repositories/customers.repository'
+import { ResourceNotFoundError } from '@/core/errors/resource-not-found.error'
 
 interface CreateCustomerRequest {
   name: string
@@ -29,12 +30,12 @@ export class CreateCustomerUseCase {
   async execute(props: CreateCustomerRequest): Promise<CreateCustomerResponse> {
     const customer = Customer.create(props)
 
-    const customerExists = await this.customersRepository.findByUserId(
-      props.userId,
+    const userExists = await this.customersRepository.findByUserId(
+      customer.userId!,
     )
 
-    if (customerExists) {
-      return left(new AlreadyExistsError())
+    if (!userExists) {
+      return left(new ResourceNotFoundError())
     }
 
     await this.customersRepository.create(customer)

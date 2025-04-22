@@ -54,6 +54,10 @@ import { FetchAllSupplierController } from './controllers/suppliers/fetch-all-su
 import { UploadAttachmentsController } from './controllers/uploads/upload-attachment.controller'
 import { AuthenticateController } from './controllers/users/authenticate.controller'
 import { CreateAccountController } from './controllers/users/create-account.controller'
+import { CreateCustomerController } from './controllers/customers/create-customer.controller'
+import { CreateCustomerUseCase } from '@/domain/customers/application/use-cases/create-customer.use-case'
+import { FetchCustomersController } from './controllers/customers/fetch-customers.controller'
+import { FetchCustomersUseCase } from '@/domain/customers/application/use-cases/fetch-customers.use-case'
 
 @Module({
   imports: [DatabaseModule, CryptographyModule, StorageModule],
@@ -84,6 +88,8 @@ import { CreateAccountController } from './controllers/users/create-account.cont
     FetchAllSalesController,
     FindSaleByIdController,
     UploadAttachmentsController,
+    CreateCustomerController,
+    FetchCustomersController,
   ],
   providers: [
     RegisterUserUseCase,
@@ -112,6 +118,8 @@ import { CreateAccountController } from './controllers/users/create-account.cont
     FetchAllSalesUseCase,
     FindSaleByIdUseCase,
     UploadAndCreateAttachmentUseCase,
+    CreateCustomerUseCase,
+    FetchCustomersUseCase,
   ],
 })
 export class HttpModule {}
