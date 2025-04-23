@@ -11,6 +11,8 @@ interface CreateSaleUseCaseRequest {
   description?: string | null
   amount: number
   servantsIds: string[]
+  customerId: string
+  employeeId: string
 }
 
 type CreateSaleUseCaseResponse = Either<
@@ -29,6 +31,8 @@ export class CreateSaleUseCase {
   ): Promise<CreateSaleUseCaseResponse> {
     const sale = Sale.create({
       ...params,
+      customerId: new UniqueEntityID(params.customerId),
+      employeeId: new UniqueEntityID(params.employeeId),
       servants: new SaleServantList(),
     })
 

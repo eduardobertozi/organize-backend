@@ -5,6 +5,7 @@ import { INestApplication } from '@nestjs/common'
 import { JwtService } from '@nestjs/jwt'
 import { Test } from '@nestjs/testing'
 import request from 'supertest'
+import { CustomersFactory } from 'test/factories/customers.factory'
 import { SalesFactory } from 'test/factories/sales.factory'
 import { UsersFactory } from 'test/factories/users.factory'
 
@@ -12,18 +13,20 @@ describe('Edit Sale (E2E)', () => {
   let app: INestApplication
   let prisma: PrismaService
   let usersFactory: UsersFactory
+  let customersFactory: CustomersFactory
   let salesFactory: SalesFactory
   let jwt: JwtService
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
       imports: [AppModule, DatabaseModule],
-      providers: [UsersFactory, SalesFactory],
+      providers: [UsersFactory, SalesFactory, CustomersFactory],
     }).compile()
 
     app = moduleRef.createNestApplication()
     prisma = moduleRef.get(PrismaService)
     usersFactory = moduleRef.get(UsersFactory)
+    customersFactory = moduleRef.get(CustomersFactory)
     salesFactory = moduleRef.get(SalesFactory)
     jwt = moduleRef.get(JwtService)
 
@@ -35,6 +38,7 @@ describe('Edit Sale (E2E)', () => {
     const access_token = jwt.sign({ sub: user.id.toString() })
 
     const sale = await salesFactory.makePrismaSale()
+    const customer = await customersFactory.makePrismaCustomer()
 
     const response = await request(app.getHttpServer())
       .put(`/sales/${sale.id.toString()}`)
@@ -43,6 +47,7 @@ describe('Edit Sale (E2E)', () => {
         description: 'New Description',
         amount: 100,
         servants: [],
+        customerId: customer.id.toString(),
       })
 
     expect(response.statusCode).toBe(204)

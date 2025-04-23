@@ -26,6 +26,8 @@ export class PrismaSaleMapper {
             }),
           ),
         ),
+        customerId: new UniqueEntityID(raw.customerId ?? ''),
+        employeeId: new UniqueEntityID(raw.employeeId ?? ''),
         createdAt: raw.createdAt,
         updatedAt: raw.updatedAt,
       },

@@ -9,6 +9,8 @@ export class SalePresenter {
       servants: sale.servants
         .getItems()
         .map((servant) => servant.servantId.toString()),
+      customerId: sale.customerId.toString(),
+      employeeId: sale.employeeId.toString(),
       createdAt: sale.createdAt,
       updatedAt: sale.updatedAt,
     }

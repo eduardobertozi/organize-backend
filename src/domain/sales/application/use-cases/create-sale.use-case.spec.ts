@@ -1,7 +1,7 @@
-import { InMemorySalesRepository } from 'test/in-memories/in-memory-sales.repository'
-import { CreateSaleUseCase } from './create-sale.use-case'
 import { makeServant } from 'test/factories/servants.factory'
 import { InMemorySaleServantsRepository } from 'test/in-memories/in-memory-sale-servants.repository'
+import { InMemorySalesRepository } from 'test/in-memories/in-memory-sales.repository'
+import { CreateSaleUseCase } from './create-sale.use-case'
 
 describe('CreateSaleUseCase', () => {
   let inMemorySaleServantsRepository: InMemorySaleServantsRepository
@@ -33,6 +33,8 @@ describe('CreateSaleUseCase', () => {
       description: 'New Sale',
       amount: servant.price + servant2.price,
       servantsIds: [servant.id.toString(), servant2.id.toString()],
+      customerId: 'customer-id',
+      employeeId: 'employee-id',
     })
 
     expect(result.isRight()).toEqual(true)

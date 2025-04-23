@@ -15,6 +15,7 @@ export function makeSale(
       description: faker.lorem.sentence(),
       amount: faker.number.float(),
       servants: new SaleServantList(),
+      customerId: new UniqueEntityID(faker.string.uuid()),
       ...override,
     },
     id,

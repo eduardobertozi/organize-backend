@@ -54,7 +54,7 @@ export class PrismaSalesService implements SalesRepository {
       this.prisma.sale.count(),
       this.prisma.sale.findMany({
         take: 10,
-        skip: (page - 1) * 10,
+        skip: (page! - 1) * 10,
         include: {
           servants: {
             select: {

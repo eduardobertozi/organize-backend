@@ -6,6 +6,8 @@ export interface SaleProps {
   description?: string | null
   amount: number
   servants: SaleServantList
+  customerId: UniqueEntityID
+  employeeId: UniqueEntityID
   createdAt?: Date | null
   updatedAt?: Date | null
 }
@@ -36,6 +38,14 @@ export class Sale extends Entity<SaleProps> {
   set servants(servants: SaleServantList) {
     this.props.servants = servants
     this.touch()
+  }
+
+  get customerId(): UniqueEntityID {
+    return this.props.customerId
+  }
+
+  get employeeId(): UniqueEntityID {
+    return this.props.employeeId
   }
 
   get createdAt() {
