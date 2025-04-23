@@ -55,7 +55,7 @@ export class PrismaSuppliersService implements SuppliersRepository {
             mode: 'insensitive',
           },
         },
-        skip: (page - 1) * 10,
+        skip: (page ?? 1 - 1) * 10,
         orderBy: { createdAt: 'desc' },
       }),
     ])
