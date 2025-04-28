@@ -104,8 +104,10 @@ model Sale {
 
   employeeId String?
   customerId String?
-  employee   User?   @relation("EmployeeSales", fields: [employeeId], references: [id])
-  customer   User?   @relation("CustomerSales", fields: [customerId], references: [id])
+
+  employee User? @relation("EmployeeSales", fields: [employeeId], references: [id])
+
+  customer User? @relation("CustomerSales", fields: [customerId], references: [id])
 
   @@map("sales")
 }

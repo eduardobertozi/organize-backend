@@ -1,5 +1,6 @@
 @base_url = http://localhost:8000
 @token = {{create_session.response.body.access_token}}
+@password = {{$dotenv.DEFAULT_PASSWORD}}
 
 ### 
 # @name create_account
@@ -7,9 +8,9 @@ POST {{base_url}}/accounts
 Content-Type: application/json
 
 {
-  "name": "John Doe",
-  "email": "johndoe@example.com",
-  "password": "123456789"
+  "name": "Agnaldo silva",
+  "username": "administrador",
+  "password": "{{password}}"
 }
 
 ### 
@@ -18,8 +19,8 @@ POST {{base_url}}/sessions
 Content-Type: application/json
 
 {
-  "email": "johndoe@example.com",
-  "password": "123456789"
+  "username": "administrador",
+  "password": "{{password}}"
 }
 
 ### 
