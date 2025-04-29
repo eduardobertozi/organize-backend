@@ -9,7 +9,7 @@ export class PrismaUsersService implements UsersRepository {
   constructor(private readonly prisma: PrismaService) {}
 
   async findByUsername(username: string): Promise<User | null> {
-    const user = await this.prisma.user.findUnique({
+    const user = await this.prisma.user.findFirst({
       where: { username },
     })
 

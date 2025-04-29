@@ -10,7 +10,7 @@ Content-Type: application/json
 {
   "name": "Agnaldo silva",
   "username": "administrador",
-  "password": "{{password}}"
+  "password": "agnaldo"
 }
 
 ### 
@@ -20,7 +20,7 @@ Content-Type: application/json
 
 {
   "username": "administrador",
-  "password": "{{password}}"
+  "password": "agnaldo"
 }
 
 ### 
