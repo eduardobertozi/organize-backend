@@ -95,7 +95,7 @@ export class PrismaServantsService implements ServantsRepository {
             mode: 'insensitive',
           },
         },
-        skip: (page ?? 1 - 1) * 10,
+        skip: ((page ?? 1) - 1) * 10,
         include: {
           products: {
             select: {

@@ -45,6 +45,7 @@ export class PrismaSuppliersService implements SuppliersRepository {
     page,
     q,
   }: PaginationParams): Promise<FindManyProductsResponse> {
+    console.log(page, q)
     const [total, suppliers] = await this.prisma.$transaction([
       this.prisma.servant.count(),
       this.prisma.supplier.findMany({
@@ -55,10 +56,12 @@ export class PrismaSuppliersService implements SuppliersRepository {
             mode: 'insensitive',
           },
         },
-        skip: (page ?? 1 - 1) * 10,
+        skip: ((page ?? 1) - 1) * 10,
         orderBy: { createdAt: 'desc' },
       }),
     ])
+
+    console.log(suppliers)
 
     return {
       total: total,
