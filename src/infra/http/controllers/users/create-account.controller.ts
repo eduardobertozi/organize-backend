@@ -15,6 +15,7 @@ import {
   CreateAccountDTO,
   CreateAccountSchema,
 } from '../../dto/create-account.dto'
+import { UserPresenter } from '../../presenters/http-users.presenter'
 
 @Controller()
 @Public()
@@ -35,6 +36,10 @@ export class CreateAccountController {
       }
 
       throw new BadRequestException()
+    }
+
+    return {
+      user: UserPresenter.toHTTP(result.value.user),
     }
   }
 }

@@ -4,11 +4,11 @@ import { ZodValidationPipe } from '../pipes/zod-validation.pipe'
 const CreateCustomerSchema = z.object({
   name: z.string(),
   phone: z.string(),
-  email: z.string().email(),
-  address: z.string(),
-  city: z.string(),
-  state: z.string(),
-  userId: z.string().uuid(),
+  email: z.string().email().optional(),
+  address: z.string().optional(),
+  city: z.string().optional(),
+  state: z.string().optional(),
+  userId: z.string().uuid().optional(),
 })
 
 export const CreateCustomerValidationPipe = new ZodValidationPipe(
