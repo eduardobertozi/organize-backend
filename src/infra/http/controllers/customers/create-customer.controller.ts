@@ -29,8 +29,6 @@ export class CreateCustomerController {
       userId: new UniqueEntityID(body.userId),
     })
 
-    console.log(result)
-
     if (result.isLeft()) {
       throw new BadRequestException()
     }
