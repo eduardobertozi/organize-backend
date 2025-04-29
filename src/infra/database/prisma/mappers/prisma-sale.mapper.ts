@@ -40,6 +40,8 @@ export class PrismaSaleMapper {
       id: sale.id.toString(),
       amount: sale.amount,
       description: sale.description,
+      customerId: sale.customerId.toString(),
+      employeeId: sale.employeeId.toString(),
       createdAt: sale.createdAt!,
       updatedAt: sale.updatedAt!,
     }
