@@ -24,13 +24,14 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 20.16.0
+          node-version: 18 # Substitua pela versão desejada
           cache: 'pnpm'
 
       # Passo 3: Instalar pnpm
       - name: Instalar pnpm
         run: |
-          npm install -g pnpm
+          corepack enable # Habilita o Corepack, que gerencia pnpm, yarn e npm
+          corepack prepare pnpm@latest --activate # Garante a instalação da versão mais recente do pnpm
 
       # Passo 4: Instalar Dependências
       - name: Instalar Dependências
