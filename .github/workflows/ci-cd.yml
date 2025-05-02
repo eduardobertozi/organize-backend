@@ -12,8 +12,17 @@ jobs:
   ci:
     runs-on: ubuntu-latest
 
-    env:
-      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+    services:
+      postgres:
+        image: bitnami/postgresql:latest
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: docker
+          POSTGRES_DB: organize
+        ports:
+          - 5432:5432
+        volumes:
+          - ./data/pg:/data/postgres
 
     steps:
       # Passo 1: Checkout do Código
@@ -37,13 +46,13 @@ jobs:
       - name: Instalar Dependências
         run: pnpm install
 
-      # Passo 5: Gerar Cliente Prisma
-      - name: Gerar Cliente Prisma
-        run: pnpm prisma generate
-
       # Passo 6: Aplicar Migrações Prisma
       - name: Aplicar Migrações Prisma
         run: pnpm prisma migrate dev
+
+      # Passo 5: Gerar Cliente Prisma
+      - name: Gerar Cliente Prisma
+        run: pnpm prisma generate
 
       # Passo 7: Linter (ESLint)
       - name: Linter (ESLint)
@@ -56,6 +65,12 @@ jobs:
       # Passo 9: Testes E2E
       - name: Testes E2E
         run: pnpm test:e2e
+        env:
+          DATABASE_HOST: localhost
+          DATABASE_PORT: ${{ job.services.postgres.ports[5432] }}
+          DATABASE_USER: docker
+          DATABASE_PASS: organize
+
 
       # Passo 10: Build da Aplicação
       - name: Build da Aplicação
