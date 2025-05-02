@@ -47,6 +47,8 @@ jobs:
       # Passo 6: Aplicar Migrações Prisma
       - name: Aplicar Migrações Prisma
         run: pnpm prisma migrate dev
+        env:
+          DATABASE_URL: "postgresql://postgres:docker@localhost:5432/organize?schema=public"
 
       # Passo 5: Gerar Cliente Prisma
       - name: Gerar Cliente Prisma
