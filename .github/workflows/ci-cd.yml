@@ -1,0 +1,42 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+
+    steps:
+      # Passo 1: Checkout do código
+      - name: Checkout do Código
+        uses: actions/checkout@v2
+
+      # Passo 2: Instalar dependências
+      - name: Instalar Dependências
+        run: pnpm install
+
+      # Passo 3: Linter (Eslint)
+      - name: Linter (Eslint)
+        run: pnpm lint
+
+      # Passo 4: Testes Unitários
+      - name: Testes Unitários
+        run: pnpm test
+
+      # Passo 5: Testes E2E
+      - name: Testes E2E
+        run: pnpm test:e2e
+
+      # Passo 6: Build da Aplicação
+      - name: Build da Aplicação
+        run: pnpm build
+
+      # Passo 7: Start da aplicação
+      - name: Start da Aplicação
+        run: pnpm start
