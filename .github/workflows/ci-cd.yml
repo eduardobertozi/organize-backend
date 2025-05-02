@@ -78,7 +78,3 @@ jobs:
       # Passo 10: Build da Aplicação
       - name: Build da Aplicação
         run: pnpm build
-
-      # Passo 11: Start da Aplicação
-      - name: Start da Aplicação
-        run: pnpm start
