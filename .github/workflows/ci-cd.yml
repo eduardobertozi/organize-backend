@@ -18,7 +18,7 @@ jobs:
     steps:
       # Passo 1: Checkout do Código
       - name: Checkout do Código
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
 
       # Passo 2: Configurar Node.js
       - name: Configurar Pnpm
