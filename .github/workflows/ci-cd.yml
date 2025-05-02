@@ -12,36 +12,54 @@ jobs:
   ci:
     runs-on: ubuntu-latest
 
+    env:
+      DATABASE_URL: ${{ secrets.DATABASE_URL }}
+
     steps:
       # Passo 1: Checkout do Código
       - name: Checkout do Código
         uses: actions/checkout@v3
 
-      # Passo 2: Instalar pnpm
+      # Passo 2: Configurar Node.js
+      - name: Configurar Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18 # Substitua pela versão desejada
+          cache: 'pnpm'
+
+      # Passo 3: Instalar pnpm
       - name: Instalar pnpm
         run: |
           npm install -g pnpm
 
-      # Passo 3: Instalar Dependências
+      # Passo 4: Instalar Dependências
       - name: Instalar Dependências
         run: pnpm install
 
-      # Passo 4: Linter (ESLint)
+      # Passo 5: Gerar Cliente Prisma
+      - name: Gerar Cliente Prisma
+        run: pnpm prisma generate
+
+      # Passo 6: Aplicar Migrações Prisma
+      - name: Aplicar Migrações Prisma
+        run: pnpm prisma migrate dev
+
+      # Passo 7: Linter (ESLint)
       - name: Linter (ESLint)
         run: pnpm lint
 
-      # Passo 5: Testes de Unidade
+      # Passo 8: Testes de Unidade
       - name: Testes de Unidade
         run: pnpm test:unit
 
-      # Passo 6: Testes E2E
+      # Passo 9: Testes E2E
       - name: Testes E2E
         run: pnpm test:e2e
 
-      # Passo 7: Build da Aplicação
+      # Passo 10: Build da Aplicação
       - name: Build da Aplicação
         run: pnpm build
 
-      # Passo 8: Start da Aplicação
+      # Passo 11: Start da Aplicação
       - name: Start da Aplicação
         run: pnpm start
