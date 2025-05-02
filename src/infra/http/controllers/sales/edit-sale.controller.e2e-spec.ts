@@ -36,9 +36,12 @@ describe('Edit Sale (E2E)', () => {
   test('[PUT] /sales/:saleId', async () => {
     const user = await usersFactory.makePrismaUser()
     const access_token = jwt.sign({ sub: user.id.toString() })
-
-    const sale = await salesFactory.makePrismaSale()
     const customer = await customersFactory.makePrismaCustomer()
+
+    const sale = await salesFactory.makePrismaSale({
+      customerId: customer.id,
+      employeeId: user.id,
+    })
 
     const response = await request(app.getHttpServer())
       .put(`/sales/${sale.id.toString()}`)

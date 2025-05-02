@@ -63,6 +63,11 @@ export class PrismaSalesService implements SalesRepository {
               },
             },
           },
+          employee: {
+            select: {
+              name: true,
+            },
+          },
         },
         orderBy: {
           createdAt: 'desc',
@@ -72,6 +77,7 @@ export class PrismaSalesService implements SalesRepository {
 
     const formattedSales = sales.map((sale) => ({
       ...sale,
+      employee: sale.employee!,
       servants: sale.servants.map(({ servant }) => ({
         id: servant.id,
         price: servant.price,

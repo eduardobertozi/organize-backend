@@ -8,6 +8,7 @@ export interface SaleProps {
   servants: SaleServantList
   customerId: UniqueEntityID
   employeeId: UniqueEntityID
+  employee?: string | null
   createdAt?: Date | null
   updatedAt?: Date | null
 }
@@ -46,6 +47,10 @@ export class Sale extends Entity<SaleProps> {
 
   get employeeId(): UniqueEntityID {
     return this.props.employeeId
+  }
+
+  get employee() {
+    return this.props.employee
   }
 
   get createdAt() {

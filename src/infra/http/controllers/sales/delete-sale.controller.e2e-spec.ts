@@ -34,7 +34,12 @@ describe('Delete Sale (E2E)', () => {
     const user = await usersFactory.makePrismaUser()
     const access_token = jwt.sign({ sub: user.id.toString() })
 
-    const sale = await salesFactory.makePrismaSale()
+    const customer = await usersFactory.makePrismaUser()
+
+    const sale = await salesFactory.makePrismaSale({
+      customerId: customer.id,
+      employeeId: user.id,
+    })
 
     const response = await request(app.getHttpServer())
       .delete(`/sales/${sale.id.toString()}`)

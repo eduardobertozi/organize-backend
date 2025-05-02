@@ -31,8 +31,15 @@ describe('Fetch all Sales (E2E)', () => {
     const user = await usersFactory.makePrismaUser()
     const access_token = jwt.sign({ sub: user.id.toString() })
 
+    const customer = await usersFactory.makePrismaUser()
+
     await Promise.all(
-      Array.from({ length: 12 }).map(() => salesFactory.makePrismaSale()),
+      Array.from({ length: 12 }).map(() =>
+        salesFactory.makePrismaSale({
+          customerId: customer.id,
+          employeeId: user.id,
+        }),
+      ),
     )
 
     const response = await request(app.getHttpServer())
