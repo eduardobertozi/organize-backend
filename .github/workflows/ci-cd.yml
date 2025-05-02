@@ -20,9 +20,9 @@ jobs:
       - name: Checkout do Código
         uses: actions/checkout@v3
 
-      # Passo 2: Configurar Node.js
+      # Passo 2: Configurar Pnpm
       - name: Configurar Pnpm
-      - uses: pnpm/action-setup@v2
+        uses: pnpm/action-setup@v2
         with:
           version: 9.15.3
 
