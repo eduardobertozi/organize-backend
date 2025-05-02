@@ -21,8 +21,6 @@ jobs:
           POSTGRES_DB: organize
         ports:
           - 5432:5432
-        volumes:
-          - ./data/pg:/data/postgres
 
     steps:
       # Passo 1: Checkout do Código
@@ -66,11 +64,7 @@ jobs:
       - name: Testes E2E
         run: pnpm test:e2e
         env:
-          DATABASE_HOST: localhost
-          DATABASE_PORT: ${{ job.services.postgres.ports[5432] }}
-          DATABASE_USER: docker
-          DATABASE_PASS: organize
-
+          DATABASE_URL: "postgresql://postgres:docker@localhost:5432/organize?schema=public"
 
       # Passo 10: Build da Aplicação
       - name: Build da Aplicação
