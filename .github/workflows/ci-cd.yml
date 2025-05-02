@@ -60,7 +60,7 @@ jobs:
 
       # Passo 8: Testes de Unidade
       - name: Testes de Unidade
-        run: pnpm test:unit
+        run: pnpm test
 
       # Passo 9: Testes E2E
       - name: Testes E2E
