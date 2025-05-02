@@ -13,30 +13,35 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      # Passo 1: Checkout do código
+      # Passo 1: Checkout do Código
       - name: Checkout do Código
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
-      # Passo 2: Instalar dependências
+      # Passo 2: Instalar pnpm
+      - name: Instalar pnpm
+        run: |
+          npm install -g pnpm
+
+      # Passo 3: Instalar Dependências
       - name: Instalar Dependências
         run: pnpm install
 
-      # Passo 3: Linter (Eslint)
-      - name: Linter (Eslint)
+      # Passo 4: Linter (ESLint)
+      - name: Linter (ESLint)
         run: pnpm lint
 
-      # Passo 4: Testes Unitários
-      - name: Testes Unitários
-        run: pnpm test
+      # Passo 5: Testes de Unidade
+      - name: Testes de Unidade
+        run: pnpm test:unit
 
-      # Passo 5: Testes E2E
+      # Passo 6: Testes E2E
       - name: Testes E2E
         run: pnpm test:e2e
 
-      # Passo 6: Build da Aplicação
+      # Passo 7: Build da Aplicação
       - name: Build da Aplicação
         run: pnpm build
 
-      # Passo 7: Start da aplicação
+      # Passo 8: Start da Aplicação
       - name: Start da Aplicação
         run: pnpm start
