@@ -24,7 +24,7 @@ jobs:
       - name: Configurar Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 18 # Substitua pela versão desejada
+          node-version: 20.16.0
           cache: 'pnpm'
 
       # Passo 3: Instalar pnpm
