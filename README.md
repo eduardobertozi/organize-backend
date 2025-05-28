@@ -27,10 +27,10 @@ Bem-vindo ao repositório do **Organize Backend**! Este projeto serve como a bas
 
 ## 🛠️ Tecnologias Utilizadas
 
-- **Linguagem de Programação:** [Informe aqui, por exemplo, "Node.js", "Python", etc.]
-- **Framework:** [Exemplo: "Express.js", "Django", etc.]
-- **Banco de Dados:** [Exemplo: "MongoDB", "PostgreSQL", etc.]
-- **Outras Dependências:** [Exemplo: "Sequelize", "Mongoose", etc.]
+- **Linguagem de Programação:** Typescript
+- **Framework:** Nestjs
+- **Banco de Dados:** PostgreSql
+- **Outras Dependências:** Prisma ORM
 
 ## 📦 Instalação
 
